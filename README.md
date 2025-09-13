@@ -1,12 +1,65 @@
 <div align="center">
-  <img src="assets/logo.svg" alt="LCBro Logo" width="200" height="150">
+  <br />
+  <img src="assets/logo.svg" alt="LCBro Logo" width="300" height="225">
+  <br />
+  <br />
   
-# LCBro - Low Cost Chrome Browser Remote Operations
-
-**Lightweight Chrome Browser Remote Operations - The Cool Browser Automation MCP Server**
+  # LCBro
+  
+  ### Low Cost Chrome Browser Remote Operations
+  
+  **The Cool Browser Automation MCP Server** 🔥
+  
+  [![npm version](https://img.shields.io/npm/v/lcbro.svg?style=flat-square)](https://www.npmjs.com/package/lcbro)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+  [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=flat-square)](https://nodejs.org/)
+  
+  <br />
+  
+  ⚡ **Lightning Fast** • 🎯 **Zero Config** • 🚀 **Production Ready**
+  
+  <br />
+  
 </div>
 
 LCBro is a powerful MCP server for browser automation with support for both Playwright and Chrome DevTools Protocol (CDP). It provides intelligent preprocessing, comprehensive logging, and remote browser management capabilities.
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎯 **Browser Automation**
+- Real browser control with JavaScript execution
+- Login flows, clicks, text input, form handling
+- Screenshot capture and content extraction
+- Session management with persistent contexts
+
+### 🤖 **Intelligent Preprocessing** 
+- Auto-generates preprocessing prompts
+- Local LLM integration (Ollama, JAN)
+- Smart content analysis and optimization
+- Cost-efficient data preparation
+
+</td>
+<td width="50%">
+
+### 🔧 **Multiple Engines**
+- **Playwright**: Full-featured automation
+- **CDP**: Chrome DevTools Protocol support
+- Remote browser connections
+- Auto-detection and fallback
+
+### 📊 **Advanced Logging**
+- Comprehensive LLM interaction logs
+- Performance metrics and token tracking
+- Configurable log rotation and compression
+- Debug and monitoring capabilities
+
+</td>
+</tr>
+</table>
 
 ## 🚀 Quick Start
 
@@ -44,16 +97,35 @@ npm start
 docker run -p 3000:3000 lcbro:latest
 ```
 
-## ✨ Features
+## 💡 Usage Examples
 
-- **🔗 Dual Browser Support**: Playwright for local automation, CDP for remote browsers
-- **🤖 Intelligent Preprocessing**: Automatic data cleaning with local LLM models
-- **📊 Comprehensive Logging**: Detailed logging with rotation and compression
-- **🌐 Remote CDP Support**: Connect to remote Chrome DevTools Protocol servers
-- **📁 Flexible Configuration**: YAML-based configuration with CLI overrides
-- **🔧 CLI Tools**: Built-in utilities for browser management and log analysis
-- **Multiple Providers**: Support for OpenAI, Anthropic, Ollama, and JAN AI
-- **IDE Integration**: Works with Claude Desktop and Cursor IDE
+### Basic Browser Automation
+```bash
+# Navigate and extract content
+npx lcbro navigate --url "https://example.com"
+npx lcbro extract --format text
+```
+
+### With Custom Configuration
+```bash
+# Enable CDP support
+npx lcbro --cdp-enabled --port 3001
+
+# Custom logging directory
+npx lcbro --logs-dir "/custom/logs" --log-level debug
+```
+
+### MCP Client Integration
+```json
+{
+  "mcpServers": {
+    "lcbro": {
+      "command": "npx",
+      "args": ["-y", "lcbro"]
+    }
+  }
+}
+```
 
 ## 📋 Installation
 
@@ -445,12 +517,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📞 Support
+## 📞 Support & Community
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/lcbro/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/lcbro/discussions)
-- **Documentation**: [Full Documentation](docs/)
-- **Examples**: [Usage Examples](examples/)
+<div align="center">
+
+[![GitHub Issues](https://img.shields.io/github/issues/your-username/lcbro?style=for-the-badge&logo=github)](https://github.com/your-username/lcbro/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/your-username/lcbro?style=for-the-badge&logo=github)](https://github.com/your-username/lcbro/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/your-username/lcbro?style=for-the-badge&logo=github)](https://github.com/your-username/lcbro/forks)
+
+</div>
+
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-username/lcbro/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-username/lcbro/discussions)
+- 📚 **Documentation**: [Full Documentation](docs/)
+- 💡 **Examples**: [Usage Examples](examples/)
+- ⭐ **Star Us**: Help us grow by starring the repository!
 
 ## 🙏 Acknowledgments
 
@@ -462,8 +543,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+<div align="center">
+
+**Made with ❤️ by the LCBro Team**
+
 **LCBro** - Lightweight Chrome Browser Remote Operations  
-**Version**: 1.0.0  
-**Status**: ✅ Production Ready  
-**License**: MIT
+**Version**: 1.0.2 • **Status**: ✅ Production Ready • **License**: MIT
+
+[⬆ Back to Top](#lcbro)
+
+</div>
 ```
