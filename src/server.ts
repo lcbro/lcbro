@@ -103,10 +103,10 @@ export class MCPBrowserServer {
               type: 'object',
               properties: {
                 url: { type: 'string', description: 'URL to navigate to' },
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 timeoutMs: { type: 'number', description: 'Timeout in milliseconds (optional)' }
               },
-              required: ['url', 'contextId']
+              required: ['url', 'pageId']
             }
           },
           {
@@ -115,13 +115,13 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 selector: { type: 'string', description: 'CSS selector (optional)' },
                 text: { type: 'string', description: 'Text content to find (optional)' },
                 role: { type: 'string', description: 'ARIA role to find (optional)' },
                 timeout: { type: 'number', description: 'Timeout in milliseconds (optional)' }
               },
-              required: ['contextId']
+              required: ['pageId']
             }
           },
           {
@@ -130,12 +130,12 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 selector: { type: 'string', description: 'CSS selector for input field' },
                 text: { type: 'string', description: 'Text to type' },
                 delay: { type: 'number', description: 'Delay between keystrokes in ms (optional)' }
               },
-              required: ['contextId', 'selector', 'text']
+              required: ['pageId', 'selector', 'text']
             }
           },
           {
@@ -144,7 +144,7 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 condition: { 
                   type: 'string', 
                   enum: ['selector', 'networkidle', 'url'],
@@ -154,7 +154,7 @@ export class MCPBrowserServer {
                 url: { type: 'string', description: 'URL pattern to wait for (if condition is url)' },
                 timeout: { type: 'number', description: 'Timeout in milliseconds (optional)' }
               },
-              required: ['contextId', 'condition']
+              required: ['pageId', 'condition']
             }
           },
           {
@@ -163,7 +163,7 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 format: { 
                   type: 'string', 
                   enum: ['text', 'html', 'markdown', 'readability'],
@@ -171,7 +171,7 @@ export class MCPBrowserServer {
                 },
                 selector: { type: 'string', description: 'CSS selector to extract from (optional)' }
               },
-              required: ['contextId', 'format']
+              required: ['pageId', 'format']
             }
           },
           {
@@ -180,11 +180,11 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 selector: { type: 'string', description: 'CSS selector for table (optional)' },
                 includeHeaders: { type: 'boolean', description: 'Include table headers (optional)' }
               },
-              required: ['contextId']
+              required: ['pageId']
             }
           },
           {
@@ -193,7 +193,7 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 selector: { type: 'string', description: 'CSS selector' },
                 attributes: { 
                   type: 'array', 
@@ -201,7 +201,7 @@ export class MCPBrowserServer {
                   description: 'List of attributes to extract' 
                 }
               },
-              required: ['contextId', 'selector', 'attributes']
+              required: ['pageId', 'selector', 'attributes']
             }
           },
           {
@@ -210,7 +210,7 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 selector: { type: 'string', description: 'CSS selector for specific area (optional)' },
                 fullPage: { type: 'boolean', description: 'Take full page screenshot (optional)' },
                 format: { 
@@ -219,7 +219,7 @@ export class MCPBrowserServer {
                   description: 'Image format (optional)' 
                 }
               },
-              required: ['contextId']
+              required: ['pageId']
             }
           },
           {
@@ -228,14 +228,14 @@ export class MCPBrowserServer {
             inputSchema: {
               type: 'object',
               properties: {
-                contextId: { type: 'string', description: 'Page context ID' },
+                pageId: { type: 'string', description: 'Page context ID' },
                 actions: { 
                   type: 'array',
                   items: { type: 'object' },
                   description: 'Sequence of authentication actions' 
                 }
               },
-              required: ['contextId', 'actions']
+              required: ['pageId', 'actions']
             }
           },
           {
