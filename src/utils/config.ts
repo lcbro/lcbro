@@ -25,14 +25,50 @@ const ConfigSchema = z.object({
     host: z.string().default('localhost'),
     port: z.number().default(11434),
     janPort: z.number().default(1337),
-    autoPreprocess: z.boolean().default(true)
+    autoPreprocess: z.boolean().default(true),
+    preprocessing: z.object({
+      enabled: z.boolean().default(true),
+      intelligentMode: z.boolean().default(true),
+      fallbackToTemplates: z.boolean().default(true),
+      thresholds: z.object({
+        html: z.number().default(3000),
+        text: z.number().default(5000),
+        json: z.number().default(1000)
+      }),
+      preferredModels: z.array(z.string()).default([
+        'ollama:qwen2.5:7b',
+        'ollama:llama3.2:3b', 
+        'ollama:mistral:7b',
+        'ollama:llama3.1:8b',
+        'jan:llama-3.2-3b',
+        'jan:mistral-7b'
+      ]),
+      analysis: z.object({
+        maxContentSample: z.number().default(1000),
+        maxAnalysisTokens: z.number().default(300),
+        analysisTemperature: z.number().default(0.1)
+      })
+    }).default({})
   }),
   limits: z.object({
     maxChars: z.number().default(300000),
     maxScreenshotBytes: z.number().default(8000000)
   }),
   logging: z.object({
-    level: z.enum(['debug', 'info', 'warn', 'error']).default('info')
+    level: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+    llm: z.object({
+      enabled: z.boolean().default(true),
+      logPrompts: z.boolean().default(true),
+      logResponses: z.boolean().default(true),
+      logTokens: z.boolean().default(true),
+      logPerformance: z.boolean().default(true),
+      logPreprocessing: z.boolean().default(true),
+      maxPromptLength: z.number().default(2000),
+      maxResponseLength: z.number().default(1000),
+      maxInputDataLength: z.number().default(5000),
+      trackMetrics: z.boolean().default(true),
+      metricsInterval: z.number().default(100)
+    }).default({})
   })
 });
 

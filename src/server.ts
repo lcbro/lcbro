@@ -23,6 +23,17 @@ import { ExtractContentInputSchema, ExtractTableInputSchema, ExtractAttributesIn
 import { SessionAuthInputSchema } from './types/session.js';
 import { LLMTransformInputSchema } from './types/llm.js';
 
+// Graceful shutdown handling for performance logging
+process.on('SIGINT', () => {
+  console.log('\nReceived SIGINT, logging final performance summary...');
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('\nReceived SIGTERM, logging final performance summary...');
+  process.exit(0);
+});
+
 export class MCPBrowserServer {
   private server: Server;
   private logger: Logger;
@@ -73,7 +84,9 @@ export class MCPBrowserServer {
     this.extractionTools = new ExtractionTools(this.browserManager, this.logger);
     this.sessionTools = new SessionTools(this.browserManager, this.logger);
     this.llmTools = new LLMTools(this.llmManager, this.logger, { 
-      autoPreprocess: config.llm.autoPreprocess 
+      autoPreprocess: config.llm.autoPreprocess,
+      preprocessing: config.llm.preprocessing,
+      logging: config.logging
     });
 
     this.setupHandlers();

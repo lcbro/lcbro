@@ -20,6 +20,33 @@ llm:
   port: 11434                     # Ollama port (default 11434)
   janPort: 1337                   # JAN port (default 1337)
   autoPreprocess: true            # automatic data preprocessing (recommended)
+  
+  # Advanced preprocessing configuration
+  preprocessing:
+    enabled: true                 # enable/disable all preprocessing
+    intelligentMode: true         # use local LLM for prompt generation (recommended)
+    fallbackToTemplates: true     # fallback to templates if intelligent mode fails
+    
+    # Content size thresholds for auto-preprocessing
+    thresholds:
+      html: 3000                  # auto-preprocess HTML above this size (bytes)
+      text: 5000                  # auto-preprocess text above this size (bytes)
+      json: 1000                  # auto-preprocess JSON above this size (bytes)
+      
+    # Model preferences for preprocessing (ordered by priority)
+    preferredModels:
+      - "ollama:qwen2.5:7b"       # fastest for preprocessing
+      - "ollama:llama3.2:3b"      # very fast, small model
+      - "ollama:mistral:7b"       # good balance
+      - "ollama:llama3.1:8b"      # stable choice
+      - "jan:llama-3.2-3b"        # JAN fallback
+      - "jan:mistral-7b"          # JAN alternative
+    
+    # Analysis settings
+    analysis:
+      maxContentSample: 1000      # max chars to analyze for prompt generation
+      maxAnalysisTokens: 300      # max tokens for content analysis
+      analysisTemperature: 0.1    # low temperature for consistent analysis
 
 limits:
   maxChars: 300000
@@ -27,3 +54,21 @@ limits:
 
 logging:
   level: info
+  
+  # Detailed LLM logging for debugging and statistics
+  llm:
+    enabled: true                 # enable detailed LLM logging
+    logPrompts: true             # log all prompts sent to LLM
+    logResponses: true           # log all responses from LLM
+    logTokens: true              # log token usage statistics
+    logPerformance: true         # log timing and performance metrics
+    logPreprocessing: true       # log preprocessing analysis and results
+    
+    # Data logging settings
+    maxPromptLength: 2000        # max chars to log for prompts (truncate if longer)
+    maxResponseLength: 1000      # max chars to log for responses (truncate if longer)
+    maxInputDataLength: 5000     # max chars to log for input data (truncate if longer)
+    
+    # Performance tracking
+    trackMetrics: true           # track performance metrics
+    metricsInterval: 100         # log metrics every N operations
