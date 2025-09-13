@@ -4,6 +4,10 @@ import { z } from 'zod';
 
 // Configuration schema
 const ConfigSchema = z.object({
+  server: z.object({
+    host: z.string().default('localhost'),
+    port: z.number().default(3000)
+  }).default({}),
   browser: z.object({
     engine: z.enum(['playwright', 'cdp']).default('playwright'),
     headless: z.boolean().default(true),

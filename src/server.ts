@@ -391,6 +391,11 @@ export class MCPBrowserServer {
     process.on('SIGTERM', () => this.shutdown());
   }
 
+  async stop(): Promise<void> {
+    await this.browserManager.cleanup();
+    // MCP server cleanup is handled by the SDK
+  }
+
   private async shutdown() {
     this.logger.info('Shutting down server...');
     

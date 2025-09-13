@@ -28,19 +28,15 @@ export const createLogger = (config: Config | LoggerConfig) => {
 
   // Console transport
   if (loggerConfig.consoleLogging !== false) {
-    const consoleTransport = pino.transport({
-      target: 'pino-pretty',
-      options: {
-        colorize: loggerConfig.colorize !== false,
-        translateTime: 'SYS:standard',
-        ignore: 'pid,hostname',
-        messageFormat: loggerConfig.format === 'json' ? undefined : '{msg}',
-        customPrettifiers: {
-          level: (logLevel: string) => `[${logLevel.toUpperCase()}]`
-        }
-      }
+    // Simple console logging without pino-pretty dependency
+    const consoleLogger = pino({
+      level: loggerConfig.level,
+      transport: undefined, // No transport for console
+      formatters: {
+        level: (label) => ({ level: label }),
+      },
     });
-    transports.push(consoleTransport);
+    transports.push(consoleLogger);
   }
 
   // File transport
@@ -97,19 +93,15 @@ export const createAdvancedLogger = async (config: Config): Promise<{
 
   // Console transport
   if (config.logging.console.enabled) {
-    const consoleTransport = pino.transport({
-      target: 'pino-pretty',
-      options: {
-        colorize: config.logging.console.colorize,
-        translateTime: 'SYS:standard',
-        ignore: 'pid,hostname',
-        messageFormat: config.logging.console.format === 'json' ? undefined : '{msg}',
-        customPrettifiers: {
-          level: (logLevel: string) => `[${logLevel.toUpperCase()}]`
-        }
-      }
+    // Simple console logging without pino-pretty dependency
+    const consoleLogger = pino({
+      level: config.logging.level,
+      transport: undefined, // No transport for console
+      formatters: {
+        level: (label) => ({ level: label }),
+      },
     });
-    transports.push(consoleTransport);
+    transports.push(consoleLogger);
   }
 
   // File transports for different categories

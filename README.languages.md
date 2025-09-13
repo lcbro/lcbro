@@ -1,6 +1,6 @@
-# Documentation Languages
+# LCBro Documentation Languages
 
-This project supports multiple languages:
+LCBro supports multiple languages for documentation:
 
 ## English (Default)
 - [README.md](README.md) - Full documentation in English

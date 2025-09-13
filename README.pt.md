@@ -1,6 +1,6 @@
-# Low Cost Browsing MCP Server
+# LCBro - Barato Operações Remotas de Navegador Chrome
 
-Agregador de servidor MCP para automação de navegador, análise e limpeza opcional de dados LLM usando Playwright.
+LCBro é um poderoso servidor MCP para automação de navegador com suporte tanto para Playwright quanto para Chrome DevTools Protocol (CDP). Ele fornece pré-processamento inteligente, logging abrangente e capacidades de gerenciamento de navegador remoto.
 
 ## Recursos
 

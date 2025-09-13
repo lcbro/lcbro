@@ -1,0 +1,54 @@
+# Source files
+src/
+tests/
+coverage/
+test-results/
+playwright-report/
+
+# Development files
+.env
+.env.*
+*.log
+*.pid
+
+# Build artifacts (keep dist/)
+*.tsbuildinfo
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation (keep README.md)
+docs/
+*.md
+!README.md
+
+# Scripts (keep essential ones)
+scripts/
+!scripts/cdp-browser-launcher.sh
+!scripts/logs-manager.sh
+!scripts/test-remote-cdp.sh
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# CI/CD
+.github/
+Makefile
+
+# Package management
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
