@@ -1,0 +1,185 @@
+name: ✨ Feature Request
+description: Suggest a new feature for the Low Cost Browsing MCP Server
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Please provide detailed information to help us understand your request.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: ✨ Feature Summary
+      description: A clear and concise description of the feature you'd like to see added.
+      placeholder: Briefly describe the feature...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 🎯 Problem Statement
+      description: What problem does this feature solve? What need does it address?
+      placeholder: "I'm always frustrated when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: Describe the solution you'd like to see implemented.
+      placeholder: "I would like to see..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternative Solutions
+      description: Describe any alternative solutions or features you've considered.
+      placeholder: "Alternatively, we could..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 🏷️ Feature Category
+      description: What category does this feature belong to?
+      options:
+        - Browser Automation
+        - Content Extraction
+        - LLM Integration
+        - Session Management
+        - Configuration
+        - Security
+        - Performance
+        - Documentation
+        - Testing
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 📈 Priority Level
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve workflow
+        - High - Significantly impacts productivity
+        - Critical - Blocking important use cases
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 🎯 Use Cases
+      description: Provide specific use cases or scenarios where this feature would be helpful.
+      placeholder: |
+        1. Use case 1: ...
+        2. Use case 2: ...
+        3. Use case 3: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: 🛠️ Implementation Ideas
+      description: If you have ideas about how this could be implemented, share them here.
+      placeholder: "This could be implemented by..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: 📝 Code Examples
+      description: Provide examples of how you envision using this feature.
+      placeholder: |
+        ```javascript
+        // Example usage:
+        await tool.newFeature({
+          parameter: 'value'
+        });
+        ```
+    validations:
+      required: false
+
+  - type: dropdown
+    id: breaking-change
+    attributes:
+      label: 💥 Breaking Change
+      description: Would this feature require breaking changes to the current API?
+      options:
+        - "No - Backwards compatible"
+        - "Yes - Minor breaking changes"
+        - "Yes - Major breaking changes"
+        - "Unknown"
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: 🚀 Benefits
+      description: What benefits would this feature provide to users?
+      placeholder: |
+        - Benefit 1: ...
+        - Benefit 2: ...
+        - Benefit 3: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: ⚠️ Potential Risks/Concerns
+      description: Are there any potential risks or concerns with this feature?
+      placeholder: "Potential concerns include..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willingness
+    attributes:
+      label: 🤝 Contribution Willingness
+      description: Would you be willing to help implement this feature?
+      options:
+        - "Yes - I can implement this feature"
+        - "Yes - I can help with implementation"
+        - "Yes - I can help with testing"
+        - "Yes - I can help with documentation"
+        - "No - I can only provide feedback"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📝 Additional Context
+      description: Add any other context, mockups, or examples about the feature request.
+      placeholder: Any additional information that might be helpful...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to ensure this feature hasn't been requested already
+          required: true
+        - label: I have provided a clear description of the problem this feature would solve
+          required: true
+        - label: I have considered how this feature fits with the existing codebase
+          required: true

@@ -1,0 +1,19 @@
+{
+  "_comment": "Configuração de exemplo para Cursor IDE - substitua '/caminho/para/seu' pelo caminho real",
+  "_comentario": "Para encontrar o caminho, execute 'pwd' na raiz do projeto",
+  "mcp": {
+    "servers": {
+      "lc-browser-mcp": {
+        "command": "node",
+        "args": ["/caminho/para/seu/mcp_servers/low_cost_browsing/dist/index.js"],
+        "cwd": "/caminho/para/seu/mcp_servers/low_cost_browsing",
+        "env": {
+          "_comment": "Descomente as chaves API que precisar:",
+          "_JAN_API_KEY": "sua_chave_api_jan_aqui",
+          "_OPENAI_API_KEY": "sk-sua_chave_openai_aqui",
+          "_ANTHROPIC_API_KEY": "sk-ant-sua_chave_anthropic_aqui"
+        }
+      }
+    }
+  }
+}

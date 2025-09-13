@@ -1,0 +1,17 @@
+{
+  "mcp": {
+    "servers": {
+      "lc-browser-mcp": {
+        "command": "node",
+        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "env": {
+          "_comment": "Uncomment the API keys you need:",
+          "_JAN_API_KEY": "your_jan_api_key_here",
+          "_OPENAI_API_KEY": "sk-your_openai_key_here",
+          "_ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here"
+        }
+      }
+    }
+  }
+}

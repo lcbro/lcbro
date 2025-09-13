@@ -1,0 +1,203 @@
+version: '3.8'
+
+services:
+  # Development service
+  app-dev:
+    build:
+      context: .
+      target: development
+      args:
+        - NODE_ENV=development
+    container_name: lc-browser-mcp-dev
+    ports:
+      - "3000:3000"
+      - "9229:9229"  # Debug port
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DEBUG=*
+    command: npm run dev
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  # Testing service
+  app-test:
+    build:
+      context: .
+      target: testing
+    container_name: lc-browser-mcp-test
+    volumes:
+      - ./coverage:/app/coverage
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    environment:
+      - NODE_ENV=test
+      - CI=true
+      - DISPLAY=:99
+    shm_size: 1gb
+    profiles:
+      - testing
+    networks:
+      - mcp-network
+
+  # Production service
+  app-prod:
+    build:
+      context: .
+      target: production
+    container_name: lc-browser-mcp-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    profiles:
+      - production
+    networks:
+      - mcp-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Browser testing service with different browsers
+  test-chromium:
+    build:
+      context: .
+      target: testing
+    container_name: lc-browser-test-chromium
+    volumes:
+      - ./test-results:/app/test-results
+    environment:
+      - NODE_ENV=test
+      - PLAYWRIGHT_PROJECT=chromium
+      - DISPLAY=:99
+    shm_size: 1gb
+    command: ["e2e"]
+    profiles:
+      - browsers
+    networks:
+      - mcp-network
+
+  test-firefox:
+    build:
+      context: .
+      target: testing
+    container_name: lc-browser-test-firefox
+    volumes:
+      - ./test-results:/app/test-results
+    environment:
+      - NODE_ENV=test
+      - PLAYWRIGHT_PROJECT=firefox
+      - DISPLAY=:99
+    shm_size: 1gb
+    command: ["e2e"]
+    profiles:
+      - browsers
+    networks:
+      - mcp-network
+
+  test-webkit:
+    build:
+      context: .
+      target: testing
+    container_name: lc-browser-test-webkit
+    volumes:
+      - ./test-results:/app/test-results
+    environment:
+      - NODE_ENV=test
+      - PLAYWRIGHT_PROJECT=webkit
+      - DISPLAY=:99
+    shm_size: 1gb
+    command: ["e2e"]
+    profiles:
+      - browsers
+    networks:
+      - mcp-network
+
+  # Ollama service for local LLM testing
+  ollama:
+    image: ollama/ollama:latest
+    container_name: lc-browser-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    profiles:
+      - llm
+      - testing
+    networks:
+      - mcp-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # JAN AI alternative (if needed)
+  jan-ai:
+    image: janai/jan:latest
+    container_name: lc-browser-jan
+    ports:
+      - "1337:1337"
+    volumes:
+      - jan-data:/app/data
+    environment:
+      - JAN_API_HOST=0.0.0.0
+      - JAN_API_PORT=1337
+    profiles:
+      - llm
+      - testing
+    networks:
+      - mcp-network
+
+  # Test report server
+  test-reports:
+    image: nginx:alpine
+    container_name: lc-browser-reports
+    ports:
+      - "8080:80"
+    volumes:
+      - ./coverage:/usr/share/nginx/html/coverage:ro
+      - ./test-results:/usr/share/nginx/html/test-results:ro
+      - ./playwright-report:/usr/share/nginx/html/playwright:ro
+      - ./docs:/usr/share/nginx/html/docs:ro
+    profiles:
+      - reports
+    networks:
+      - mcp-network
+
+  # Redis for session storage (if needed)
+  redis:
+    image: redis:alpine
+    container_name: lc-browser-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    profiles:
+      - storage
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  ollama-data:
+    driver: local
+  jan-data:
+    driver: local
+  redis-data:
+    driver: local

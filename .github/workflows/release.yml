@@ -1,0 +1,361 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  prepare-release:
+    name: 📋 Prepare Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            VERSION="${{ github.event.release.tag_name }}"
+          fi
+          
+          # Remove 'v' prefix if present
+          CLEAN_VERSION=${VERSION#v}
+          
+          echo "version=${CLEAN_VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Release version: ${CLEAN_VERSION}"
+          echo "Release tag: ${VERSION}"
+
+  test-before-release:
+    name: 🧪 Pre-Release Tests
+    runs-on: ubuntu-latest
+    needs: prepare-release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full test suite
+        run: |
+          npm test
+          echo "✅ Unit tests passed"
+
+      - name: Build and test Docker images
+        run: |
+          make build-test
+          make test-unit
+          make build-prod
+          echo "✅ Docker tests passed"
+
+  build-release-images:
+    name: 🏗️ Build Release Images
+    runs-on: ubuntu-latest
+    needs: [prepare-release, test-before-release]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - name: Build and push production image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: production
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}
+            ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push development image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: development
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev-${{ needs.prepare-release.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev-latest
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push testing image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: testing
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test-${{ needs.prepare-release.outputs.version }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test-latest
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  create-release-artifacts:
+    name: 📦 Create Release Artifacts
+    runs-on: ubuntu-latest
+    needs: [prepare-release, test-before-release]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Create source archive
+        run: |
+          tar -czf lc-browser-mcp-${{ needs.prepare-release.outputs.version }}-source.tar.gz \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=coverage \
+            --exclude=test-results \
+            --exclude=playwright-report \
+            .
+
+      - name: Create build archive
+        run: |
+          tar -czf lc-browser-mcp-${{ needs.prepare-release.outputs.version }}-build.tar.gz \
+            dist/ package.json package-lock.json config/
+
+      - name: Generate checksums
+        run: |
+          sha256sum *.tar.gz > checksums.txt
+          cat checksums.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts-${{ needs.prepare-release.outputs.version }}
+          path: |
+            *.tar.gz
+            checksums.txt
+          retention-days: 90
+
+  security-scan-release:
+    name: 🔒 Security Scan Release
+    runs-on: ubuntu-latest
+    needs: [prepare-release, build-release-images]
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Security scan summary
+        run: |
+          echo "🔒 Security scan completed for release ${{ needs.prepare-release.outputs.version }}"
+
+  test-release-images:
+    name: 🧪 Test Release Images
+    runs-on: ubuntu-latest
+    needs: [prepare-release, build-release-images]
+    strategy:
+      matrix:
+        image_type: [production, development, testing]
+    steps:
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test ${{ matrix.image_type }} image
+        run: |
+          IMAGE_TAG=""
+          TEST_CMD=""
+          
+          case "${{ matrix.image_type }}" in
+            "production")
+              IMAGE_TAG="${{ needs.prepare-release.outputs.version }}"
+              TEST_CMD="node --version"
+              ;;
+            "development")
+              IMAGE_TAG="dev-${{ needs.prepare-release.outputs.version }}"
+              TEST_CMD="npm --version"
+              ;;
+            "testing")
+              IMAGE_TAG="test-${{ needs.prepare-release.outputs.version }}"
+              TEST_CMD="unit"
+              ;;
+          esac
+          
+          echo "Testing image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
+          docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG} ${TEST_CMD}
+          echo "✅ ${{ matrix.image_type }} image test passed"
+
+  update-release:
+    name: 📝 Update Release
+    runs-on: ubuntu-latest
+    needs: [prepare-release, create-release-artifacts, build-release-images, test-release-images, security-scan-release]
+    if: github.event_name == 'release' || github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download release artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release-artifacts-${{ needs.prepare-release.outputs.version }}
+
+      - name: Create or update release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.prepare-release.outputs.tag }}
+          name: Release ${{ needs.prepare-release.outputs.tag }}
+          body: |
+            ## 🎉 Release ${{ needs.prepare-release.outputs.tag }}
+            
+            ### 📦 Docker Images
+            
+            **Production Image:**
+            ```bash
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}
+            ```
+            
+            **Development Image:**
+            ```bash
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev-${{ needs.prepare-release.outputs.version }}
+            ```
+            
+            **Testing Image:**
+            ```bash
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test-${{ needs.prepare-release.outputs.version }}
+            ```
+            
+            ### 🚀 Quick Start
+            
+            ```bash
+            # Run with Docker
+            docker run -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}
+            
+            # Run with Docker Compose
+            docker-compose up -d
+            ```
+            
+            ### 📋 What's Included
+            
+            - ✅ Production-ready Docker images
+            - ✅ Multi-stage builds (development, testing, production)
+            - ✅ Comprehensive testing suite
+            - ✅ Security scanning completed
+            - ✅ Browser automation support (Chromium, Firefox)
+            
+            ### 📁 Artifacts
+            
+            - `lc-browser-mcp-${{ needs.prepare-release.outputs.version }}-source.tar.gz` - Source code
+            - `lc-browser-mcp-${{ needs.prepare-release.outputs.version }}-build.tar.gz` - Built application
+            - `checksums.txt` - SHA256 checksums
+            
+            ### 🔒 Security
+            
+            All images have been scanned for vulnerabilities using Trivy.
+            
+            ---
+            
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/...
+          files: |
+            *.tar.gz
+            checksums.txt
+          draft: false
+          prerelease: ${{ contains(needs.prepare-release.outputs.version, '-') }}
+
+  deployment-notification:
+    name: 📢 Deployment Notification
+    runs-on: ubuntu-latest
+    needs: [prepare-release, update-release]
+    if: always()
+    steps:
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Release Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Release Version:** ${{ needs.prepare-release.outputs.tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Docker Images Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dev-${{ needs.prepare-release.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test-${{ needs.prepare-release.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🎯 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Test the released images in your environment" >> $GITHUB_STEP_SUMMARY
+          echo "2. Update your deployment configurations" >> $GITHUB_STEP_SUMMARY
+          echo "3. Monitor the deployment" >> $GITHUB_STEP_SUMMARY

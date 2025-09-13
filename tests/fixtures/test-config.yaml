@@ -1,0 +1,22 @@
+browser:
+  headless: true
+  maxContexts: 2
+  storageDir: /tmp/test-profiles
+  defaultTimeoutMs: 5000
+
+llm:
+  defaultModel: "mock:test-model"
+  maxOutputTokens: 1000
+  temperature: 0
+  host: "localhost"
+  port: 11434
+  janPort: 1337
+  autoPreprocess: false
+
+security:
+  allowDomains: ["example.com", "httpbin.org", "localhost"]
+  blockPrivateNetworks: false
+
+limits:
+  maxChars: 10000
+  maxScreenshotBytes: 1000000

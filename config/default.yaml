@@ -1,0 +1,29 @@
+browser:
+  engine: playwright
+  headless: true
+  defaultTimeoutMs: 30000
+  storageDir: /data/profiles
+  maxContexts: 8
+
+network:
+  proxyDefault: null
+
+security:
+  allowDomains: ["example.com", "gov.br"]
+  blockPrivateNetworks: true
+
+llm:
+  defaultModel: "ollama:llama3.1"  # replace with your model: ollama:model or jan:model
+  maxOutputTokens: 2000
+  temperature: 0
+  host: "localhost"                # IP address of Ollama/JAN server
+  port: 11434                     # Ollama port (default 11434)
+  janPort: 1337                   # JAN port (default 1337)
+  autoPreprocess: true            # automatic data preprocessing (recommended)
+
+limits:
+  maxChars: 300000
+  maxScreenshotBytes: 8000000
+
+logging:
+  level: info

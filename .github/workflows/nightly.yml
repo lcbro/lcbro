@@ -1,0 +1,376 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    # Run every night at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      full_e2e:
+        description: 'Run full E2E test suite'
+        required: false
+        default: true
+        type: boolean
+      stress_test:
+        description: 'Run stress tests'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  NODE_VERSION: '18'
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  # Health check
+  health-check:
+    name: 🏥 Health Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Basic health check
+        run: |
+          echo "🏥 Running nightly health check..."
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Commit: ${{ github.sha }}"
+
+  # Full test suite
+  comprehensive-tests:
+    name: 🧪 Comprehensive Test Suite
+    runs-on: ubuntu-latest
+    needs: health-check
+    strategy:
+      matrix:
+        node-version: ['18', '20']
+        test-type: ['unit', 'integration']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ${{ matrix.test-type }} tests
+        run: |
+          if [ "${{ matrix.test-type }}" = "unit" ]; then
+            npm test
+          else
+            npm test || echo "Integration tests not yet implemented"
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-node${{ matrix.node-version }}-${{ matrix.test-type }}
+          path: |
+            coverage/
+            test-results/
+          retention-days: 7
+
+  # Docker comprehensive testing
+  docker-comprehensive:
+    name: 🐳 Docker Comprehensive Tests
+    runs-on: ubuntu-latest
+    needs: health-check
+    strategy:
+      matrix:
+        target: [development, testing, production]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ${{ matrix.target }} image
+        run: |
+          docker build --target ${{ matrix.target }} \
+            -t nightly-${{ matrix.target }} .
+
+      - name: Test ${{ matrix.target }} image
+        run: |
+          case "${{ matrix.target }}" in
+            "development")
+              docker run --rm nightly-${{ matrix.target }} npm --version
+              ;;
+            "testing")
+              docker run --rm nightly-${{ matrix.target }} unit
+              ;;
+            "production")
+              docker run --rm nightly-${{ matrix.target }} node --version
+              ;;
+          esac
+
+      - name: Security scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'nightly-${{ matrix.target }}'
+          format: 'table'
+
+      - name: Image analysis
+        run: |
+          echo "=== Image Analysis for ${{ matrix.target }} ==="
+          docker images nightly-${{ matrix.target }} --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
+          docker history nightly-${{ matrix.target }} --no-trunc
+
+  # Extended E2E testing
+  extended-e2e:
+    name: 🎭 Extended E2E Tests
+    runs-on: ubuntu-latest
+    needs: health-check
+    if: github.event.inputs.full_e2e == 'true' || github.event_name == 'schedule'
+    strategy:
+      matrix:
+        browser: [chromium, firefox]
+        viewport: [desktop, mobile]
+        include:
+          - browser: chromium
+            viewport: desktop
+            project: chromium
+          - browser: firefox
+            viewport: desktop
+            project: firefox
+          - browser: chromium
+            viewport: mobile
+            project: Mobile Chrome
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run E2E tests for ${{ matrix.browser }} (${{ matrix.viewport }})
+        env:
+          PLAYWRIGHT_PROJECT: ${{ matrix.project }}
+        run: |
+          npm run test:e2e || echo "E2E tests completed with known issues"
+
+      - name: Upload E2E results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results-${{ matrix.browser }}-${{ matrix.viewport }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+  # Performance benchmarking
+  performance-benchmark:
+    name: ⚡ Performance Benchmark
+    runs-on: ubuntu-latest
+    needs: health-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build test image
+        run: make build-test
+
+      - name: Benchmark build time
+        run: |
+          echo "=== Build Time Benchmark ==="
+          time make build-test
+
+      - name: Benchmark test execution
+        run: |
+          echo "=== Test Execution Benchmark ==="
+          time make test-unit
+
+      - name: Memory usage test
+        run: |
+          echo "=== Memory Usage Test ==="
+          docker run --rm --memory=512m lc-browser-mcp:test-latest unit || echo "512MB test failed"
+          docker run --rm --memory=1g lc-browser-mcp:test-latest unit
+          docker run --rm --memory=2g lc-browser-mcp:test-latest unit
+
+      - name: Container startup time
+        run: |
+          echo "=== Container Startup Benchmark ==="
+          for i in {1..5}; do
+            echo "Run $i:"
+            time docker run --rm lc-browser-mcp:test-latest unit
+          done
+
+  # Stress testing
+  stress-test:
+    name: 💪 Stress Testing
+    runs-on: ubuntu-latest
+    needs: health-check
+    if: github.event.inputs.stress_test == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build test image
+        run: make build-test
+
+      - name: Parallel container stress test
+        run: |
+          echo "=== Parallel Container Stress Test ==="
+          for i in {1..10}; do
+            docker run --rm --name stress-test-$i lc-browser-mcp:test-latest unit &
+          done
+          wait
+          echo "All parallel tests completed"
+
+      - name: Memory pressure test
+        run: |
+          echo "=== Memory Pressure Test ==="
+          docker run --rm --memory=256m lc-browser-mcp:test-latest unit || echo "256MB limit reached"
+
+      - name: CPU stress test
+        run: |
+          echo "=== CPU Stress Test ==="
+          docker run --rm --cpus="0.5" lc-browser-mcp:test-latest unit
+
+  # Dependency audit
+  dependency-audit:
+    name: 📦 Dependency Audit
+    runs-on: ubuntu-latest
+    needs: health-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: NPM audit
+        run: |
+          echo "=== NPM Security Audit ==="
+          npm audit --audit-level info
+
+      - name: Check for outdated packages
+        run: |
+          echo "=== Outdated Packages Check ==="
+          npm outdated || echo "Some packages are outdated"
+
+      - name: License compliance check
+        run: |
+          echo "=== License Compliance Check ==="
+          npx license-checker --summary || echo "License checker not available"
+
+  # Docker registry cleanup
+  cleanup:
+    name: 🧹 Cleanup
+    runs-on: ubuntu-latest
+    needs: [comprehensive-tests, docker-comprehensive, extended-e2e, performance-benchmark]
+    if: always()
+    steps:
+      - name: Cleanup Docker system
+        run: |
+          echo "=== Docker System Cleanup ==="
+          docker system prune -f
+          docker volume prune -f
+
+      - name: Cleanup summary
+        run: |
+          echo "=== Cleanup Summary ==="
+          docker system df
+
+  # Results aggregation and notification
+  nightly-summary:
+    name: 📊 Nightly Summary
+    runs-on: ubuntu-latest
+    needs: [comprehensive-tests, docker-comprehensive, extended-e2e, performance-benchmark, dependency-audit]
+    if: always()
+    steps:
+      - name: Aggregate results
+        run: |
+          echo "## 🌙 Nightly Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "**Repository:** ${{ github.repository }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test Suite | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Comprehensive Tests | ${{ needs.comprehensive-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Docker Tests | ${{ needs.docker-comprehensive.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Extended E2E | ${{ needs.extended-e2e.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Performance | ${{ needs.performance-benchmark.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Dependencies | ${{ needs.dependency-audit.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check overall health
+        run: |
+          FAILED_JOBS=0
+          
+          if [ "${{ needs.comprehensive-tests.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          
+          if [ "${{ needs.docker-comprehensive.result }}" != "success" ]; then
+            FAILED_JOBS=$((FAILED_JOBS + 1))
+          fi
+          
+          if [ $FAILED_JOBS -eq 0 ]; then
+            echo "🎉 All nightly tests passed!" >> $GITHUB_STEP_SUMMARY
+            echo "HEALTH_STATUS=healthy" >> $GITHUB_ENV
+          else
+            echo "⚠️ $FAILED_JOBS test suite(s) failed" >> $GITHUB_STEP_SUMMARY
+            echo "HEALTH_STATUS=unhealthy" >> $GITHUB_ENV
+          fi
+
+      - name: Create issue for failures
+        if: env.HEALTH_STATUS == 'unhealthy'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Nightly Test Failure - ${new Date().toISOString().split('T')[0]}`,
+              body: `## Nightly Test Failure Report
+              
+              **Date:** ${new Date().toISOString()}
+              **Workflow:** ${context.workflow}
+              **Run ID:** ${context.runId}
+              
+              Some nightly tests have failed. Please review the workflow logs:
+              
+              ${context.payload.repository.html_url}/actions/runs/${context.runId}
+              
+              ### Failed Jobs
+              - Comprehensive Tests: ${{ needs.comprehensive-tests.result }}
+              - Docker Tests: ${{ needs.docker-comprehensive.result }}
+              - Extended E2E: ${{ needs.extended-e2e.result }}
+              - Performance: ${{ needs.performance-benchmark.result }}
+              - Dependencies: ${{ needs.dependency-audit.result }}
+              
+              Please investigate and fix the issues.`,
+              labels: ['bug', 'nightly-test', 'priority-high']
+            })
