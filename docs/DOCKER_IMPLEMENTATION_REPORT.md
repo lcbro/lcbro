@@ -155,7 +155,7 @@ make test-browsers      # Все браузеры последовательно
 
 ### Performance Testing
 ```bash
-docker-compose --profile browsers up  # Параллельные browser тесты
+docker compose --profile browsers up  # Параллельные browser тесты
 make ci-test            # Полный CI pipeline
 ```
 
@@ -171,10 +171,10 @@ PLAYWRIGHT_PROJECT=chromium  # Конкретный браузер
 
 ### Docker Compose Profiles
 ```bash
-docker-compose --profile testing up     # Тестирование
-docker-compose --profile llm up         # С LLM провайдерами  
-docker-compose --profile browsers up    # Browser тесты
-docker-compose --profile reports up     # Reports server
+docker compose --profile testing up     # Тестирование
+docker compose --profile llm up         # С LLM провайдерами  
+docker compose --profile browsers up    # Browser тесты
+docker compose --profile reports up     # Reports server
 ```
 
 ### Make Variables

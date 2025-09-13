@@ -94,19 +94,19 @@ make clean-all             # Remove everything
 
 ```bash
 # Development
-docker-compose up app-dev                    # Start development
-docker-compose logs -f app-dev              # View logs
+docker compose up app-dev                    # Start development
+docker compose logs -f app-dev              # View logs
 
 # Testing
-docker-compose --profile testing up app-test    # Run tests
-docker-compose --profile browsers up            # Test all browsers
+docker compose --profile testing up app-test    # Run tests
+docker compose --profile browsers up            # Test all browsers
 
 # With LLM providers
-docker-compose --profile llm up ollama          # Start Ollama
-docker-compose --profile llm up jan-ai          # Start JAN AI
+docker compose --profile llm up ollama          # Start Ollama
+docker compose --profile llm up jan-ai          # Start JAN AI
 
 # Reports server
-docker-compose --profile reports up test-reports  # Serve reports at :8080
+docker compose --profile reports up test-reports  # Serve reports at :8080
 ```
 
 ### Direct Docker Commands
@@ -321,7 +321,7 @@ npx playwright test --debug
 
 ```bash
 # Parallel browser testing
-docker-compose --profile browsers up
+docker compose --profile browsers up
 
 # Use test cache
 docker run --rm \
@@ -363,7 +363,7 @@ make docs-coverage
 make docs-tests
 
 # Serve reports via HTTP
-docker-compose --profile reports up test-reports
+docker compose --profile reports up test-reports
 # View at http://localhost:8080
 ```
 

@@ -78,27 +78,27 @@ jobs:
       - name: Test Docker Compose configuration
         run: |
           # Validate docker-compose file
-          docker-compose config
+          docker compose config
 
       - name: Test development environment
         run: |
-          docker-compose build app-dev
-          docker-compose run --rm app-dev npm --version
+          docker compose build app-dev
+          docker compose run --rm app-dev npm --version
 
       - name: Test testing environment
         run: |
-          docker-compose --profile testing build app-test
-          docker-compose --profile testing run --rm app-test unit
+          docker compose --profile testing build app-test
+          docker compose --profile testing run --rm app-test unit
 
       - name: Test production environment
         run: |
-          docker-compose --profile production build app-prod
-          docker-compose --profile production run --rm app-prod node --version
+          docker compose --profile production build app-prod
+          docker compose --profile production run --rm app-prod node --version
 
       - name: Cleanup
         if: always()
         run: |
-          docker-compose down -v
+          docker compose down -v
           docker system prune -f
 
   make-commands-test:

@@ -52,8 +52,8 @@ jobs:
 
       - name: Validate Docker Compose
         run: |
-          docker-compose config
-          docker-compose build app-test
+          docker compose config
+          docker compose build app-test
 
   # Check for changes that require E2E tests
   detect-changes:

@@ -43,18 +43,16 @@ check_prerequisites() {
         exit 1
     fi
     
-    if ! command_exists docker-compose; then
-        print_warning "docker-compose not found. Checking for 'docker compose'..."
-        if ! docker compose version >/dev/null 2>&1; then
-            print_error "Docker Compose is not available. Please install Docker Compose."
-            exit 1
-        else
-            print_success "Docker Compose (v2) is available"
-            DOCKER_COMPOSE_CMD="docker compose"
-        fi
-    else
-        print_success "Docker Compose (v1) is available"
+    # Check for Docker Compose v2 (preferred) or v1 (fallback)
+    if docker compose version >/dev/null 2>&1; then
+        print_success "Docker Compose (v2) is available"
+        DOCKER_COMPOSE_CMD="docker compose"
+    elif command_exists docker-compose; then
+        print_warning "Using Docker Compose v1 (deprecated). Consider upgrading to Docker Compose v2."
         DOCKER_COMPOSE_CMD="docker-compose"
+    else
+        print_error "Docker Compose is not available. Please install Docker with Compose plugin."
+        exit 1
     fi
     
     if ! command_exists make; then
@@ -174,9 +172,9 @@ show_usage() {
     echo "  make clean               - Clean up containers"
     echo ""
     echo "Using Docker Compose:"
-    echo "  docker-compose up app-dev           - Start development"
-    echo "  docker-compose --profile testing up - Start testing"
-    echo "  docker-compose --profile llm up     - Start with LLM"
+    echo "  docker compose up app-dev           - Start development"
+    echo "  docker compose --profile testing up - Start testing"
+    echo "  docker compose --profile llm up     - Start with LLM"
     echo ""
     echo "Using Docker directly:"
     echo "  docker run --rm lc-browser-mcp:test-latest unit  - Run unit tests"
@@ -197,7 +195,7 @@ show_usage() {
 cleanup() {
     if [ $? -ne 0 ]; then
         print_error "Setup failed. Cleaning up..."
-        docker-compose down 2>/dev/null || true
+        docker compose down 2>/dev/null || docker-compose down 2>/dev/null || true
     fi
 }
 

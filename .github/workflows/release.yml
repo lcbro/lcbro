@@ -304,7 +304,7 @@ jobs:
             docker run -p 3000:3000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.prepare-release.outputs.version }}
             
             # Run with Docker Compose
-            docker-compose up -d
+            docker compose up -d
             ```
             
             ### 📋 What's Included
