@@ -1,6 +1,6 @@
 # Low Cost Browsing MCP Server
 
-с
+MCP server aggregator for browser automation, parsing and optional LLM data cleaning using Playwright.
 
 ## Features
 
@@ -184,8 +184,8 @@ npm start
 ### Configuration for Claude Desktop
 
 1. **Find Claude Desktop configuration file:**
-   - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-   - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+    - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+    - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 2. **Add MCP server configuration:**
 
@@ -264,9 +264,9 @@ pwd
 ### Configuration for Cursor IDE
 
 1. **Find Cursor configuration file:**
-   - **macOS:** `~/Library/Application Support/Cursor/User/settings.json`
-   - **Windows:** `%APPDATA%\Cursor\User\settings.json`
-   - **Linux:** `~/.config/Cursor/User/settings.json`
+    - **macOS:** `~/Library/Application Support/Cursor/User/settings.json`
+    - **Windows:** `%APPDATA%\Cursor\User\settings.json`
+    - **Linux:** `~/.config/Cursor/User/settings.json`
 
    Or use the ready-made `cursor-mcp-config.json` file from the project.
 
@@ -334,8 +334,8 @@ pwd
 4. **Restart Cursor**
 
 5. **Activate MCP in chat:**
-   - Open AI chat in Cursor (`Cmd/Ctrl + L`)
-   - Use `@lc-browser-mcp` to access browsing tools
+    - Open AI chat in Cursor (`Cmd/Ctrl + L`)
+    - Use `@lc-browser-mcp` to access browsing tools
 
 ### Testing
 
@@ -419,7 +419,7 @@ Automatic preprocessing is an intelligent system that analyzes incoming data and
 🎯 **Token and cost savings** — expensive APIs (OpenAI, Anthropic) receive already cleaned data  
 📊 **Better quality results** — LLM works with clean, structured data  
 ⚡ **Automation** — no need to manually plan data cleaning  
-🔧 **Smart adaptation** — system understands what needs to be cleaned based on data type and task  
+🔧 **Smart adaptation** — system understands what needs to be cleaned based on data type and task
 
 **How does it work?**
 
@@ -434,7 +434,7 @@ The system automatically determines when preprocessing is needed:
 
 **Automatically enabled for:**
 - HTML content > 5000 characters
-- Text > 3000 characters  
+- Text > 3000 characters
 - JSON arrays > 10 elements
 - JSON objects > 20 fields
 - Instructions with keywords: "clean", "extract", "parse", "standardize", "normalize"
@@ -443,7 +443,7 @@ The system automatically determines when preprocessing is needed:
 
 📄 **HTML content** — system removes:
 - Navigation menus and sidebars
-- Advertisement blocks and banners  
+- Advertisement blocks and banners
 - JavaScript code and CSS styles
 - Comments and service information
 - Focuses on main article/product content
@@ -466,7 +466,7 @@ The system automatically determines when preprocessing is needed:
 The system analyzes your instruction and adapts preprocessing:
 
 - "extract **table**" → preserves table structures
-- "find **products**" → focuses on product cards  
+- "find **products**" → focuses on product cards
 - "get **article**" → preserves main article text
 - "structure **data**" → normalizes formats
 
@@ -610,27 +610,6 @@ npm test             # Run tests
 - `page_not_found` - Invalid page ID
 - `internal_error` - General server error
 
-## Documentation Languages
-
-This project supports multiple languages:
-
-- **English** (current): [README.md](README.md)
-- **Russian**: [README.ru.md](README.ru.md) 
-- **Portuguese**: [README.pt.md](README.pt.md)
-- **Language Navigation**: [README.languages.md](README.languages.md)
-
-### Configuration Files by Language
-
-**English (default):**
-- `example-mcp-config.json` - Claude Desktop configuration
-- `cursor-mcp-config.json` - Cursor IDE configuration  
-- `env.example` - Environment variables template
-
-**Portuguese:**
-- `example-mcp-config.pt.json` - Configuração Claude Desktop
-- `cursor-mcp-config.pt.json` - Configuração Cursor IDE
-- `env.pt.example` - Modelo de variáveis de ambiente
-
 ## Contributing
 
 We welcome contributions to the Low Cost Browsing MCP Server! Here's how you can help:
@@ -657,10 +636,10 @@ We welcome contributions to the Low Cost Browsing MCP Server! Here's how you can
    ```
 
 4. **Make Your Changes**
-   - Write clean, well-documented code
-   - Follow the existing code style
-   - Add tests for new functionality
-   - Update documentation as needed
+    - Write clean, well-documented code
+    - Follow the existing code style
+    - Add tests for new functionality
+    - Update documentation as needed
 
 5. **Test Your Changes**
    ```bash
@@ -687,14 +666,14 @@ We welcome contributions to the Low Cost Browsing MCP Server! Here's how you can
    ```
 
 8. **Create a Pull Request**
-   - Go to the original repository on GitHub
-   - Click "New Pull Request"
-   - Select your fork and branch
-   - Fill out the PR template with:
-     - Clear description of changes
-     - Link to any related issues
-     - Screenshots if applicable
-     - Testing instructions
+    - Go to the original repository on GitHub
+    - Click "New Pull Request"
+    - Select your fork and branch
+    - Fill out the PR template with:
+        - Clear description of changes
+        - Link to any related issues
+        - Screenshots if applicable
+        - Testing instructions
 
 ### 📋 Pull Request Guidelines
 
