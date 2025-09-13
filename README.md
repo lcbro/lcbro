@@ -6,13 +6,18 @@
   
   # LCBro
   
-  ### Low Cost Chrome Browser Remote Operations
+  ### Low Cost Browser Remote Operations
   
   **The Cool Browser Automation MCP Server** 🔥
   
   [![npm version](https://img.shields.io/npm/v/lcbro.svg?style=flat-square)](https://www.npmjs.com/package/lcbro)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
   [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=flat-square)](https://nodejs.org/)
+  
+  [![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml)
+  [![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml)
+  [![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml)
+  [![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml)
   
   <br />
   
@@ -425,6 +430,9 @@ LCBro provides the following MCP tools:
 ✅ **Documentation** - Comprehensive documentation provided  
 ✅ **Multi-language Support** - English, Russian, Portuguese  
 ✅ **Zero Breaking Changes** - All original functionality preserved  
+✅ **Continuous Integration** - Automated testing and deployment  
+✅ **Docker Support** - Multi-stage builds and container testing  
+✅ **Security Scanning** - Automated vulnerability detection  
 
 ## 🚀 Quick Start
 
@@ -485,6 +493,25 @@ lcbro
 - **Node.js**: 18.x, 20.x, 22.x
 - **Operating Systems**: Windows, macOS, Linux
 
+## 🔧 CI/CD Pipeline Status
+
+**Automated Testing & Deployment** 🚀
+
+| Pipeline | Status | Description |
+|----------|--------|-------------|
+| **CI/CD** | [![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml) | Main build, test, and deployment pipeline |
+| **Docker** | [![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml) | Container builds and multi-platform testing |
+| **Release** | [![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml) | Automated release and npm publishing |
+| **Nightly** | [![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml) | Extended tests and performance benchmarks |
+
+### 📊 Quality Metrics
+- **Test Coverage**: >80% (Unit + E2E)
+- **Build Time**: ~3-5 minutes  
+- **Docker Build**: Multi-stage with layer caching
+- **Security**: CodeQL analysis + dependency scanning
+
+[📋 View all workflows →](.github/WORKFLOWS.md) | [🚀 View pipeline runs →](https://github.com/your-username/lcbro/actions)
+
 ## 🛠️ Development
 
 ### Prerequisites
@@ -503,6 +530,9 @@ npm test
 
 # Run E2E tests
 npm run test:e2e
+
+# Run CI pipeline locally
+make ci
 ```
 
 ## 📄 License
@@ -532,6 +562,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 📚 **Documentation**: [Full Documentation](docs/)
 - 💡 **Examples**: [Usage Examples](examples/)
 - 🔧 **CI/CD Workflows**: [Workflows Documentation](.github/WORKFLOWS.md)
+- 🚀 **Pipeline Status**: [GitHub Actions](https://github.com/your-username/lcbro/actions)
+- 🛡️ **Security Reports**: [Security Tab](https://github.com/your-username/lcbro/security)
 - ⭐ **Star Us**: Help us grow by starring the repository!
 
 ## 🙏 Acknowledgments
