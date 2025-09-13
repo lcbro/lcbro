@@ -531,6 +531,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/your-username/lcbro/discussions)
 - 📚 **Documentation**: [Full Documentation](docs/)
 - 💡 **Examples**: [Usage Examples](examples/)
+- 🔧 **CI/CD Workflows**: [Workflows Documentation](.github/WORKFLOWS.md)
 - ⭐ **Star Us**: Help us grow by starring the repository!
 
 ## 🙏 Acknowledgments
