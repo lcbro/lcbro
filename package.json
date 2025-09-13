@@ -1,7 +1,7 @@
 {
   "name": "lcbro",
   "version": "1.0.6",
-  "description": "Lightweight Chrome Browser Remote Operations - MCP server for browser automation with CDP support",
+  "description": "Low Cost Browser Remote Operations - MCP server for browser automation with CDP support",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {

@@ -123,5 +123,5 @@ lcbro --cdp-enabled
 
 ---
 
-**LCBro** - Lightweight Chrome Browser Remote Operations  
+**LCBro** - Low Cost Browser Remote Operations  
 **Status**: ✅ Production Ready

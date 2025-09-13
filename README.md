@@ -580,8 +580,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ by the LCBro Team**
 
-**LCBro** - Lightweight Chrome Browser Remote Operations  
-**Version**: 1.0.2 • **Status**: ✅ Production Ready • **License**: MIT
+**LCBro** - Low Cost Browser Remote Operations  
+**Version**: 1.0.7 • **Status**: ✅ Production Ready • **License**: MIT
 
 [⬆ Back to Top](#lcbro)
 

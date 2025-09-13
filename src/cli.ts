@@ -17,7 +17,7 @@ const packageJson = JSON.parse(
 
 program
   .name('lcbro')
-  .description('Lightweight Chrome Browser Remote Operations - MCP server for browser automation')
+  .description('Low Cost Browser Remote Operations - MCP server for browser automation')
   .version(packageJson.version)
   .option('-c, --config <path>', 'Path to configuration file', 'config/default.yaml')
   .option('-p, --port <port>', 'Port to run the server on', '3000')
@@ -52,7 +52,7 @@ program
     ║        ║        🚀    [███]  Playwright + CDP     ║          ║
     ║        ╚═══════════════════════════════════════════╝          ║
     ║                                                               ║
-    ║              Lightweight Chrome Browser Remote Operations     ║
+    ║              Low Cost Browser Remote Operations     ║
     ║                                                               ║
     ╚═══════════════════════════════════════════════════════════════╝
       `);

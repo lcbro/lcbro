@@ -21,6 +21,9 @@ env:
   DOCKER_BUILDKIT: 1
   COMPOSE_DOCKER_CLI_BUILD: 1
 
+permissions:
+  contents: read
+
 jobs:
   docker-build-matrix:
     name: 🐳 Docker Build Matrix
@@ -164,6 +167,10 @@ jobs:
     name: 🔒 Docker Security Scan
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

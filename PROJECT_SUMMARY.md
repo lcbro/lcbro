@@ -2,7 +2,7 @@
 
 ## 🎯 Project Overview
 
-**LCBro** (Lightweight Chrome Browser Remote Operations) is a comprehensive MCP server for browser automation with support for both Playwright and Chrome DevTools Protocol (CDP). The project has been successfully transformed from a local development tool into a globally installable npm package.
+**LCBro** (Low Cost Browser Remote Operations) is a comprehensive MCP server for browser automation with support for both Playwright and Chrome DevTools Protocol (CDP). The project has been successfully transformed from a local development tool into a globally installable npm package.
 
 ## ✅ Completed Tasks
 
