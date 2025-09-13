@@ -9,10 +9,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=flat-square)](https://nodejs.org/)
 
-[![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml)
-[![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml)
-[![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml)
-[![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml)
+[![CI/CD Pipeline](https://github.com/lcbro/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/ci.yml)
+[![Docker Testing](https://github.com/lcbro/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/docker.yml)
+[![Release](https://github.com/lcbro/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/release.yml)
+[![Nightly Tests](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml)
 
 ⚡ **Velocidade Relâmpago** • 🎯 **Configuração Zero** • 🚀 **Pronto para Produção**
 </div>
@@ -615,10 +615,10 @@ Use pré-processamento automático para padronizar datas e números de casos
 
 | Pipeline | Status | Descrição |
 |----------|--------|-----------|
-| **CI/CD** | [![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml) | Pipeline principal de build, teste e implantação |
-| **Docker** | [![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml) | Builds de contêiner e testes multiplataforma |
-| **Release** | [![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml) | Release automático e publicação npm |
-| **Nightly** | [![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml) | Testes estendidos e benchmarks de performance |
+| **CI/CD** | [![CI/CD Pipeline](https://github.com/lcbro/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/ci.yml) | Pipeline principal de build, teste e implantação |
+| **Docker** | [![Docker Testing](https://github.com/lcbro/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/docker.yml) | Builds de contêiner e testes multiplataforma |
+| **Release** | [![Release](https://github.com/lcbro/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/release.yml) | Release automático e publicação npm |
+| **Nightly** | [![Nightly Tests](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml) | Testes estendidos e benchmarks de performance |
 
 ### 📊 Métricas de Qualidade
 - **Cobertura de Testes**: >80% (Unit + E2E)
@@ -626,7 +626,7 @@ Use pré-processamento automático para padronizar datas e números de casos
 - **Build Docker**: Multi-estágio com cache de camadas
 - **Segurança**: Análise CodeQL + scanning de dependências
 
-[📋 Ver todos os workflows →](.github/WORKFLOWS.md) | [🚀 Ver execuções do pipeline →](https://github.com/your-username/lcbro/actions)
+[📋 Ver todos os workflows →](.github/WORKFLOWS.md) | [🚀 Ver execuções do pipeline →](https://github.com/lcbro/lcbro/actions)
 
 ## 🏆 Status do Projeto
 
@@ -876,8 +876,8 @@ Ajude a melhorar nossa documentação:
 - 🐛 **Issues**: Procure em issues existentes
 - 💬 **Discussões**: Use GitHub Discussions para perguntas
 - 🔧 **CI/CD Workflows**: [Documentação de workflows](.github/WORKFLOWS.md)
-- 🚀 **Status do Pipeline**: [GitHub Actions](https://github.com/your-username/lcbro/actions)
-- 🛡️ **Relatórios de Segurança**: [Aba Security](https://github.com/your-username/lcbro/security)
+- 🚀 **Status do Pipeline**: [GitHub Actions](https://github.com/lcbro/lcbro/actions)
+- 🛡️ **Relatórios de Segurança**: [Aba Security](https://github.com/lcbro/lcbro/security)
 - 📧 **Contato**: Entre em contato com os mantenedores
 
 Obrigado por contribuir com o Low Cost Browsing MCP Server! 🎉

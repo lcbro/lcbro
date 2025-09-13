@@ -117,7 +117,7 @@ lcbro --cdp-enabled
 
 ## 🆘 Need Help?
 
-- [GitHub Issues](https://github.com/your-username/lcbro/issues)
+- [GitHub Issues](https://github.com/lcbro/lcbro/issues)
 - [Documentation](docs/)
 - [Examples](examples/)
 

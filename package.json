@@ -74,10 +74,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/lcbro.git"
+    "url": "git+https://github.com/lcbro/lcbro.git"
   },
-  "homepage": "https://github.com/your-username/lcbro#readme",
+  "homepage": "https://github.com/lcbro/lcbro#readme",
   "bugs": {
-    "url": "https://github.com/your-username/lcbro/issues"
+    "url": "https://github.com/lcbro/lcbro/issues"
   }
 }

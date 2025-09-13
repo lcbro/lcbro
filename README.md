@@ -14,10 +14,10 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
   [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=flat-square)](https://nodejs.org/)
   
-  [![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml)
-  [![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml)
-  [![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml)
-  [![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml)
+  [![CI/CD Pipeline](https://github.com/lcbro/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/ci.yml)
+  [![Docker Testing](https://github.com/lcbro/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/docker.yml)
+  [![Release](https://github.com/lcbro/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/release.yml)
+  [![Nightly Tests](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml)
   
   <br />
   
@@ -89,7 +89,7 @@ lcbro
 ### Local Development
 ```bash
 # Clone and install
-git clone https://github.com/your-username/lcbro.git
+git clone https://github.com/lcbro/lcbro.git
 cd lcbro
 npm install
 npm run build
@@ -151,7 +151,7 @@ lcbro --version
 ### Local Development
 ```bash
 # Clone repository
-git clone https://github.com/your-username/lcbro.git
+git clone https://github.com/lcbro/lcbro.git
 cd lcbro
 
 # Install dependencies
@@ -499,10 +499,10 @@ lcbro
 
 | Pipeline | Status | Description |
 |----------|--------|-------------|
-| **CI/CD** | [![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml) | Main build, test, and deployment pipeline |
-| **Docker** | [![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml) | Container builds and multi-platform testing |
-| **Release** | [![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml) | Automated release and npm publishing |
-| **Nightly** | [![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml) | Extended tests and performance benchmarks |
+| **CI/CD** | [![CI/CD Pipeline](https://github.com/lcbro/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/ci.yml) | Main build, test, and deployment pipeline |
+| **Docker** | [![Docker Testing](https://github.com/lcbro/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/docker.yml) | Container builds and multi-platform testing |
+| **Release** | [![Release](https://github.com/lcbro/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/release.yml) | Automated release and npm publishing |
+| **Nightly** | [![Nightly Tests](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml) | Extended tests and performance benchmarks |
 
 ### 📊 Quality Metrics
 - **Test Coverage**: >80% (Unit + E2E)
@@ -510,7 +510,7 @@ lcbro
 - **Docker Build**: Multi-stage with layer caching
 - **Security**: CodeQL analysis + dependency scanning
 
-[📋 View all workflows →](.github/WORKFLOWS.md) | [🚀 View pipeline runs →](https://github.com/your-username/lcbro/actions)
+[📋 View all workflows →](.github/WORKFLOWS.md) | [🚀 View pipeline runs →](https://github.com/lcbro/lcbro/actions)
 
 ## 🛠️ Development
 
@@ -551,19 +551,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-[![GitHub Issues](https://img.shields.io/github/issues/your-username/lcbro?style=for-the-badge&logo=github)](https://github.com/your-username/lcbro/issues)
-[![GitHub Stars](https://img.shields.io/github/stars/your-username/lcbro?style=for-the-badge&logo=github)](https://github.com/your-username/lcbro/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/your-username/lcbro?style=for-the-badge&logo=github)](https://github.com/your-username/lcbro/forks)
+[![GitHub Issues](https://img.shields.io/github/issues/lcbro/lcbro?style=for-the-badge&logo=github)](https://github.com/lcbro/lcbro/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/lcbro/lcbro?style=for-the-badge&logo=github)](https://github.com/lcbro/lcbro/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/lcbro/lcbro?style=for-the-badge&logo=github)](https://github.com/lcbro/lcbro/forks)
 
 </div>
 
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/your-username/lcbro/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-username/lcbro/discussions)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/lcbro/lcbro/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/lcbro/lcbro/discussions)
 - 📚 **Documentation**: [Full Documentation](docs/)
 - 💡 **Examples**: [Usage Examples](examples/)
 - 🔧 **CI/CD Workflows**: [Workflows Documentation](.github/WORKFLOWS.md)
-- 🚀 **Pipeline Status**: [GitHub Actions](https://github.com/your-username/lcbro/actions)
-- 🛡️ **Security Reports**: [Security Tab](https://github.com/your-username/lcbro/security)
+- 🚀 **Pipeline Status**: [GitHub Actions](https://github.com/lcbro/lcbro/actions)
+- 🛡️ **Security Reports**: [Security Tab](https://github.com/lcbro/lcbro/security)
 - ⭐ **Star Us**: Help us grow by starring the repository!
 
 ## 🙏 Acknowledgments

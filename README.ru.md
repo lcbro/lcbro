@@ -9,10 +9,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg?style=flat-square)](https://nodejs.org/)
 
-[![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml)
-[![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml)
-[![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml)
-[![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml)
+[![CI/CD Pipeline](https://github.com/lcbro/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/ci.yml)
+[![Docker Testing](https://github.com/lcbro/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/docker.yml)
+[![Release](https://github.com/lcbro/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/release.yml)
+[![Nightly Tests](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml)
 
 ⚡ **Молниеносно быстро** • 🎯 **Без настройки** • 🚀 **Готов к продакшену**
 </div>
@@ -613,10 +613,10 @@ const result = await mcp.callTool('llm.transform', {
 
 | Пайплайн | Статус | Описание |
 |----------|--------|----------|
-| **CI/CD** | [![CI/CD Pipeline](https://github.com/your-username/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/ci.yml) | Основной пайплайн сборки, тестирования и развёртывания |
-| **Docker** | [![Docker Testing](https://github.com/your-username/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/docker.yml) | Сборка контейнеров и мультиплатформенное тестирование |
-| **Release** | [![Release](https://github.com/your-username/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/release.yml) | Автоматический релиз и публикация в npm |
-| **Nightly** | [![Nightly Tests](https://github.com/your-username/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/your-username/lcbro/actions/workflows/nightly.yml) | Расширенные тесты и бенчмарки производительности |
+| **CI/CD** | [![CI/CD Pipeline](https://github.com/lcbro/lcbro/actions/workflows/ci.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/ci.yml) | Основной пайплайн сборки, тестирования и развёртывания |
+| **Docker** | [![Docker Testing](https://github.com/lcbro/lcbro/actions/workflows/docker.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/docker.yml) | Сборка контейнеров и мультиплатформенное тестирование |
+| **Release** | [![Release](https://github.com/lcbro/lcbro/actions/workflows/release.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/release.yml) | Автоматический релиз и публикация в npm |
+| **Nightly** | [![Nightly Tests](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml/badge.svg)](https://github.com/lcbro/lcbro/actions/workflows/nightly.yml) | Расширенные тесты и бенчмарки производительности |
 
 ### 📊 Метрики качества
 - **Покрытие тестами**: >80% (Unit + E2E)
@@ -624,7 +624,7 @@ const result = await mcp.callTool('llm.transform', {
 - **Docker сборка**: Многоступенчатая с кэшированием слоёв
 - **Безопасность**: CodeQL анализ + сканирование зависимостей
 
-[📋 Просмотреть все workflow →](.github/WORKFLOWS.md) | [🚀 Просмотреть запуски пайплайна →](https://github.com/your-username/lcbro/actions)
+[📋 Просмотреть все workflow →](.github/WORKFLOWS.md) | [🚀 Просмотреть запуски пайплайна →](https://github.com/lcbro/lcbro/actions)
 
 ## 🏆 Статус проекта
 
@@ -874,8 +874,8 @@ make test-all
 - 🐛 **Issues**: Поищите в существующих issues
 - 💬 **Обсуждения**: Используйте GitHub Discussions для вопросов
 - 🔧 **CI/CD Workflows**: [Документация по workflow](.github/WORKFLOWS.md)
-- 🚀 **Статус пайплайна**: [GitHub Actions](https://github.com/your-username/lcbro/actions)
-- 🛡️ **Отчёты безопасности**: [Вкладка безопасности](https://github.com/your-username/lcbro/security)
+- 🚀 **Статус пайплайна**: [GitHub Actions](https://github.com/lcbro/lcbro/actions)
+- 🛡️ **Отчёты безопасности**: [Вкладка безопасности](https://github.com/lcbro/lcbro/security)
 - 📧 **Контакт**: Обращайтесь к мейнтейнерам
 
 Спасибо за вклад в Low Cost Browsing MCP Server! 🎉
