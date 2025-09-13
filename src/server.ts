@@ -14,7 +14,7 @@ import { ExtractionTools } from './tools/extraction.js';
 import { SessionTools } from './tools/session.js';
 import { LLMTools } from './tools/llm.js';
 import { Config } from './utils/config.js';
-import { createLogger } from './utils/logger.js';
+import { createLogger, createAdvancedLogger } from './utils/logger.js';
 
 // Input validation schemas
 import { NavigateOpenInputSchema, NavigateGotoInputSchema } from './types/navigation.js';
@@ -48,7 +48,12 @@ export class MCPBrowserServer {
   private llmTools: LLMTools;
 
   constructor(private config: Config) {
-    this.logger = createLogger(config.logging.level);
+    // Use advanced logger if file logging is enabled
+    if (config.logging.files.enabled) {
+      this.logger = createLogger(config);
+    } else {
+      this.logger = createLogger({ level: config.logging.level });
+    }
     this.server = new Server(
       {
         name: 'lc-browser-mcp-mcp',

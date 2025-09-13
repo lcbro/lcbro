@@ -89,6 +89,30 @@ const ConfigSchema = z.object({
   }),
   logging: z.object({
     level: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+    directory: z.string().default('/data/logs'),
+    maxFileSize: z.string().default('100MB'),
+    maxFiles: z.number().default(10),
+    compress: z.boolean().default(true),
+    rotation: z.enum(['daily', 'weekly', 'monthly', 'size']).default('daily'),
+    files: z.object({
+      enabled: z.boolean().default(true),
+      format: z.enum(['json', 'pretty', 'text']).default('json'),
+      includeTimestamp: z.boolean().default(true),
+      includeLevel: z.boolean().default(true)
+    }).default({}),
+    console: z.object({
+      enabled: z.boolean().default(true),
+      format: z.enum(['pretty', 'json', 'text']).default('pretty'),
+      colorize: z.boolean().default(true)
+    }).default({}),
+    categories: z.object({
+      browser: z.boolean().default(true),
+      llm: z.boolean().default(true),
+      cdp: z.boolean().default(true),
+      network: z.boolean().default(true),
+      errors: z.boolean().default(true),
+      performance: z.boolean().default(true)
+    }).default({}),
     llm: z.object({
       enabled: z.boolean().default(true),
       logPrompts: z.boolean().default(true),
