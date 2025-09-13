@@ -1,7 +1,7 @@
 # Low Cost Browsing MCP Server
 
-![Build Status](https://github.com/nightweb/low_cost_browsing/actions/workflows/ci.yml/badge.svg)
-![Docker Build](https://github.com/nightweb/low_cost_browsing/actions/workflows/docker.yml/badge.svg)
+![Build Status](https://github.com/nightweb/lc-browser-mcp/actions/workflows/ci.yml/badge.svg)
+![Docker Build](https://github.com/nightweb/lc-browser-mcp/actions/workflows/docker.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node.js Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)
@@ -12,11 +12,11 @@ MCP server aggregator for browser automation, parsing and optional LLM data clea
 
 | Workflow | Status | Description |
 |----------|--------|-------------|
-| **Main CI** | ![CI](https://github.com/nightweb/low_cost_browsing/actions/workflows/ci.yml/badge.svg) | Core tests, linting, and build validation |
-| **Docker Tests** | ![Docker](https://github.com/nightweb/low_cost_browsing/actions/workflows/docker.yml/badge.svg) | Multi-platform Docker testing and builds |
-| **PR Validation** | ![PR](https://github.com/nightweb/low_cost_browsing/actions/workflows/pr.yml/badge.svg) | Pull request validation and testing |
-| **Nightly Tests** | ![Nightly](https://github.com/nightweb/low_cost_browsing/actions/workflows/nightly.yml/badge.svg) | Comprehensive nightly testing suite |
-| **Release** | ![Release](https://github.com/nightweb/low_cost_browsing/actions/workflows/release.yml/badge.svg) | Automated release and deployment |
+| **Main CI** | ![CI](https://github.com/nightweb/lc-browser-mcp/actions/workflows/ci.yml/badge.svg) | Core tests, linting, and build validation |
+| **Docker Tests** | ![Docker](https://github.com/nightweb/lc-browser-mcp/actions/workflows/docker.yml/badge.svg) | Multi-platform Docker testing and builds |
+| **PR Validation** | ![PR](https://github.com/nightweb/lc-browser-mcp/actions/workflows/pr.yml/badge.svg) | Pull request validation and testing |
+| **Nightly Tests** | ![Nightly](https://github.com/nightweb/lc-browser-mcp/actions/workflows/nightly.yml/badge.svg) | Comprehensive nightly testing suite |
+| **Release** | ![Release](https://github.com/nightweb/lc-browser-mcp/actions/workflows/release.yml/badge.svg) | Automated release and deployment |
 
 ## 📋 Contributing Templates & Guidelines
 
@@ -33,10 +33,10 @@ MCP server aggregator for browser automation, parsing and optional LLM data clea
 - **[🐳 Docker Testing](../docs/DOCKER_TESTING.md)** - Docker testing documentation
 
 ### 🔗 Quick Links
-- [📊 **Actions**](https://github.com/nightweb/low_cost_browsing/actions) - View all workflow runs
-- [🐛 **Issues**](https://github.com/nightweb/low_cost_browsing/issues) - Report bugs or request features
-- [🔀 **Pull Requests**](https://github.com/nightweb/low_cost_browsing/pulls) - Contribute code changes
-- [📈 **Insights**](https://github.com/nightweb/low_cost_browsing/pulse) - Repository activity and statistics
+- [📊 **Actions**](https://github.com/nightweb/lc-browser-mcp/actions) - View all workflow runs
+- [🐛 **Issues**](https://github.com/nightweb/lc-browser-mcp/issues) - Report bugs or request features
+- [🔀 **Pull Requests**](https://github.com/nightweb/lc-browser-mcp/pulls) - Contribute code changes
+- [📈 **Insights**](https://github.com/nightweb/lc-browser-mcp/pulse) - Repository activity and statistics
 
 ## 📦 Build Information
 
@@ -264,7 +264,7 @@ npm start
 To find the full path, run in project root:
 ```bash
 pwd
-# Example output: /Users/username/projects/mcp_servers/low_cost_browsing
+# Example output: /Users/username/projects/mcp_servers/lc-browser-mcp
 ```
 
 ### Claude Desktop Configuration Examples:
@@ -275,7 +275,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"]
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"]
     }
   }
 }
@@ -287,7 +287,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "JAN_API_KEY": "your_jan_api_key_here"
       }
@@ -302,7 +302,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node", 
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "OPENAI_API_KEY": "sk-your_openai_key_here",
         "ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here"
@@ -318,7 +318,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "JAN_API_KEY": "your_jan_key",
         "OPENAI_API_KEY": "sk-your_openai_key", 
@@ -343,7 +343,7 @@ pwd
 2. **Find the full project path:**
 ```bash
 pwd
-# Example: /Users/username/projects/mcp_servers/low_cost_browsing
+# Example: /Users/username/projects/mcp_servers/lc-browser-mcp
 ```
 
 3. **Add MCP server to settings.json (replace paths with yours):**
@@ -355,8 +355,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing"
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp"
       }
     }
   }
@@ -370,8 +370,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "JAN_API_KEY": "your_jan_api_key_here"
         }
@@ -388,8 +388,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "OPENAI_API_KEY": "sk-your_openai_key_here",
           "ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here",
@@ -689,13 +689,13 @@ We welcome contributions to the Low Cost Browsing MCP Server! Here's how you can
 1. **Fork the Repository**
    ```bash
    # Click the "Fork" button on GitHub or use GitHub CLI
-   gh repo fork nightweb/low_cost_browsing
+   gh repo fork nightweb/lc-browser-mcp
    ```
 
 2. **Clone Your Fork**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/low_cost_browsing.git
-   cd low_cost_browsing
+   git clone https://github.com/YOUR_USERNAME/lc-browser-mcp.git
+   cd lc-browser-mcp
    ```
 
 3. **Create a Feature Branch**
@@ -978,10 +978,10 @@ make ci                 # Full CI pipeline locally
 ### 📊 Monitoring & Metrics
 
 Track project health through:
-- **[Actions Tab](https://github.com/nightweb/low_cost_browsing/actions)** - Real-time workflow status
-- **[Security Tab](https://github.com/nightweb/low_cost_browsing/security)** - Security advisories and alerts
-- **[Insights](https://github.com/nightweb/low_cost_browsing/pulse)** - Repository activity and statistics
-- **[Dependency Graph](https://github.com/nightweb/low_cost_browsing/network/dependencies)** - Dependency health
+- **[Actions Tab](https://github.com/nightweb/lc-browser-mcp/actions)** - Real-time workflow status
+- **[Security Tab](https://github.com/nightweb/lc-browser-mcp/security)** - Security advisories and alerts
+- **[Insights](https://github.com/nightweb/lc-browser-mcp/pulse)** - Repository activity and statistics
+- **[Dependency Graph](https://github.com/nightweb/lc-browser-mcp/network/dependencies)** - Dependency health
 
 ### 🔧 Maintenance Commands
 

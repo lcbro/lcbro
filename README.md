@@ -194,7 +194,7 @@ npm start
 To find the full path, run in project root:
 ```bash
 pwd
-# Example output: /Users/username/projects/mcp_servers/low_cost_browsing
+# Example output: /Users/username/projects/mcp_servers/lc-browser-mcp
 ```
 
 ### Claude Desktop Configuration Examples:
@@ -205,7 +205,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"]
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"]
     }
   }
 }
@@ -217,7 +217,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "JAN_API_KEY": "your_jan_api_key_here"
       }
@@ -232,7 +232,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node", 
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "OPENAI_API_KEY": "sk-your_openai_key_here",
         "ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here"
@@ -248,7 +248,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "JAN_API_KEY": "your_jan_key",
         "OPENAI_API_KEY": "sk-your_openai_key", 
@@ -273,7 +273,7 @@ pwd
 2. **Find the full project path:**
 ```bash
 pwd
-# Example: /Users/username/projects/mcp_servers/low_cost_browsing
+# Example: /Users/username/projects/mcp_servers/lc-browser-mcp
 ```
 
 3. **Add MCP server to settings.json (replace paths with yours):**
@@ -285,8 +285,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing"
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp"
       }
     }
   }
@@ -300,8 +300,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "JAN_API_KEY": "your_jan_api_key_here"
         }
@@ -318,8 +318,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "OPENAI_API_KEY": "sk-your_openai_key_here",
           "ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here",
@@ -619,13 +619,13 @@ We welcome contributions to the Low Cost Browsing MCP Server! Here's how you can
 1. **Fork the Repository**
    ```bash
    # Click the "Fork" button on GitHub or use GitHub CLI
-   gh repo fork nightweb/low_cost_browsing
+   gh repo fork nightweb/lc-browser-mcp
    ```
 
 2. **Clone Your Fork**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/low_cost_browsing.git
-   cd low_cost_browsing
+   git clone https://github.com/YOUR_USERNAME/lc-browser-mcp.git
+   cd lc-browser-mcp
    ```
 
 3. **Create a Feature Branch**

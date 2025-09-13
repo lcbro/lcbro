@@ -192,7 +192,7 @@ npm start
 Чтобы узнать полный путь, выполните в корне проекта:
 ```bash
 pwd
-# Пример вывода: /Users/username/projects/mcp_servers/low_cost_browsing
+# Пример вывода: /Users/username/projects/mcp_servers/lc-browser-mcp
 ```
 
 ### Примеры конфигураций Claude Desktop:
@@ -203,7 +203,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"]
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"]
     }
   }
 }
@@ -215,7 +215,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "JAN_API_KEY": "your_jan_api_key_here"
       }
@@ -230,7 +230,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node", 
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "OPENAI_API_KEY": "sk-your_openai_key_here",
         "ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here"
@@ -246,7 +246,7 @@ pwd
   "mcpServers": {
     "lc-browser-mcp": {
       "command": "node",
-      "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
+      "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
       "env": {
         "JAN_API_KEY": "your_jan_key",
         "OPENAI_API_KEY": "sk-your_openai_key", 
@@ -271,7 +271,7 @@ pwd
 2. **Узнайте полный путь к проекту:**
 ```bash
 pwd
-# Пример: /Users/username/projects/mcp_servers/low_cost_browsing
+# Пример: /Users/username/projects/mcp_servers/lc-browser-mcp
 ```
 
 3. **Добавьте MCP сервер в settings.json (замените пути на свои):**
@@ -283,8 +283,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing"
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp"
       }
     }
   }
@@ -298,8 +298,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "JAN_API_KEY": "your_jan_api_key_here"
         }
@@ -316,8 +316,8 @@ pwd
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["/path/to/your/mcp_servers/lc-browser-mcp/dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "OPENAI_API_KEY": "sk-your_openai_key_here",
           "ANTHROPIC_API_KEY": "sk-ant-your_anthropic_key_here",
@@ -638,13 +638,13 @@ npm test             # Запуск тестов
 1. **Сделайте Fork репозитория**
    ```bash
    # Нажмите кнопку "Fork" на GitHub или используйте GitHub CLI
-   gh repo fork nightweb/low_cost_browsing
+   gh repo fork nightweb/lc-browser-mcp
    ```
 
 2. **Клонируйте ваш Fork**
    ```bash
-   git clone https://github.com/ВАШ_ЛОГИН/low_cost_browsing.git
-   cd low_cost_browsing
+   git clone https://github.com/ВАШ_ЛОГИН/lc-browser-mcp.git
+   cd lc-browser-mcp
    ```
 
 3. **Создайте ветку для функциональности**
