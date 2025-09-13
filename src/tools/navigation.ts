@@ -34,7 +34,7 @@ export class NavigationTools {
       }
 
       const context = await this.browserManager.createContext(contextOptions);
-      const pageInfo = await this.browserManager.createPage(context, params.persistSessionKey);
+      const pageInfo = await this.browserManager.createPage(context as any, params.persistSessionKey);
 
       // Navigate to URL
       const response = await pageInfo.page.goto(params.url, {

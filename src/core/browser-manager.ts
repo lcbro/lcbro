@@ -76,7 +76,11 @@ export class BrowserManager {
     // Initialize CDP manager if enabled
     if (this.config.cdp?.enabled) {
       this.engine = 'cdp';
-      this.cdpManager = new CDPBrowserManager(this.logger, this.config);
+      this.cdpManager = new CDPBrowserManager(this.logger, {
+        browser: {
+          cdp: this.config.cdp
+        }
+      } as any);
       this.logger.info('CDP browser manager initialized');
     }
   }

@@ -81,7 +81,7 @@ const ConfigSchema = z.object({
         maxAnalysisTokens: z.number().default(300),
         analysisTemperature: z.number().default(0.1)
       })
-    }).default({})
+    }).optional()
   }),
   limits: z.object({
     maxChars: z.number().default(300000),

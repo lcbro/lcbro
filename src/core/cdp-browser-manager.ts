@@ -36,9 +36,9 @@ export class CDPBrowserManager {
   private activeConnections: Map<string, WebSocket> = new Map();
   private reconnectAttempts: Map<string, number> = new Map();
   private logger: Logger;
-  private config: Config;
+  private config: any;
 
-  constructor(logger: Logger, config: Config) {
+  constructor(logger: Logger, config: any) {
     this.logger = logger;
     this.config = config;
   }

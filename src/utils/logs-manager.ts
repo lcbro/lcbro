@@ -1,6 +1,7 @@
 import { Logger } from 'pino';
 import { Config } from './config.js';
-import { mkdir, writeFile, readdir, stat, unlink, createReadStream, createWriteStream } from 'fs/promises';
+import { mkdir, writeFile, readdir, stat, unlink } from 'fs/promises';
+import { createReadStream, createWriteStream } from 'fs';
 import { join, basename, extname } from 'path';
 import { createGzip } from 'zlib';
 import { pipeline } from 'stream/promises';

@@ -92,33 +92,6 @@ limits:
 
 logging:
   level: info
-  directory: /data/logs           # directory for storing log files
-  maxFileSize: "100MB"           # maximum size of a single log file
-  maxFiles: 10                   # maximum number of log files to keep
-  compress: true                 # compress old log files
-  rotation: "daily"              # log rotation: daily, weekly, monthly, size
-  
-  # File logging configuration
-  files:
-    enabled: true                # enable file logging
-    format: "json"               # log format: json, pretty, text
-    includeTimestamp: true       # include timestamp in filename
-    includeLevel: true           # include log level in filename
-    
-  # Console logging configuration  
-  console:
-    enabled: true                # enable console logging
-    format: "pretty"             # console format: pretty, json, text
-    colorize: true               # colorize console output
-    
-  # Log categories
-  categories:
-    browser: true               # browser operation logs
-    llm: true                   # LLM operation logs
-    cdp: true                   # CDP connection logs
-    network: true               # network request logs
-    errors: true                # error logs
-    performance: true           # performance metrics logs
   
   # Detailed LLM logging for debugging and statistics
   llm:
