@@ -39,7 +39,14 @@ const ConfigSchema = z.object({
 export type Config = z.infer<typeof ConfigSchema>;
 
 export function loadConfig(configPath?: string): Config {
-  const defaultConfig = ConfigSchema.parse({});
+  const defaultConfig = ConfigSchema.parse({
+    browser: {},
+    network: {},
+    security: {},
+    llm: {},
+    limits: {},
+    logging: {}
+  });
   
   if (!configPath) {
     return defaultConfig;
