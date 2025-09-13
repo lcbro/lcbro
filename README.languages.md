@@ -1,4 +1,8 @@
+<div align="center">
+  <img src="assets/logo.svg" alt="LCBro Logo" width="150" height="112">
+  
 # LCBro Documentation Languages
+</div>
 
 LCBro supports multiple languages for documentation:
 

@@ -1,4 +1,10 @@
+<div align="center">
+  <img src="assets/logo.svg" alt="LCBro Logo" width="200" height="150">
+  
 # LCBro - Barato Operações Remotas de Navegador Chrome
+
+**Operações Leves de Navegador Chrome Remoto - O Servidor MCP Legal de Automação de Navegador**
+</div>
 
 LCBro é um poderoso servidor MCP para automação de navegador com suporte tanto para Playwright quanto para Chrome DevTools Protocol (CDP). Ele fornece pré-processamento inteligente, logging abrangente e capacidades de gerenciamento de navegador remoto.
 

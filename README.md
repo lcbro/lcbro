@@ -1,4 +1,10 @@
+<div align="center">
+  <img src="assets/logo.svg" alt="LCBro Logo" width="200" height="150">
+  
 # LCBro - Low Cost Chrome Browser Remote Operations
+
+**Lightweight Chrome Browser Remote Operations - The Cool Browser Automation MCP Server**
+</div>
 
 LCBro is a powerful MCP server for browser automation with support for both Playwright and Chrome DevTools Protocol (CDP). It provides intelligent preprocessing, comprehensive logging, and remote browser management capabilities.
 

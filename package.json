@@ -67,7 +67,10 @@
     "config/",
     "scripts/",
     "docs/",
-    "README.md"
+    "assets/",
+    "examples/",
+    "README.md",
+    "QUICK_START.md"
   ],
   "repository": {
     "type": "git",

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="800"
+   height="600"
+   viewBox="0 0 800 600"
+   version="1.1"
+   id="svg20"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview20"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="0.69729303"
+     inkscape:cx="306.18404"
+     inkscape:cy="386.49461"
+     inkscape:window-width="1656"
+     inkscape:window-height="814"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg20" />
+  <defs
+     id="defs3">
+    <!-- Градиент золота для цепи -->
+    <linearGradient
+       id="gold"
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="1">
+      <stop
+         offset="0%"
+         stop-color="#FFD700"
+         id="stop1" />
+      <stop
+         offset="50%"
+         stop-color="#FFC200"
+         id="stop2" />
+      <stop
+         offset="100%"
+         stop-color="#FFA500"
+         id="stop3" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#gold"
+       id="linearGradient20"
+       x1="-22.385795"
+       y1="-38.595905"
+       x2="22.385795"
+       y2="6.175685"
+       gradientTransform="scale(2.1442169,0.46637073)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#gold"
+       id="linearGradient21"
+       x1="-36"
+       y1="-6"
+       x2="-24"
+       y2="6"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#gold"
+       id="linearGradient22"
+       x1="-16"
+       y1="4"
+       x2="-4"
+       y2="16"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#gold"
+       id="linearGradient23"
+       x1="4"
+       y1="4"
+       x2="16"
+       y2="16"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#gold"
+       id="linearGradient24"
+       x1="24"
+       y1="-6"
+       x2="36"
+       y2="6"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <!-- Чувак на кортах -->
+  <g
+     transform="matrix(2.3241215,0,0,3.0071507,387.02761,271.30623)"
+     id="g19">
+    <!-- Ноги -->
+    <ellipse
+       cx="-80"
+       cy="90"
+       rx="48"
+       ry="16"
+       fill="#000000"
+       id="ellipse3" />
+    <ellipse
+       cx="80"
+       cy="90"
+       rx="48"
+       ry="16"
+       fill="#000000"
+       id="ellipse4" />
+    <path
+       d="m -140,40 q 20,40 50,55 h 30 Q -70,70 -55,55 L -95,45 Z"
+       fill="#000000"
+       id="path4" />
+    <path
+       d="M 140,40 Q 120,80 90,95 H 60 Q 70,70 55,55 L 95,45 Z"
+       fill="#000000"
+       id="path5" />
+    <!-- Футболка (белая) -->
+    <path
+       d="M -120,35 Q 0,-95 120,35 L 90,100 Q 0,55 -90,100 Z"
+       fill="#ffffff"
+       stroke="#000000"
+       stroke-width="4"
+       id="path6" />
+    <!-- Голова -->
+    <circle
+       cx="0"
+       cy="-35"
+       r="50"
+       fill="#000000"
+       id="circle6" />
+    <path
+       d="M -50,-30 Q 0,-85 50,-30"
+       fill="none"
+       stroke="#000000"
+       stroke-width="8"
+       id="path7" />
+    <!-- Руки -->
+    <rect
+       x="-120"
+       y="20"
+       width="65"
+       height="38"
+       rx="18"
+       fill="#000000"
+       id="rect7" />
+    <rect
+       x="55"
+       y="20"
+       width="65"
+       height="38"
+       rx="18"
+       fill="#000000"
+       id="rect8" />
+    <!-- Кулаки -->
+    <circle
+       cx="-90"
+       cy="50"
+       r="20"
+       fill="#000000"
+       id="circle8" />
+    <circle
+       cx="90"
+       cy="50"
+       r="20"
+       fill="#000000"
+       id="circle9" />
+    <!-- Чётки -->
+    <g
+       fill="#000000"
+       id="g15">
+      <circle
+         cx="-85"
+         cy="75"
+         r="5"
+         id="circle10" />
+      <circle
+         cx="-74"
+         cy="85"
+         r="5"
+         id="circle11" />
+      <circle
+         cx="-63"
+         cy="90"
+         r="5"
+         id="circle12" />
+      <circle
+         cx="85"
+         cy="75"
+         r="5"
+         id="circle13" />
+      <circle
+         cx="74"
+         cy="85"
+         r="5"
+         id="circle14" />
+      <circle
+         cx="63"
+         cy="90"
+         r="5"
+         id="circle15" />
+    </g>
+    <!-- Золотая цепь на шее -->
+    <path
+       d="m -45,-15 q 45,30 90,0"
+       fill="none"
+       stroke="url(#gold)"
+       stroke-width="6"
+       stroke-linecap="round"
+       id="path15"
+       style="stroke:url(#linearGradient20)" />
+    <circle
+       cx="-30"
+       cy="0"
+       r="6"
+       fill="url(#gold)"
+       id="circle16"
+       style="fill:url(#linearGradient21)" />
+    <circle
+       cx="-10"
+       cy="10"
+       r="6"
+       fill="url(#gold)"
+       id="circle17"
+       style="fill:url(#linearGradient22)" />
+    <circle
+       cx="10"
+       cy="10"
+       r="6"
+       fill="url(#gold)"
+       id="circle18"
+       style="fill:url(#linearGradient23)" />
+    <circle
+       cx="30"
+       cy="0"
+       r="6"
+       fill="url(#gold)"
+       id="circle19"
+       style="fill:url(#linearGradient24)" />
+    <!-- ТЕКСТ НА ФУТБОЛКЕ -->
+    <text
+       x="-1.8212286"
+       y="56.814857"
+       text-anchor="middle"
+       font-size="34.6208px"
+       font-family="Impact, Haettenschweiler, 'Arial Black', sans-serif"
+       font-weight="900"
+       fill="#ffffff"
+       stroke="#000000"
+       stroke-width="2.47292"
+       id="text19"
+       transform="scale(1.0355579,0.96566304)">LC BRO</text>
+  </g>
+</svg>

@@ -1,4 +1,8 @@
+<div align="center">
+  <img src="assets/logo.svg" alt="LCBro Logo" width="150" height="112">
+  
 # LCBro Quick Start Guide
+</div>
 
 ## 🚀 Install & Run in 30 Seconds
 

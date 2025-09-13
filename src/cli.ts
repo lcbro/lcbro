@@ -34,6 +34,28 @@ program
   .option('--remote-api-key <key>', 'Remote CDP API key')
   .action(async (options) => {
     try {
+      // Show ASCII logo
+      console.log(`
+    ╔═══════════════════════════════════════════════════════════════╗
+    ║                                                               ║
+    ║        ╔═══════════════════════════════════════════╗          ║
+    ║        ║                                           ║          ║
+    ║        ║    ██╗     ██████╗    ██████╗ ██████╗    ║          ║
+    ║        ║    ██║    ██╔═══██╗  ██╔══██╗██╔══██╗   ║          ║
+    ║        ║    ██║    ██║   ██║  ██████╔╝██████╔╝   ║          ║
+    ║        ║    ██║    ██║   ██║  ██╔══██╗██╔══██╗   ║          ║
+    ║        ║    ███████╗╚██████╔╝  ██████╔╝██║  ██║   ║          ║
+    ║        ║    ╚══════╝ ╚═════╝   ╚═════╝ ╚═╝  ╚═╝   ║          ║
+    ║        ║                                           ║          ║
+    ║        ║        ● ●   [●●●]  Browser Automation    ║          ║
+    ║        ║        └─┘   [███]  Cool Browser Ops     ║          ║
+    ║        ║        🚀    [███]  Playwright + CDP     ║          ║
+    ║        ╚═══════════════════════════════════════════╝          ║
+    ║                                                               ║
+    ║              Lightweight Chrome Browser Remote Operations     ║
+    ║                                                               ║
+    ╚═══════════════════════════════════════════════════════════════╝
+      `);
       console.log(`🚀 Starting LCBro v${packageJson.version}`);
       console.log(`📋 Configuration: ${options.config}`);
       

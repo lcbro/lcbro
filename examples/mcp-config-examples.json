@@ -1,0 +1,136 @@
+{
+  "claude_desktop_example": {
+    "description": "Claude Desktop configuration for ~/.claude/claude_desktop_config.json",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": ["-y", "lcbro"]
+        }
+      }
+    }
+  },
+  "cursor_ide_example": {
+    "description": "Cursor IDE configuration for ~/.cursor/mcp.json",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": ["-y", "lcbro"]
+        }
+      }
+    }
+  },
+  "claude_with_cdp": {
+    "description": "Claude Desktop with CDP support enabled",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": ["-y", "lcbro", "--cdp-enabled"]
+        }
+      }
+    }
+  },
+  "cursor_with_cdp": {
+    "description": "Cursor IDE with CDP support enabled",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": ["-y", "lcbro", "--cdp-enabled"]
+        }
+      }
+    }
+  },
+  "claude_with_custom_config": {
+    "description": "Claude Desktop with custom configuration file",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": ["-y", "lcbro", "--config", "/path/to/your/config.yaml"]
+        }
+      }
+    }
+  },
+  "cursor_with_custom_config": {
+    "description": "Cursor IDE with custom configuration file",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": ["-y", "lcbro", "--config", "/path/to/your/config.yaml"]
+        }
+      }
+    }
+  },
+  "claude_with_remote_cdp": {
+    "description": "Claude Desktop with remote CDP server",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": [
+            "-y", 
+            "lcbro", 
+            "--cdp-enabled",
+            "--remote-url", "https://cdp.example.com:9222",
+            "--remote-ssl-mode", "enabled",
+            "--remote-api-key", "your_api_key_here"
+          ]
+        }
+      }
+    }
+  },
+  "cursor_with_remote_cdp": {
+    "description": "Cursor IDE with remote CDP server",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": [
+            "-y", 
+            "lcbro", 
+            "--cdp-enabled",
+            "--remote-url", "https://cdp.example.com:9222",
+            "--remote-ssl-mode", "enabled",
+            "--remote-api-key", "your_api_key_here"
+          ]
+        }
+      }
+    }
+  },
+  "claude_with_debug_logging": {
+    "description": "Claude Desktop with debug logging enabled",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": [
+            "-y", 
+            "lcbro", 
+            "--log-level", "debug",
+            "--logs-dir", "/tmp/lcbro-logs"
+          ]
+        }
+      }
+    }
+  },
+  "cursor_with_debug_logging": {
+    "description": "Cursor IDE with debug logging enabled",
+    "config": {
+      "mcpServers": {
+        "lcbro": {
+          "command": "npx",
+          "args": [
+            "-y", 
+            "lcbro", 
+            "--log-level", "debug",
+            "--logs-dir", "/tmp/lcbro-logs"
+          ]
+        }
+      }
+    }
+  }
+}
