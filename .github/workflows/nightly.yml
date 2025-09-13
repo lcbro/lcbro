@@ -76,6 +76,7 @@ jobs:
             coverage/
             test-results/
           retention-days: 7
+        continue-on-error: true
 
   # Docker comprehensive testing
   docker-comprehensive:
@@ -174,6 +175,7 @@ jobs:
             test-results/
             playwright-report/
           retention-days: 7
+        continue-on-error: true
 
   # Performance benchmarking
   performance-benchmark:

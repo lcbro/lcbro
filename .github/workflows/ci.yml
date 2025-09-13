@@ -234,9 +234,22 @@ jobs:
         with:
           name: coverage-reports
           path: coverage/
+          merge-multiple: true
+        continue-on-error: true
+
+      - name: Check if coverage exists
+        id: coverage-check
+        run: |
+          if [ -d "coverage" ] && [ -f "coverage/lcov.info" ]; then
+            echo "coverage-exists=true" >> $GITHUB_OUTPUT
+            echo "✅ Coverage reports found"
+          else
+            echo "coverage-exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ No coverage reports found, skipping coverage analysis"
+          fi
 
       - name: Upload coverage to Codecov
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.coverage-check.outputs.coverage-exists == 'true'
         uses: codecov/codecov-action@v4
         with:
           file: ./coverage/lcov.info
@@ -245,7 +258,7 @@ jobs:
           fail_ci_if_error: false
 
       - name: Coverage comment on PR
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.coverage-check.outputs.coverage-exists == 'true'
         uses: 5monkeys/cobertura-action@master
         continue-on-error: true
         with:
@@ -269,17 +282,32 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: production-image
+        continue-on-error: true
+
+      - name: Check if production image exists
+        id: image-check
+        run: |
+          if [ -f "lc-browser-mcp-latest.tar.gz" ]; then
+            echo "image-exists=true" >> $GITHUB_OUTPUT
+            echo "✅ Production image found"
+          else
+            echo "image-exists=false" >> $GITHUB_OUTPUT
+            echo "⚠️ No production image found, skipping deployment"
+          fi
 
       - name: Load Docker image
+        if: steps.image-check.outputs.image-exists == 'true'
         run: docker load < lc-browser-mcp-latest.tar.gz
 
       - name: Deploy to staging
+        if: steps.image-check.outputs.image-exists == 'true'
         run: |
           echo "🚀 Deploying to staging environment..."
           echo "Image: lc-browser-mcp:latest"
           echo "Deployment would happen here with your deployment strategy"
 
       - name: Health check
+        if: steps.image-check.outputs.image-exists == 'true'
         run: |
           echo "🏥 Running health checks..."
           echo "Health checks would be performed here"
