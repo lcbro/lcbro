@@ -3,12 +3,46 @@ import { Logger } from 'pino';
 import { PageId, ProxyConfig, Viewport } from '../types/index.js';
 import { createHash } from 'crypto';
 import path from 'path';
+import { CDPBrowserManager, CDPBrowserInfo, CDPContext } from './cdp-browser-manager.js';
 
 export interface BrowserConfig {
   headless: boolean;
   maxContexts: number;
   storageDir: string;
   defaultTimeoutMs: number;
+    cdp?: {
+      enabled: boolean;
+      host: string;
+      port: number;
+      autoDetect: boolean;
+      maxRetries: number;
+      retryDelay: number;
+      remote: {
+        enabled: boolean;
+        url: string | null;
+        sslMode: 'auto' | 'enabled' | 'disabled' | 'insecure';
+        apiKey: string | null;
+        headers: Record<string, string>;
+      };
+      detection: {
+        enabled: boolean;
+        ports: number[];
+        timeout: number;
+        useRemote: boolean;
+      };
+      launch: {
+        autoLaunch: boolean;
+        browserPath: string | null;
+        userDataDir: string | null;
+        additionalArgs: string[];
+      };
+      connection: {
+        timeout: number;
+        keepAlive: boolean;
+        reconnect: boolean;
+        maxReconnects: number;
+      };
+    };
 }
 
 export interface ContextOptions {
@@ -32,13 +66,57 @@ export class BrowserManager {
   private contexts = new Map<string, BrowserContext>();
   private pages = new Map<PageId, PageInfo>();
   private contextCounter = 0;
+  private cdpManager: CDPBrowserManager | null = null;
+  private engine: 'playwright' | 'cdp' = 'playwright';
   
   constructor(
     private config: BrowserConfig,
     private logger: Logger
-  ) {}
+  ) {
+    // Initialize CDP manager if enabled
+    if (this.config.cdp?.enabled) {
+      this.engine = 'cdp';
+      this.cdpManager = new CDPBrowserManager(this.logger, this.config);
+      this.logger.info('CDP browser manager initialized');
+    }
+  }
 
   async initialize(): Promise<void> {
+    if (this.engine === 'cdp') {
+      await this.initializeCDP();
+    } else {
+      await this.initializePlaywright();
+    }
+  }
+
+  private async initializeCDP(): Promise<void> {
+    if (!this.cdpManager) {
+      throw new Error('CDP manager not initialized');
+    }
+
+    this.logger.info('Initializing CDP browser connection');
+
+    // Auto-detect browsers if enabled
+    if (this.config.cdp?.autoDetect) {
+      const browsers = await this.cdpManager.detectBrowsers();
+      if (browsers.length > 0) {
+        this.logger.info({ count: browsers.length }, 'Found CDP browsers, connecting to first available');
+        const browser = browsers[0];
+        await this.cdpManager.connectToBrowser(browser);
+        this.logger.info('CDP browser connection established');
+        return;
+      }
+    }
+
+    // Auto-launch browser if enabled
+    if (this.config.cdp?.launch?.autoLaunch) {
+      await this.launchCDPBrowser();
+    } else {
+      throw new Error('No CDP browsers found and auto-launch is disabled');
+    }
+  }
+
+  private async initializePlaywright(): Promise<void> {
     const launchOptions: LaunchOptions = {
       headless: this.config.headless,
       args: [
@@ -56,10 +134,37 @@ export class BrowserManager {
     }
 
     this.browser = await chromium.launch(launchOptions);
-    this.logger.info('Browser launched successfully');
+    this.logger.info('Playwright browser launched successfully');
   }
 
-  async createContext(options: ContextOptions = {}): Promise<BrowserContext> {
+  private async launchCDPBrowser(): Promise<void> {
+    // This would launch a browser with CDP enabled
+    // For now, we'll throw an error as this requires external browser launch
+    throw new Error('Auto-launching CDP browser is not implemented. Please start a browser manually with --remote-debugging-port=9222');
+  }
+
+  async createContext(options: ContextOptions = {}): Promise<BrowserContext | string> {
+    if (this.engine === 'cdp') {
+      return this.createCDPContext(options);
+    } else {
+      return this.createPlaywrightContext(options);
+    }
+  }
+
+  private async createCDPContext(options: ContextOptions = {}): Promise<string> {
+    if (!this.cdpManager) {
+      throw new Error('CDP manager not initialized');
+    }
+
+    // For CDP, we return a context ID that can be used for operations
+    // The actual context creation happens during connection
+    const contextId = `cdp_context_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    this.logger.info({ contextId }, 'Created CDP context');
+    return contextId;
+  }
+
+  private async createPlaywrightContext(options: ContextOptions = {}): Promise<BrowserContext> {
     if (!this.browser) {
       throw new Error('Browser not initialized');
     }

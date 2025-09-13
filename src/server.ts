@@ -67,7 +67,8 @@ export class MCPBrowserServer {
         headless: config.browser.headless,
         maxContexts: config.browser.maxContexts,
         storageDir: config.browser.storageDir,
-        defaultTimeoutMs: config.browser.defaultTimeoutMs
+        defaultTimeoutMs: config.browser.defaultTimeoutMs,
+        cdp: config.browser.cdp
       },
       this.logger
     );

@@ -5,11 +5,44 @@ import { z } from 'zod';
 // Configuration schema
 const ConfigSchema = z.object({
   browser: z.object({
-    engine: z.literal('playwright').default('playwright'),
+    engine: z.enum(['playwright', 'cdp']).default('playwright'),
     headless: z.boolean().default(true),
     defaultTimeoutMs: z.number().default(30000),
     storageDir: z.string().default('/data/profiles'),
-    maxContexts: z.number().default(8)
+    maxContexts: z.number().default(8),
+    cdp: z.object({
+      enabled: z.boolean().default(false),
+      host: z.string().default('localhost'),
+      port: z.number().default(9222),
+      autoDetect: z.boolean().default(true),
+      maxRetries: z.number().default(3),
+      retryDelay: z.number().default(1000),
+      remote: z.object({
+        enabled: z.boolean().default(false),
+        url: z.string().nullable().default(null),
+        sslMode: z.enum(['auto', 'enabled', 'disabled', 'insecure']).default('auto'),
+        apiKey: z.string().nullable().default(null),
+        headers: z.record(z.string()).default({})
+      }).default({}),
+      detection: z.object({
+        enabled: z.boolean().default(true),
+        ports: z.array(z.number()).default([9222, 9223, 9224, 9225, 9226]),
+        timeout: z.number().default(5000),
+        useRemote: z.boolean().default(false)
+      }).default({}),
+      launch: z.object({
+        autoLaunch: z.boolean().default(false),
+        browserPath: z.string().nullable().default(null),
+        userDataDir: z.string().nullable().default(null),
+        additionalArgs: z.array(z.string()).default([])
+      }).default({}),
+      connection: z.object({
+        timeout: z.number().default(30000),
+        keepAlive: z.boolean().default(true),
+        reconnect: z.boolean().default(true),
+        maxReconnects: z.number().default(5)
+      }).default({})
+    }).default({})
   }),
   network: z.object({
     proxyDefault: z.string().nullable().default(null)

@@ -1,9 +1,47 @@
 browser:
-  engine: playwright
+  engine: playwright          # playwright | cdp
   headless: true
   defaultTimeoutMs: 30000
   storageDir: /data/profiles
   maxContexts: 8
+  
+  # Chrome DevTools Protocol (CDP) configuration
+  cdp:
+    enabled: false            # enable CDP browser support
+    host: "localhost"         # CDP host
+    port: 9222               # CDP port (default Chrome debug port)
+    autoDetect: true         # auto-detect running browsers
+    maxRetries: 3            # connection retry attempts
+    retryDelay: 1000         # delay between retries (ms)
+    
+    # Remote CDP server configuration
+    remote:
+      enabled: false         # enable remote CDP server support
+      url: null             # remote CDP server URL (e.g., "https://cdp.example.com:9222")
+      sslMode: "auto"       # ssl mode: auto, enabled, disabled, insecure
+      apiKey: null          # API key for authentication (if required)
+      headers: {}           # additional headers for requests
+      
+    # Browser detection settings
+    detection:
+      enabled: true          # enable browser detection
+      ports: [9222, 9223, 9224, 9225, 9226]  # ports to scan (for local detection)
+      timeout: 5000          # detection timeout per port
+      useRemote: false       # use remote server for detection instead of local scanning
+      
+    # Browser launch settings (when auto-launching)
+    launch:
+      autoLaunch: false      # auto-launch browser if none found
+      browserPath: null      # custom browser path (null = auto-detect)
+      userDataDir: null      # custom user data directory
+      additionalArgs: []     # additional browser arguments
+      
+    # Connection settings
+    connection:
+      timeout: 30000         # connection timeout
+      keepAlive: true        # keep connection alive
+      reconnect: true        # auto-reconnect on disconnect
+      maxReconnects: 5       # max reconnection attempts
 
 network:
   proxyDefault: null
