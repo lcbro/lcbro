@@ -3,8 +3,8 @@
     "servers": {
       "lc-browser-mcp": {
         "command": "node",
-        "args": ["/path/to/your/mcp_servers/low_cost_browsing/dist/index.js"],
-        "cwd": "/path/to/your/mcp_servers/low_cost_browsing",
+        "args": ["dist/index.js"],
+        "cwd": "/path/to/your/mcp_servers/lc-browser-mcp",
         "env": {
           "_comment": "Uncomment the API keys you need:",
           "_JAN_API_KEY": "your_jan_api_key_here",
