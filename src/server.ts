@@ -87,57 +87,179 @@ export class MCPBrowserServer {
           {
             name: 'navigate.open',
             description: 'Open a URL and create a new page context',
-            inputSchema: NavigateOpenInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                url: { type: 'string', description: 'URL to open' },
+                timeoutMs: { type: 'number', description: 'Timeout in milliseconds (optional)' }
+              },
+              required: ['url']
+            }
           },
           {
             name: 'navigate.goto',
             description: 'Navigate to a URL in an existing page context',
-            inputSchema: NavigateGotoInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                url: { type: 'string', description: 'URL to navigate to' },
+                contextId: { type: 'string', description: 'Page context ID' },
+                timeoutMs: { type: 'number', description: 'Timeout in milliseconds (optional)' }
+              },
+              required: ['url', 'contextId']
+            }
           },
           {
             name: 'interact.click',
             description: 'Click on an element using CSS selector, text, or role',
-            inputSchema: InteractClickInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                selector: { type: 'string', description: 'CSS selector (optional)' },
+                text: { type: 'string', description: 'Text content to find (optional)' },
+                role: { type: 'string', description: 'ARIA role to find (optional)' },
+                timeout: { type: 'number', description: 'Timeout in milliseconds (optional)' }
+              },
+              required: ['contextId']
+            }
           },
           {
             name: 'interact.type',
             description: 'Type text into an input field',
-            inputSchema: InteractTypeInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                selector: { type: 'string', description: 'CSS selector for input field' },
+                text: { type: 'string', description: 'Text to type' },
+                delay: { type: 'number', description: 'Delay between keystrokes in ms (optional)' }
+              },
+              required: ['contextId', 'selector', 'text']
+            }
           },
           {
             name: 'interact.wait',
             description: 'Wait for a condition (selector, network idle, or URL change)',
-            inputSchema: InteractWaitInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                condition: { 
+                  type: 'string', 
+                  enum: ['selector', 'networkidle', 'url'],
+                  description: 'Wait condition type' 
+                },
+                selector: { type: 'string', description: 'CSS selector to wait for (if condition is selector)' },
+                url: { type: 'string', description: 'URL pattern to wait for (if condition is url)' },
+                timeout: { type: 'number', description: 'Timeout in milliseconds (optional)' }
+              },
+              required: ['contextId', 'condition']
+            }
           },
           {
             name: 'extract.content',
             description: 'Extract page content in various formats (text, html, markdown, readability)',
-            inputSchema: ExtractContentInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                format: { 
+                  type: 'string', 
+                  enum: ['text', 'html', 'markdown', 'readability'],
+                  description: 'Output format' 
+                },
+                selector: { type: 'string', description: 'CSS selector to extract from (optional)' }
+              },
+              required: ['contextId', 'format']
+            }
           },
           {
             name: 'extract.table',
             description: 'Extract table data as JSON',
-            inputSchema: ExtractTableInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                selector: { type: 'string', description: 'CSS selector for table (optional)' },
+                includeHeaders: { type: 'boolean', description: 'Include table headers (optional)' }
+              },
+              required: ['contextId']
+            }
           },
           {
             name: 'extract.attributes',
             description: 'Extract attributes from elements matching CSS selectors',
-            inputSchema: ExtractAttributesInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                selector: { type: 'string', description: 'CSS selector' },
+                attributes: { 
+                  type: 'array', 
+                  items: { type: 'string' },
+                  description: 'List of attributes to extract' 
+                }
+              },
+              required: ['contextId', 'selector', 'attributes']
+            }
           },
           {
             name: 'extract.screenshot',
             description: 'Take a screenshot of the page or a specific area',
-            inputSchema: ExtractScreenshotInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                selector: { type: 'string', description: 'CSS selector for specific area (optional)' },
+                fullPage: { type: 'boolean', description: 'Take full page screenshot (optional)' },
+                format: { 
+                  type: 'string', 
+                  enum: ['png', 'jpeg'],
+                  description: 'Image format (optional)' 
+                }
+              },
+              required: ['contextId']
+            }
           },
           {
             name: 'session.auth',
             description: 'Perform authentication by executing a sequence of actions',
-            inputSchema: SessionAuthInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                contextId: { type: 'string', description: 'Page context ID' },
+                actions: { 
+                  type: 'array',
+                  items: { type: 'object' },
+                  description: 'Sequence of authentication actions' 
+                }
+              },
+              required: ['contextId', 'actions']
+            }
           },
           {
             name: 'llm.transform',
             description: 'Transform data using LLM with custom instructions and JSON schema validation',
-            inputSchema: LLMTransformInputSchema._def as any
+            inputSchema: {
+              type: 'object',
+              properties: {
+                input: { 
+                  type: 'object',
+                  properties: {
+                    kind: { type: 'string', enum: ['text', 'html', 'json'], description: 'Type of input data' },
+                    data: { type: 'string', description: 'Input data content' }
+                  },
+                  required: ['kind', 'data'],
+                  description: 'Input data to transform'
+                },
+                instruction: { type: 'string', description: 'Transformation instructions' },
+                outputSchema: { type: 'object', description: 'Expected output JSON schema (optional)' },
+                model: { type: 'string', description: 'LLM model to use (optional)' },
+                preprocessRequest: { type: 'string', description: 'Preprocessing instructions (optional)' }
+              },
+              required: ['input', 'instruction']
+            }
           }
         ]
       };
