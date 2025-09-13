@@ -1,6 +1,76 @@
 # Low Cost Browsing MCP Server
 
+![Build Status](https://github.com/nightweb/low_cost_browsing/actions/workflows/ci.yml/badge.svg)
+![Docker Build](https://github.com/nightweb/low_cost_browsing/actions/workflows/docker.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node.js Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)
+
 MCP server aggregator for browser automation, parsing and optional LLM data cleaning using Playwright.
+
+## 🚀 Build & CI Status
+
+| Workflow | Status | Description |
+|----------|--------|-------------|
+| **Main CI** | ![CI](https://github.com/nightweb/low_cost_browsing/actions/workflows/ci.yml/badge.svg) | Core tests, linting, and build validation |
+| **Docker Tests** | ![Docker](https://github.com/nightweb/low_cost_browsing/actions/workflows/docker.yml/badge.svg) | Multi-platform Docker testing and builds |
+| **PR Validation** | ![PR](https://github.com/nightweb/low_cost_browsing/actions/workflows/pr.yml/badge.svg) | Pull request validation and testing |
+| **Nightly Tests** | ![Nightly](https://github.com/nightweb/low_cost_browsing/actions/workflows/nightly.yml/badge.svg) | Comprehensive nightly testing suite |
+| **Release** | ![Release](https://github.com/nightweb/low_cost_browsing/actions/workflows/release.yml/badge.svg) | Automated release and deployment |
+
+## 📋 Contributing Templates & Guidelines
+
+### 🛠️ Issue Templates
+- **[🐛 Bug Report](.github/ISSUE_TEMPLATE/bug_report.yml)** - Report bugs with structured form
+- **[✨ Feature Request](.github/ISSUE_TEMPLATE/feature_request.yml)** - Suggest new features with detailed template
+
+### 📝 Pull Request Template
+- **[📋 PR Template](.github/pull_request_template.md)** - Comprehensive PR template with checklists
+
+### 📖 Documentation
+- **[🔧 Workflow Documentation](.github/README.md)** - This file with CI/CD information
+- **[📚 Contributing Guidelines](../README.md#contributing)** - Full contributing guidelines
+- **[🐳 Docker Testing](../docs/DOCKER_TESTING.md)** - Docker testing documentation
+
+### 🔗 Quick Links
+- [📊 **Actions**](https://github.com/nightweb/low_cost_browsing/actions) - View all workflow runs
+- [🐛 **Issues**](https://github.com/nightweb/low_cost_browsing/issues) - Report bugs or request features
+- [🔀 **Pull Requests**](https://github.com/nightweb/low_cost_browsing/pulls) - Contribute code changes
+- [📈 **Insights**](https://github.com/nightweb/low_cost_browsing/pulse) - Repository activity and statistics
+
+## 📦 Build Information
+
+### Quick Build Commands
+```bash
+# Install dependencies
+npm install
+
+# Build project
+npm run build
+
+# Install browsers
+npm run install:browsers
+
+# Run tests
+npm test
+
+# Docker build (all platforms)
+make build
+
+# Docker tests
+make test-all
+```
+
+### Docker Multi-Architecture Support
+This project supports multiple architectures:
+- `linux/amd64` (Intel/AMD 64-bit)
+- `linux/arm64` (ARM 64-bit, Apple Silicon)
+
+### Environment Requirements
+- **Node.js**: >= 18.0.0
+- **npm**: >= 8.0.0
+- **Docker**: >= 20.10.0 (for containerized testing)
+- **Operating Systems**: macOS, Linux, Windows
 
 ## Features
 
@@ -787,6 +857,149 @@ Help improve our documentation:
 - 📧 **Contact**: Reach out to maintainers
 
 Thank you for contributing to Low Cost Browsing MCP Server! 🎉
+
+## 🔧 GitHub Actions Workflows
+
+Our CI/CD pipeline consists of 5 comprehensive workflows designed to ensure code quality, reliability, and seamless deployment:
+
+### 1. **Main CI Pipeline** ([ci.yml](workflows/ci.yml))
+**Triggers:** Push to `main`, pull requests to `main`
+```yaml
+Strategy: Full validation pipeline
+Jobs:
+  - Lint & Code Quality
+  - Unit Tests (Node 18, 20, 22)
+  - Docker Build & Test
+  - E2E Tests (Chromium, Firefox)
+  - Security Scanning
+  - Production Build
+  - Coverage Report
+  - Deploy (if main branch)
+```
+
+### 2. **Docker Testing** ([docker.yml](workflows/docker.yml))
+**Triggers:** Docker-related changes, manual dispatch
+```yaml
+Strategy: Comprehensive Docker validation
+Matrix:
+  - Platforms: linux/amd64, linux/arm64
+  - Stages: base, development, testing, production
+Jobs:
+  - Multi-arch Docker builds
+  - Docker Compose testing
+  - Container security scanning
+  - Performance benchmarks
+  - Makefile command validation
+```
+
+### 3. **Pull Request Validation** ([pr.yml](workflows/pr.yml))
+**Triggers:** Pull request events
+```yaml
+Strategy: Fast feedback for contributors
+Jobs:
+  - Quick validation (lint, build, unit tests)
+  - Docker validation (if Docker files changed)
+  - Smart test selection (based on changed files)
+  - Extended E2E tests (if core files changed)
+  - Size impact analysis
+  - Security scan
+  - PR summary generation
+```
+
+### 4. **Release Management** ([release.yml](workflows/release.yml))
+**Triggers:** Release tags (`v*.*.*`)
+```yaml
+Strategy: Production deployment pipeline
+Jobs:
+  - Pre-release validation
+  - Multi-platform Docker images
+  - Release artifacts generation
+  - Security verification
+  - Release testing
+  - Production deployment
+  - Notification dispatch
+```
+
+### 5. **Nightly Comprehensive Tests** ([nightly.yml](workflows/nightly.yml))
+**Triggers:** Daily at 2 AM UTC, manual dispatch
+```yaml
+Strategy: Deep testing and monitoring
+Jobs:
+  - Health check
+  - Comprehensive test suite
+  - Extended Docker testing
+  - Performance benchmarks
+  - Stress testing
+  - Dependency audit
+  - Report generation
+```
+
+### 🎯 Workflow Features
+
+#### **Quality Gates**
+- ✅ **Code Quality**: ESLint, Prettier, TypeScript strict mode
+- ✅ **Security**: CodeQL analysis, dependency vulnerability scanning
+- ✅ **Testing**: Unit tests (>80% coverage), E2E tests, Docker tests
+- ✅ **Build**: Multi-platform builds, dependency validation
+- ✅ **Performance**: Bundle size tracking, performance regression detection
+
+#### **Smart Optimization**
+- 🚀 **Parallel Execution**: Jobs run concurrently when possible
+- 🎯 **Conditional Execution**: Only relevant tests run based on changes
+- 💾 **Caching Strategy**: Node modules, Docker layers, test artifacts
+- 🔄 **Auto-retry**: Flaky tests automatically retry with backoff
+
+#### **Notification & Reporting**
+- 📊 **Coverage Reports**: Detailed test coverage with trend analysis
+- 📈 **Performance Metrics**: Bundle size, build time, test duration
+- 🚨 **Failure Alerts**: Immediate notification on critical failures
+- 📋 **PR Comments**: Automated feedback on pull requests
+
+### 🐳 Docker Integration
+
+All workflows support Docker-based testing:
+
+```bash
+# Local Docker testing (mirrors CI)
+make test-unit          # Unit tests in Docker
+make test-e2e           # E2E tests in Docker
+make test-all           # Complete test suite
+make ci                 # Full CI pipeline locally
+```
+
+### 🛡️ Security & Compliance
+
+- **Dependency Scanning**: Daily vulnerability checks
+- **Code Analysis**: Static security analysis with CodeQL
+- **Container Security**: Docker image vulnerability scanning
+- **Supply Chain**: Verification of all dependencies
+- **SARIF Reporting**: Security findings in standardized format
+
+### 📊 Monitoring & Metrics
+
+Track project health through:
+- **[Actions Tab](https://github.com/nightweb/low_cost_browsing/actions)** - Real-time workflow status
+- **[Security Tab](https://github.com/nightweb/low_cost_browsing/security)** - Security advisories and alerts
+- **[Insights](https://github.com/nightweb/low_cost_browsing/pulse)** - Repository activity and statistics
+- **[Dependency Graph](https://github.com/nightweb/low_cost_browsing/network/dependencies)** - Dependency health
+
+### 🔧 Maintenance Commands
+
+```bash
+# Trigger specific workflows manually
+gh workflow run ci.yml
+gh workflow run docker.yml
+gh workflow run nightly.yml
+
+# View workflow status
+gh run list --workflow=ci.yml
+
+# Download artifacts
+gh run download <run-id>
+
+# View logs
+gh run view <run-id> --log
+```
 
 ## License
 
