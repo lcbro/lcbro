@@ -52,7 +52,10 @@ export class MCPBrowserServer {
     if (config.logging.files.enabled) {
       this.logger = createLogger(config);
     } else {
-      this.logger = createLogger({ level: config.logging.level });
+      this.logger = createLogger({ 
+        level: config.logging.level,
+        consoleLogging: config.logging.console.enabled
+      });
     }
     this.server = new Server(
       {

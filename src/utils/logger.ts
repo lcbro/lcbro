@@ -24,35 +24,37 @@ export const createLogger = (config: Config | LoggerConfig) => {
       }
     : config;
 
-  const transports: any[] = [];
+  // Check if running in MCP mode (stdio transport)
+  const isMCPMode = process.env.NODE_ENV === 'mcp' || 
+                    process.argv.includes('--mcp') ||
+                    (process.stdin.isTTY === false || process.stdin.isTTY === undefined);
 
-  // Console transport
-  if (loggerConfig.consoleLogging !== false) {
-    // Simple console logging without pino-pretty dependency
-    const consoleLogger = pino({
-      level: loggerConfig.level,
-      transport: undefined, // No transport for console
-      formatters: {
-        level: (label) => ({ level: label }),
-      },
+  const streams: any[] = [];
+
+  // Console transport - only if not in MCP mode and explicitly enabled
+  if (loggerConfig.consoleLogging === true && !isMCPMode) {
+    streams.push({
+      stream: process.stderr, // Use stderr to avoid interfering with MCP stdout
+      level: loggerConfig.level
     });
-    transports.push(consoleLogger);
   }
 
   // File transport
   if (loggerConfig.fileLogging && loggerConfig.directory) {
-    const fileTransport = pino.transport({
-      target: 'pino/file',
-      options: {
-        destination: `${loggerConfig.directory}/application.log`,
-        mkdir: true
-      }
+    streams.push({
+      stream: pino.transport({
+        target: 'pino/file',
+        options: {
+          destination: `${loggerConfig.directory}/application.log`,
+          mkdir: true
+        }
+      }),
+      level: loggerConfig.level
     });
-    transports.push(fileTransport);
   }
 
   // Create logger with transports
-  const logger = transports.length > 0 
+  const logger = streams.length > 0 
     ? pino({
         level: loggerConfig.level,
         timestamp: pino.stdTimeFunctions.isoTime,
@@ -61,9 +63,9 @@ export const createLogger = (config: Config | LoggerConfig) => {
             return { level: label };
           },
         },
-      }, pino.multistream(transports))
+      }, pino.multistream(streams))
     : pino({
-        level: loggerConfig.level,
+        level: 'silent', // Silent logger when no transports
         timestamp: pino.stdTimeFunctions.isoTime,
         formatters: {
           level: (label) => {
@@ -88,20 +90,20 @@ export const createAdvancedLogger = async (config: Config): Promise<{
   await logsManager.initialize();
   logsManager.scheduleLogRotation();
 
-  // Create transports based on configuration
-  const transports: any[] = [];
+  // Check if running in MCP mode
+  const isMCPMode = process.env.NODE_ENV === 'mcp' || 
+                    process.argv.includes('--mcp') ||
+                    (process.stdin.isTTY === false || process.stdin.isTTY === undefined);
 
-  // Console transport
-  if (config.logging.console.enabled) {
-    // Simple console logging without pino-pretty dependency
-    const consoleLogger = pino({
-      level: config.logging.level,
-      transport: undefined, // No transport for console
-      formatters: {
-        level: (label) => ({ level: label }),
-      },
+  // Create transports based on configuration
+  const streams: any[] = [];
+
+  // Console transport - only if not in MCP mode and explicitly enabled
+  if (config.logging.console.enabled === true && !isMCPMode) {
+    streams.push({
+      stream: process.stderr, // Use stderr to avoid interfering with MCP stdout
+      level: config.logging.level
     });
-    transports.push(consoleLogger);
   }
 
   // File transports for different categories
@@ -113,30 +115,34 @@ export const createAdvancedLogger = async (config: Config): Promise<{
     for (const category of categories) {
       const filePath = logsManager.getLogFilePath(category);
       
-      const fileTransport = pino.transport({
-        target: 'pino/file',
-        options: {
-          destination: filePath,
-          mkdir: true
-        }
+      streams.push({
+        stream: pino.transport({
+          target: 'pino/file',
+          options: {
+            destination: filePath,
+            mkdir: true
+          }
+        }),
+        level: config.logging.level
       });
-      transports.push(fileTransport);
     }
 
     // General application log
     const generalLogPath = logsManager.getLogFilePath('application');
-    const generalTransport = pino.transport({
-      target: 'pino/file',
-      options: {
-        destination: generalLogPath,
-        mkdir: true
-      }
+    streams.push({
+      stream: pino.transport({
+        target: 'pino/file',
+        options: {
+          destination: generalLogPath,
+          mkdir: true
+        }
+      }),
+      level: config.logging.level
     });
-    transports.push(generalTransport);
   }
 
   // Create logger with transports
-  const logger = transports.length > 0 
+  const logger = streams.length > 0 
     ? pino({
         level: config.logging.level,
         timestamp: pino.stdTimeFunctions.isoTime,
@@ -145,9 +151,9 @@ export const createAdvancedLogger = async (config: Config): Promise<{
             return { level: label };
           },
         },
-      }, pino.multistream(transports))
+      }, pino.multistream(streams))
     : pino({
-        level: config.logging.level,
+        level: 'silent', // Silent logger when no transports
         timestamp: pino.stdTimeFunctions.isoTime,
         formatters: {
           level: (label) => {

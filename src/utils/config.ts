@@ -93,7 +93,7 @@ const ConfigSchema = z.object({
   }),
   logging: z.object({
     level: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
-    directory: z.string().default('/data/logs'),
+    directory: z.string().default('/tmp/lc-browser-mcp/logs'),
     maxFileSize: z.string().default('100MB'),
     maxFiles: z.number().default(10),
     compress: z.boolean().default(true),

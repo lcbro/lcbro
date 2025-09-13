@@ -25,7 +25,7 @@ program
   .option('--no-console', 'Disable console logging')
   .option('--no-files', 'Disable file logging')
   .option('--log-level <level>', 'Log level (debug, info, warn, error)', 'info')
-  .option('--logs-dir <dir>', 'Directory for log files', '/data/logs')
+  .option('--logs-dir <dir>', 'Directory for log files', '/tmp/lc-browser-mcp/logs')
   .option('--cdp-enabled', 'Enable CDP browser support')
   .option('--cdp-host <host>', 'CDP server host', 'localhost')
   .option('--cdp-port <port>', 'CDP server port', '9222')
@@ -34,8 +34,15 @@ program
   .option('--remote-api-key <key>', 'Remote CDP API key')
   .action(async (options) => {
     try {
-      // Show ASCII logo
-      console.log(`
+      // Check if running in MCP mode (stdio transport)
+      const isMCPMode = process.env.NODE_ENV === 'mcp' || 
+                        process.argv.includes('--mcp') ||
+                        (process.stdin.isTTY === false || process.stdin.isTTY === undefined);
+      
+
+      // Show ASCII logo only if not in MCP mode
+      if (!isMCPMode) {
+        console.log(`
     ╔═══════════════════════════════════════════════════════════════╗
     ║                                                               ║
     ║        ╔═══════════════════════════════════════════╗          ║
@@ -55,9 +62,10 @@ program
     ║              Low Cost Browser Remote Operations     ║
     ║                                                               ║
     ╚═══════════════════════════════════════════════════════════════╝
-      `);
-      console.log(`🚀 Starting LCBro v${packageJson.version}`);
-      console.log(`📋 Configuration: ${options.config}`);
+        `);
+        console.log(`🚀 Starting LCBro v${packageJson.version}`);
+        console.log(`📋 Configuration: ${options.config}`);
+      }
       
       // Load configuration
       const config = await loadConfig(options.config);
@@ -104,12 +112,15 @@ program
         config.browser.cdp.remote.apiKey = options.remoteApiKey;
       }
       
-      console.log(`🌐 Server: ${config.server.host}:${config.server.port}`);
-      console.log(`📝 Logging: ${config.logging.level} level`);
-      console.log(`📁 Logs directory: ${config.logging.directory}`);
-      console.log(`🔧 Browser engine: ${config.browser.engine}`);
+      // Only show detailed config in non-MCP mode
+      if (!isMCPMode) {
+        console.log(`🌐 Server: ${config.server.host}:${config.server.port}`);
+        console.log(`📝 Logging: ${config.logging.level} level`);
+        console.log(`📁 Logs directory: ${config.logging.directory}`);
+        console.log(`🔧 Browser engine: ${config.browser.engine}`);
+      }
       
-      if (config.browser.engine === 'cdp') {
+      if (config.browser.engine === 'cdp' && !isMCPMode) {
         console.log(`🔗 CDP: ${config.browser.cdp.host}:${config.browser.cdp.port}`);
         if (config.browser.cdp.remote.enabled) {
           console.log(`🌍 Remote CDP: ${config.browser.cdp.remote.url}`);
@@ -120,25 +131,41 @@ program
       const server = new MCPBrowserServer(config);
       await server.start();
       
-      console.log(`✅ LCBro server started successfully!`);
-      console.log(`📡 MCP endpoint: stdio`);
-      console.log(`🛑 Press Ctrl+C to stop`);
+      // Only show success messages in non-MCP mode
+      if (!isMCPMode) {
+        console.log(`✅ LCBro server started successfully!`);
+        console.log(`📡 MCP endpoint: stdio`);
+        console.log(`🛑 Press Ctrl+C to stop`);
+      }
       
       // Handle graceful shutdown
       process.on('SIGINT', async () => {
-        console.log('\n🛑 Shutting down LCBro server...');
+        if (!isMCPMode) {
+          console.log('\n🛑 Shutting down LCBro server...');
+        }
         await server.stop();
         process.exit(0);
       });
       
       process.on('SIGTERM', async () => {
-        console.log('\n🛑 Shutting down LCBro server...');
+        if (!isMCPMode) {
+          console.log('\n🛑 Shutting down LCBro server...');
+        }
         await server.stop();
         process.exit(0);
       });
       
     } catch (error) {
-      console.error('❌ Failed to start LCBro server:', error);
+      // Check if running in MCP mode for error display
+      const isMCPMode = process.env.NODE_ENV === 'mcp' || 
+                        process.argv.includes('--mcp') ||
+                        (process.stdin.isTTY === false || process.stdin.isTTY === undefined);
+      
+      if (!isMCPMode) {
+        console.error('❌ Failed to start LCBro server:', error);
+      } else {
+        console.error('Failed to start LCBro server:', error);
+      }
       process.exit(1);
     }
   });
@@ -194,7 +221,7 @@ program
 program
   .command('logs')
   .description('Manage log files')
-  .option('-d, --directory <dir>', 'Logs directory', '/data/logs')
+  .option('-d, --directory <dir>', 'Logs directory', '/tmp/lc-browser-mcp/logs')
   .option('-c, --command <cmd>', 'Command (list, summary, cleanup, compress)', 'list')
   .option('-a, --age <days>', 'Age in days for cleanup', '30')
   .action(async (options) => {
