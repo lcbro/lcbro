@@ -1,12 +1,68 @@
-# Low Cost Browsing MCP Server
+<div align="center">
+  <br />
+  <img src="../assets/logo.svg" alt="LCBro Logo" width="250" height="188">
+  <br />
+  <br />
+  
+  # LCBro
+  
+  ### Low Cost Chrome Browser Remote Operations
+  
+  **The Cool Browser Automation MCP Server** 🔥
+  
+  [![Build Status](https://github.com/nightweb/lc-browser-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/nightweb/lc-browser-mcp/actions/workflows/ci.yml)
+  [![Docker Build](https://github.com/nightweb/lc-browser-mcp/actions/workflows/docker.yml/badge.svg)](https://github.com/nightweb/lc-browser-mcp/actions/workflows/docker.yml)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+  [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+  [![npm version](https://img.shields.io/npm/v/lcbro.svg?style=flat-square)](https://www.npmjs.com/package/lcbro)
+  
+  <br />
+  
+  ⚡ **Lightning Fast** • 🎯 **Zero Config** • 🚀 **Production Ready**
+  
+  <br />
+  
+</div>
 
-![Build Status](https://github.com/nightweb/lc-browser-mcp/actions/workflows/ci.yml/badge.svg)
-![Docker Build](https://github.com/nightweb/lc-browser-mcp/actions/workflows/docker.yml/badge.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Node.js Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)
+LCBro is a powerful MCP server for browser automation with support for both Playwright and Chrome DevTools Protocol (CDP). It provides intelligent preprocessing, comprehensive logging, and remote browser management capabilities.
 
-MCP server aggregator for browser automation, parsing and optional LLM data cleaning using Playwright.
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🎯 **Browser Automation**
+- Real browser control with JavaScript execution
+- Login flows, clicks, text input, form handling
+- Screenshot capture and content extraction
+- Session management with persistent contexts
+
+### 🤖 **Intelligent Preprocessing** 
+- Auto-generates preprocessing prompts
+- Local LLM integration (Ollama, JAN)
+- Smart content analysis and optimization
+- Cost-efficient data preparation
+
+</td>
+<td width="50%">
+
+### 🔧 **Multiple Engines**
+- **Playwright**: Full-featured automation
+- **CDP**: Chrome DevTools Protocol support
+- Remote browser connections
+- Auto-detection and fallback
+
+### 📊 **Advanced Logging**
+- Comprehensive LLM interaction logs
+- Performance metrics and token tracking
+- Configurable log rotation and compression
+- Debug and monitoring capabilities
+
+</td>
+</tr>
+</table>
 
 ## 🚀 Build & CI Status
 
@@ -17,6 +73,38 @@ MCP server aggregator for browser automation, parsing and optional LLM data clea
 | **PR Validation** | ![PR](https://github.com/nightweb/lc-browser-mcp/actions/workflows/pr.yml/badge.svg) | Pull request validation and testing |
 | **Nightly Tests** | ![Nightly](https://github.com/nightweb/lc-browser-mcp/actions/workflows/nightly.yml/badge.svg) | Comprehensive nightly testing suite |
 | **Release** | ![Release](https://github.com/nightweb/lc-browser-mcp/actions/workflows/release.yml/badge.svg) | Automated release and deployment |
+
+## 🚀 Quick Start
+
+### Use with npx (Recommended - No Installation)
+```bash
+# Use directly without installation
+npx lcbro
+
+# With custom configuration
+npx lcbro --config /path/to/config.yaml --port 3000
+```
+
+### Global Installation
+```bash
+# Install globally via npm
+npm install -g lcbro
+
+# Start the server
+lcbro
+```
+
+### MCP Client Integration
+```json
+{
+  "mcpServers": {
+    "lcbro": {
+      "command": "npx",
+      "args": ["-y", "lcbro"]
+    }
+  }
+}
+```
 
 ## 📋 Contributing Templates & Guidelines
 
@@ -1001,6 +1089,39 @@ gh run download <run-id>
 gh run view <run-id> --log
 ```
 
-## License
+## 📞 Support & Community
 
-MIT
+<div align="center">
+
+[![GitHub Issues](https://img.shields.io/github/issues/nightweb/lc-browser-mcp?style=for-the-badge&logo=github)](https://github.com/nightweb/lc-browser-mcp/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/nightweb/lc-browser-mcp?style=for-the-badge&logo=github)](https://github.com/nightweb/lc-browser-mcp/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/nightweb/lc-browser-mcp?style=for-the-badge&logo=github)](https://github.com/nightweb/lc-browser-mcp/forks)
+
+</div>
+
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/nightweb/lc-browser-mcp/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/nightweb/lc-browser-mcp/discussions)
+- 📚 **Documentation**: [Full Documentation](../README.md)
+- 💡 **Examples**: [Usage Examples](../examples/)
+- ⭐ **Star Us**: Help us grow by starring the repository!
+
+## 🙏 Acknowledgments
+
+- **Playwright** - Browser automation framework
+- **Chrome DevTools Protocol** - Remote browser debugging
+- **MCP SDK** - Model Context Protocol framework
+- **Claude Desktop** - MCP client integration
+- **Cursor IDE** - Development environment
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the LCBro Team**
+
+**LCBro** - Lightweight Chrome Browser Remote Operations  
+**Version**: 1.0.3 • **Status**: ✅ Production Ready • **License**: MIT
+
+[⬆ Back to Top](#lcbro)
+
+</div>
