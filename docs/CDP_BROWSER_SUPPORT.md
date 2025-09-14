@@ -1,82 +1,82 @@
-# Поддержка Chrome DevTools Protocol (CDP)
+# Chrome DevTools Protocol (CDP) Support
 
-## Обзор
+## Overview
 
-Реализована полная поддержка подключения к внешним браузерам через Chrome DevTools Protocol. Это позволяет использовать уже запущенные браузеры вместо создания новых экземпляров Playwright.
+Full support for connecting to external browsers through Chrome DevTools Protocol has been implemented. This allows using already running browsers instead of creating new Playwright instances.
 
-## Основные возможности
+## Key Features
 
-### 🔗 **Подключение к внешним браузерам**
-- Автоматическое обнаружение запущенных браузеров с CDP
-- Подключение к Chrome, Edge, Chromium
-- Поддержка множественных браузеров и вкладок
+### 🔗 **External Browser Connection**
+- Automatic detection of running browsers with CDP
+- Connection to Chrome, Edge, Chromium
+- Support for multiple browsers and tabs
 
-### 🔍 **Автоматическое обнаружение**
-- Сканирование портов для поиска CDP браузеров
-- Обнаружение браузеров на разных портах (9222-9226)
-- Валидация CDP endpoints
+### 🔍 **Automatic Detection**
+- Port scanning for CDP browsers
+- Browser detection on different ports (9222-9226)
+- CDP endpoint validation
 
-### 🔄 **Управление соединениями**
-- WebSocket соединения к CDP
-- Автоматическое переподключение при обрыве связи
-- Keep-alive для стабильных соединений
+### 🔄 **Connection Management**
+- WebSocket connections to CDP
+- Automatic reconnection on connection loss
+- Keep-alive for stable connections
 
-### 🎯 **Полная функциональность**
-- Навигация по URL
-- Выполнение JavaScript
-- Создание скриншотов
-- Извлечение контента страниц
+### 🎯 **Full Functionality**
+- URL navigation
+- JavaScript execution
+- Screenshot creation
+- Page content extraction
 
-## Конфигурация
+## Configuration
 
 ### config/default.yaml
 
 ```yaml
 browser:
-  engine: cdp                # использовать CDP вместо playwright
-  headless: false            # для CDP обычно false
+  engine: cdp                # use CDP instead of playwright
+  headless: false            # usually false for CDP
   
-  # Chrome DevTools Protocol настройки
+  # Chrome DevTools Protocol settings
   cdp:
-    enabled: true            # включить поддержку CDP
-    host: "localhost"        # хост CDP сервера
-    port: 9222              # порт CDP (по умолчанию Chrome debug port)
-    autoDetect: true        # автоматическое обнаружение браузеров
-    maxRetries: 3           # попытки подключения
-    retryDelay: 1000        # задержка между попытками (ms)
+    enabled: true            # enable CDP support
+    host: "localhost"        # CDP server host
+    port: 9222              # CDP port (default Chrome debug port)
+    autoDetect: true        # automatic browser detection
+    maxRetries: 3           # connection attempts
+    retryDelay: 1000        # delay between attempts (ms)
     
-    # Настройки обнаружения браузеров
+    # Browser detection settings
     detection:
-      enabled: true         # включить обнаружение
-      ports: [9222, 9223, 9224, 9225, 9226]  # порты для сканирования
-      timeout: 5000         # таймаут обнаружения на порт
+      enabled: true         # enable detection
+      ports: [9222, 9223, 9224, 9225, 9226]  # ports to scan
+      timeout: 5000         # detection timeout per port
       
-    # Настройки запуска браузера
+    # Browser launch settings
     launch:
-      autoLaunch: false     # автозапуск браузера если не найден
-      browserPath: null     # путь к браузеру (null = автопоиск)
-      userDataDir: null     # директория пользовательских данных
-      additionalArgs: []    # дополнительные аргументы браузера
+      autoLaunch: false     # auto-launch browser if not found
+      browserPath: null     # browser path (null = auto-search)
+      userDataDir: null     # user data directory
+      additionalArgs: []    # additional browser arguments
       
-    # Настройки соединения
+    # Connection settings
     connection:
-      timeout: 30000        # таймаут соединения
-      keepAlive: true       # поддержание соединения
-      reconnect: true       # автопереподключение при обрыве
-      maxReconnects: 5      # максимум попыток переподключения
+      timeout: 30000        # connection timeout
+      keepAlive: true       # maintain connection
+      reconnect: true       # auto-reconnect on disconnect
+      maxReconnects: 5      # maximum reconnection attempts
 ```
 
-## Запуск браузера с CDP
+## Starting Browser with CDP
 
 ### Chrome/Chromium
 ```bash
-# Запуск Chrome с включенным CDP
+# Start Chrome with CDP enabled
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
 
-# Или Chromium
+# Or Chromium
 chromium --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug
 
-# С дополнительными опциями
+# With additional options
 google-chrome \
   --remote-debugging-port=9222 \
   --user-data-dir=/tmp/chrome-debug \
@@ -86,23 +86,23 @@ google-chrome \
 
 ### Microsoft Edge
 ```bash
-# Запуск Edge с CDP
+# Start Edge with CDP
 msedge --remote-debugging-port=9222 --user-data-dir=/tmp/edge-debug
 ```
 
-### Альтернативные порты
+### Alternative Ports
 ```bash
-# Использование других портов для множественных браузеров
+# Using different ports for multiple browsers
 google-chrome --remote-debugging-port=9223 --user-data-dir=/tmp/chrome-debug-2
 google-chrome --remote-debugging-port=9224 --user-data-dir=/tmp/chrome-debug-3
 ```
 
-## Примеры использования
+## Usage Examples
 
-### 1. Автоматическое обнаружение и подключение
+### 1. Automatic Detection and Connection
 
 ```typescript
-// В конфигурации включить CDP
+// Enable CDP in configuration
 browser:
   engine: cdp
   cdp:
@@ -111,13 +111,13 @@ browser:
     detection:
       ports: [9222, 9223, 9224]
 
-// Система автоматически найдет и подключится к первому доступному браузеру
+// System will automatically find and connect to first available browser
 ```
 
-### 2. Подключение к конкретному браузеру
+### 2. Connection to Specific Browser
 
 ```typescript
-// Указать конкретный порт
+// Specify specific port
 browser:
   engine: cdp
   cdp:
@@ -127,27 +127,27 @@ browser:
     port: 9222
 ```
 
-### 3. Множественные браузеры
+### 3. Multiple Browsers
 
 ```bash
-# Запустить несколько браузеров на разных портах
+# Start multiple browsers on different ports
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-1 &
 google-chrome --remote-debugging-port=9223 --user-data-dir=/tmp/chrome-2 &
 google-chrome --remote-debugging-port=9224 --user-data-dir=/tmp/chrome-3 &
 
-# Система автоматически найдет все доступные браузеры
+# System will automatically find all available browsers
 ```
 
-## API для работы с CDP
+## API for CDP Operations
 
-### Обнаружение браузеров
+### Browser Detection
 
 ```typescript
 import { CDPDetector } from './src/utils/cdp-detector.js';
 
 const detector = new CDPDetector(logger);
 
-// Обнаружить все браузеры
+// Detect all browsers
 const result = await detector.detectBrowsers({
   host: 'localhost',
   ports: [9222, 9223, 9224, 9225, 9226],
@@ -160,33 +160,33 @@ result.browsers.forEach(browser => {
 });
 ```
 
-### Подключение к браузеру
+### Browser Connection
 
 ```typescript
 import { CDPBrowserManager } from './src/core/cdp-browser-manager.js';
 
 const cdpManager = new CDPBrowserManager(logger, config);
 
-// Подключиться к конкретному браузеру
+// Connect to specific browser
 const contextId = await cdpManager.connectToBrowser(browserInfo);
 
-// Навигация
+// Navigation
 await cdpManager.navigateToUrl(contextId, 'https://example.com');
 
-// Выполнение JavaScript
+// JavaScript execution
 const result = await cdpManager.executeScript(contextId, 'document.title');
 
-// Создание скриншота
+// Screenshot creation
 const screenshot = await cdpManager.takeScreenshot(contextId, { fullPage: true });
 
-// Извлечение контента
+// Content extraction
 const content = await cdpManager.getPageContent(contextId);
 ```
 
-### Мониторинг браузеров
+### Browser Monitoring
 
 ```typescript
-// Мониторинг появления новых браузеров
+// Monitor for new browsers
 const stopMonitoring = await detector.monitorBrowsers(
   { host: 'localhost', ports: [9222, 9223, 9224], timeout: 5000 },
   (browsers) => {
@@ -195,64 +195,64 @@ const stopMonitoring = await detector.monitorBrowsers(
       console.log(`New browser: ${browser.title}`);
     });
   },
-  5000 // проверка каждые 5 секунд
+  5000 // check every 5 seconds
 );
 
-// Остановить мониторинг
+// Stop monitoring
 stopMonitoring();
 ```
 
-## Архитектура системы
+## System Architecture
 
 ### 1. **CDPDetector** (`src/utils/cdp-detector.ts`)
-- Обнаружение браузеров на портах
-- Валидация CDP endpoints
-- Мониторинг новых браузеров
-- Сканирование диапазонов портов
+- Browser detection on ports
+- CDP endpoint validation
+- New browser monitoring
+- Port range scanning
 
 ### 2. **CDPBrowserManager** (`src/core/cdp-browser-manager.ts`)
-- Управление WebSocket соединениями
-- Выполнение CDP команд
-- Обработка событий браузера
-- Автоматическое переподключение
+- WebSocket connection management
+- CDP command execution
+- Browser event handling
+- Automatic reconnection
 
-### 3. **BrowserManager** (обновлен)
-- Поддержка как Playwright, так и CDP
-- Автоматический выбор движка
-- Единый интерфейс для операций
+### 3. **BrowserManager** (updated)
+- Support for both Playwright and CDP
+- Automatic engine selection
+- Unified interface for operations
 
-## CDP команды и события
+## CDP Commands and Events
 
-### Основные команды
+### Main Commands
 ```typescript
-// Навигация
+// Navigation
 { method: 'Page.navigate', params: { url: 'https://example.com' } }
 
-// Выполнение JavaScript
+// JavaScript execution
 { method: 'Runtime.evaluate', params: { expression: 'document.title' } }
 
-// Создание скриншота
+// Screenshot creation
 { method: 'Page.captureScreenshot', params: { format: 'png', fullPage: true } }
 
-// Получение HTML
+// Get HTML
 { method: 'Runtime.evaluate', params: { expression: 'document.documentElement.outerHTML' } }
 ```
 
-### События
+### Events
 ```typescript
-// Загрузка страницы
+// Page load
 { method: 'Page.loadEventFired' }
 
-// Консольные сообщения
+// Console messages
 { method: 'Runtime.consoleAPICalled', params: { type: 'log', args: [...] } }
 
-// Сетевые запросы
+// Network requests
 { method: 'Network.responseReceived', params: { response: { url: '...' } } }
 ```
 
-## Отладка и мониторинг
+## Debugging and Monitoring
 
-### Логирование
+### Logging
 ```json
 {
   "level": "info",
@@ -274,7 +274,7 @@ stopMonitoring();
 }
 ```
 
-### Мониторинг соединений
+### Connection Monitoring
 ```json
 {
   "level": "warn",
@@ -291,81 +291,81 @@ stopMonitoring();
 }
 ```
 
-## Преимущества CDP
+## CDP Advantages
 
-### **Производительность**
-- ✅ Использование уже запущенных браузеров
-- ✅ Отсутствие накладных расходов на запуск
-- ✅ Быстрое переключение между вкладками
+### **Performance**
+- ✅ Using already running browsers
+- ✅ No startup overhead
+- ✅ Fast tab switching
 
-### **Гибкость**
-- ✅ Подключение к любому CDP-совместимому браузеру
-- ✅ Работа с пользовательскими профилями
-- ✅ Доступ к расширениям и настройкам
+### **Flexibility**
+- ✅ Connect to any CDP-compatible browser
+- ✅ Work with user profiles
+- ✅ Access to extensions and settings
 
-### **Отладка**
-- ✅ Прямой доступ к DevTools
-- ✅ Мониторинг консоли браузера
-- ✅ Отслеживание сетевых запросов
+### **Debugging**
+- ✅ Direct access to DevTools
+- ✅ Browser console monitoring
+- ✅ Network request tracking
 
-### **Масштабируемость**
-- ✅ Поддержка множественных браузеров
-- ✅ Распределение нагрузки между портами
-- ✅ Изоляция сессий
+### **Scalability**
+- ✅ Multiple browser support
+- ✅ Load distribution across ports
+- ✅ Session isolation
 
-## Ограничения и рекомендации
+## Limitations and Recommendations
 
-### **Безопасность**
-- CDP позволяет полный доступ к браузеру
-- Используйте только в доверенных сетях
-- Ограничьте доступ по IP если возможно
+### **Security**
+- CDP provides full browser access
+- Use only in trusted networks
+- Restrict access by IP if possible
 
-### **Стабильность**
-- WebSocket соединения могут обрываться
-- Включите автопереподключение
-- Мониторьте состояние соединений
+### **Stability**
+- WebSocket connections may disconnect
+- Enable auto-reconnection
+- Monitor connection status
 
-### **Производительность**
-- CDP может быть медленнее Playwright для некоторых операций
-- Используйте для случаев когда нужен доступ к существующему браузеру
-- Playwright остается предпочтительным для автоматизации
+### **Performance**
+- CDP may be slower than Playwright for some operations
+- Use for cases requiring access to existing browser
+- Playwright remains preferred for automation
 
-## Примеры сценариев использования
+## Usage Scenario Examples
 
-### 1. **Интеграция с существующими тестами**
+### 1. **Integration with Existing Tests**
 ```bash
-# Запустить браузер для тестирования
+# Start browser for testing
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/test-profile
 
-# Подключиться из MCP сервера
-# Система автоматически найдет и подключится к браузеру
+# Connect from MCP server
+# System will automatically find and connect to browser
 ```
 
-### 2. **Мониторинг пользовательской активности**
+### 2. **User Activity Monitoring**
 ```bash
-# Пользователь работает в браузере
+# User working in browser
 google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/user-profile
 
-# MCP сервер может мониторить и анализировать активность
+# MCP server can monitor and analyze activity
 ```
 
-### 3. **Автоматизация с пользовательскими настройками**
+### 3. **Automation with User Settings**
 ```bash
-# Браузер с расширениями и настройками
+# Browser with extensions and settings
 google-chrome \
   --remote-debugging-port=9222 \
   --user-data-dir=/home/user/.config/google-chrome \
   --profile-directory="Profile 1"
 ```
 
-## Заключение
+## Conclusion
 
-Поддержка CDP значительно расширяет возможности MCP браузерного сервера:
+CDP support significantly expands MCP browser server capabilities:
 
-- ✅ **Гибкость**: подключение к любым CDP-совместимым браузерам
-- ✅ **Производительность**: использование существующих браузеров
-- ✅ **Интеграция**: работа с пользовательскими профилями и настройками
-- ✅ **Мониторинг**: отслеживание реальной пользовательской активности
-- ✅ **Отладка**: прямой доступ к DevTools и консоли
+- ✅ **Flexibility**: connect to any CDP-compatible browsers
+- ✅ **Performance**: use existing browsers
+- ✅ **Integration**: work with user profiles and settings
+- ✅ **Monitoring**: track real user activity
+- ✅ **Debugging**: direct access to DevTools and console
 
-**Модель:** Claude Sonnet 4
+**Model:** Claude Sonnet 4

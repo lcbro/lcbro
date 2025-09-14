@@ -1,30 +1,30 @@
-# Remote CDP Server Support
+# Suporte a Servidores CDP Remotos
 
-## Overview
+## Visão Geral
 
-Support for connecting to remote Chrome DevTools Protocol (CDP) servers via HTTP/HTTPS API has been implemented. This allows getting a list of available browsers and ports from remote servers.
+Foi implementado suporte para conexão com servidores Chrome DevTools Protocol (CDP) remotos via API HTTP/HTTPS. Isso permite obter uma lista de navegadores e portas disponíveis de servidores remotos.
 
-## 🔗 Key Features
+## 🔗 Principais Funcionalidades
 
-### **Remote CDP Servers**
-- Connection to remote CDP servers via HTTP/HTTPS
-- Getting list of available browsers and ports
-- SSL/TLS support for secure connections
-- Authentication via API keys
+### **Servidores CDP Remotos**
+- Conexão com servidores CDP remotos via HTTP/HTTPS
+- Obter lista de navegadores e portas disponíveis
+- Suporte SSL/TLS para conexões seguras
+- Autenticação via chaves de API
 
-### **Flexible Configuration**
-- Automatic selection between local and remote detection
-- SSL mode configuration
-- Custom HTTP headers
-- Timeouts and retries
+### **Configuração Flexível**
+- Seleção automática entre detecção local e remota
+- Configuração de modo SSL
+- Cabeçalhos HTTP personalizados
+- Timeouts e tentativas
 
-### **Security**
-- HTTPS support for encrypted connections
-- API keys for authentication
-- Configurable SSL modes
-- URL validation
+### **Segurança**
+- Suporte HTTPS para conexões criptografadas
+- Chaves de API para autenticação
+- Modos SSL configuráveis
+- Validação de URL
 
-## 📋 Configuration
+## 📋 Configuração
 
 ### config/default.yaml
 
@@ -33,50 +33,50 @@ browser:
   engine: cdp
   cdp:
     enabled: true
-    host: "localhost"        # for local detection
-    port: 9222              # for local detection
+    host: "localhost"        # para detecção local
+    port: 9222              # para detecção local
     
-    # Remote CDP server configuration
+    # Configuração do servidor CDP remoto
     remote:
-      enabled: true         # enable remote server support
-      url: "https://cdp.example.com:9222"  # remote server URL
-      sslMode: "auto"       # SSL mode: auto, enabled, disabled, insecure
-      apiKey: "your-api-key"  # API key for authentication (optional)
-      headers:              # additional HTTP headers
+      enabled: true         # habilitar suporte a servidor remoto
+      url: "https://cdp.example.com:9222"  # URL do servidor remoto
+      sslMode: "auto"       # modo SSL: auto, enabled, disabled, insecure
+      apiKey: "your-api-key"  # chave de API para autenticação (opcional)
+      headers:              # cabeçalhos HTTP adicionais
         "X-Custom-Header": "value"
         "User-Agent": "MCP-Browser-Server/1.0"
     
-    # Detection settings
+    # Configurações de detecção
     detection:
       enabled: true
-      ports: [9222, 9223, 9224, 9225, 9226]  # for local scanning
+      ports: [9222, 9223, 9224, 9225, 9226]  # para escaneamento local
       timeout: 5000
-      useRemote: true       # use remote server instead of local scanning
+      useRemote: true       # usar servidor remoto em vez de escaneamento local
 ```
 
-## 🔧 SSL Modes
+## 🔧 Modos SSL
 
-### **auto** (default)
-- Automatically detects SSL based on URL
-- HTTPS URL → SSL enabled
-- HTTP URL → SSL disabled
+### **auto** (padrão)
+- Detecta automaticamente SSL baseado na URL
+- URL HTTPS → SSL habilitado
+- URL HTTP → SSL desabilitado
 
 ### **enabled**
-- Forces SSL enablement
-- All connections must be encrypted
+- Força habilitação SSL
+- Todas as conexões devem ser criptografadas
 
 ### **disabled**
-- Forces SSL disablement
-- All connections without encryption
+- Força desabilitação SSL
+- Todas as conexões sem criptografia
 
 ### **insecure**
-- Disables SSL certificate verification
-- Used for self-signed certificates
-- ⚠️ **Insecure** - only for development
+- Desabilita verificação de certificados SSL
+- Usado para certificados auto-assinados
+- ⚠️ **Inseguro** - apenas para desenvolvimento
 
-## 🌐 Usage Examples
+## 🌐 Exemplos de Uso
 
-### 1. **Connection to Remote CDP Server**
+### 1. **Conexão com Servidor CDP Remoto**
 
 ```yaml
 browser:
@@ -92,7 +92,7 @@ browser:
       useRemote: true
 ```
 
-### 2. **Self-signed Certificate (Development)**
+### 2. **Certificado Auto-assinado (Desenvolvimento)**
 
 ```yaml
 browser:
@@ -102,12 +102,12 @@ browser:
     remote:
       enabled: true
       url: "https://localhost:9222"
-      sslMode: "insecure"  # disables certificate verification
+      sslMode: "insecure"  # desabilita verificação de certificados
     detection:
       useRemote: true
 ```
 
-### 3. **HTTP Connection (Insecure)**
+### 3. **Conexão HTTP (Inseguro)**
 
 ```yaml
 browser:
@@ -122,7 +122,7 @@ browser:
       useRemote: true
 ```
 
-### 4. **Custom Headers**
+### 4. **Cabeçalhos Personalizados**
 
 ```yaml
 browser:
@@ -142,9 +142,9 @@ browser:
       useRemote: true
 ```
 
-## 🔌 Remote CDP Server API
+## 🔌 API do Servidor CDP Remoto
 
-### **Expected Response Format**
+### **Formato de Resposta Esperado**
 
 ```json
 {
@@ -158,7 +158,7 @@ browser:
       "url": "https://example.com",
       "webSocketUrl": "ws://localhost:9222/devtools/browser/...",
       "wsUrl": "ws://localhost:9222/devtools/browser/...",
-      "description": "Chrome browser on port 9222"
+      "description": "Chrome browser na porta 9222"
     }
   ],
   "serverVersion": "1.0.0",
@@ -169,16 +169,16 @@ browser:
 ### **Endpoints**
 
 #### **GET /api/browsers**
-Returns list of all available browsers.
+Retorna lista de todos os navegadores disponíveis.
 
-**Headers:**
+**Cabeçalhos:**
 ```
 Authorization: Bearer your-api-key
 X-API-Key: your-api-key
 Accept: application/json
 ```
 
-**Response:**
+**Resposta:**
 ```json
 {
   "browsers": [...],
@@ -188,9 +188,9 @@ Accept: application/json
 ```
 
 #### **GET /api/browsers/{id}**
-Returns details of specific browser.
+Retorna detalhes de navegador específico.
 
-**Response:**
+**Resposta:**
 ```json
 {
   "id": "browser_9222",
@@ -201,9 +201,9 @@ Returns details of specific browser.
 ```
 
 #### **GET /api/info**
-Returns server information.
+Retorna informações do servidor.
 
-**Response:**
+**Resposta:**
 ```json
 {
   "name": "Remote CDP Server",
@@ -214,9 +214,9 @@ Returns server information.
 ```
 
 #### **GET /api/health**
-Server availability check.
+Verificação de disponibilidade do servidor.
 
-**Response:**
+**Resposta:**
 ```json
 {
   "status": "healthy",
@@ -224,14 +224,14 @@ Server availability check.
 }
 ```
 
-## 💻 Programmatic Usage
+## 💻 Uso Programático
 
 ### **RemoteCDPClient**
 
 ```typescript
 import { RemoteCDPClient } from './src/utils/remote-cdp-client.js';
 
-// Create client
+// Criar cliente
 const client = new RemoteCDPClient(logger, {
   url: 'https://cdp-server.example.com:9222',
   sslMode: 'enabled',
@@ -242,40 +242,40 @@ const client = new RemoteCDPClient(logger, {
   timeout: 30000
 });
 
-// Get browser list
+// Obter lista de navegadores
 const response = await client.getAvailableBrowsers();
 if (response.success) {
-  console.log(`Found ${response.browsers.length} browsers`);
+  console.log(`Encontrados ${response.browsers.length} navegadores`);
   response.browsers.forEach(browser => {
     console.log(`- ${browser.title}: ${browser.webSocketDebuggerUrl}`);
   });
 }
 
-// Check server availability
+// Verificar disponibilidade do servidor
 const isAvailable = await client.isServerAvailable();
-console.log(`Server available: ${isAvailable}`);
+console.log(`Servidor disponível: ${isAvailable}`);
 
-// Get server information
+// Obter informações do servidor
 const serverInfo = await client.getServerInfo();
 if (serverInfo.success) {
-  console.log(`Server: ${serverInfo.info.name} v${serverInfo.info.version}`);
+  console.log(`Servidor: ${serverInfo.info.name} v${serverInfo.info.version}`);
 }
 ```
 
-### **URL Validation**
+### **Validação de URL**
 
 ```typescript
 import { RemoteCDPClient } from './src/utils/remote-cdp-client.js';
 
-// Validate URL
+// Validar URL
 const validation = RemoteCDPClient.validateURL('https://cdp.example.com:9222');
 if (validation.valid) {
-  console.log('URL is valid');
+  console.log('URL é válida');
 } else {
-  console.error(`Invalid URL: ${validation.error}`);
+  console.error(`URL inválida: ${validation.error}`);
 }
 
-// Parse URL
+// Analisar URL
 const parsed = RemoteCDPClient.parseRemoteURL('https://cdp.example.com:9222/api');
 console.log(parsed);
 // {
@@ -286,19 +286,19 @@ console.log(parsed);
 // }
 ```
 
-## 🔍 Logging and Debugging
+## 🔍 Logging e Depuração
 
-### **Successful Connection**
+### **Conexão Bem-sucedida**
 ```json
 {
   "level": "info",
-  "msg": "Detecting browsers from remote CDP server",
+  "msg": "Detectando navegadores do servidor CDP remoto",
   "url": "https://cdp.example.com:9222"
 }
 
 {
   "level": "info",
-  "msg": "Retrieved browsers from remote CDP server",
+  "msg": "Navegadores recuperados do servidor CDP remoto",
   "count": 3,
   "browsers": [
     {"id": "browser_9222", "title": "Chrome Browser"},
@@ -307,102 +307,102 @@ console.log(parsed);
 }
 ```
 
-### **Connection Errors**
+### **Erros de Conexão**
 ```json
 {
   "level": "error",
-  "msg": "Failed to fetch browsers from remote CDP server",
+  "msg": "Falha ao buscar navegadores do servidor CDP remoto",
   "url": "https://cdp.example.com:9222",
   "error": "HTTP 401: Unauthorized"
 }
 
 {
   "level": "error",
-  "msg": "Remote CDP browser detection failed",
-  "error": "Network timeout after 30000ms"
+  "msg": "Detecção de navegador CDP remoto falhou",
+  "error": "Timeout de rede após 30000ms"
 }
 ```
 
-### **SSL Warnings**
+### **Avisos SSL**
 ```json
 {
   "level": "warn",
-  "msg": "SSL verification disabled - connections may not be secure",
+  "msg": "Verificação SSL desabilitada - conexões podem não ser seguras",
   "sslMode": "insecure"
 }
 ```
 
-## 🛡️ Security
+## 🛡️ Segurança
 
-### **Recommendations**
+### **Recomendações**
 
-1. **Use HTTPS** for production
-2. **API keys** for authentication
-3. **Validate certificates** (don't use `insecure`)
-4. **Restrict access** by IP addresses
-5. **Log connections** for audit
+1. **Use HTTPS** para produção
+2. **Chaves de API** para autenticação
+3. **Valide certificados** (não use `insecure`)
+4. **Restrinja acesso** por endereços IP
+5. **Registre conexões** para auditoria
 
-### **SSL Configuration**
+### **Configuração SSL**
 
 ```yaml
-# Production (secure)
+# Produção (seguro)
 remote:
   url: "https://cdp.company.com:9222"
   sslMode: "enabled"
   apiKey: "secure-api-key"
 
-# Development with self-signed certificate
+# Desenvolvimento com certificado auto-assinado
 remote:
   url: "https://localhost:9222"
-  sslMode: "insecure"  # only for development!
+  sslMode: "insecure"  # apenas para desenvolvimento!
 
-# Internal network
+# Rede interna
 remote:
   url: "http://internal-cdp:9222"
-  sslMode: "disabled"  # only in trusted network
+  sslMode: "disabled"  # apenas em rede confiável
 ```
 
-## 🔧 Integration with Existing System
+## 🔧 Integração com Sistema Existente
 
-### **Automatic Switching**
+### **Mudança Automática**
 
 ```yaml
 browser:
   engine: cdp
   cdp:
     enabled: true
-    # Local detection as fallback
+    # Detecção local como fallback
     host: "localhost"
     ports: [9222, 9223, 9224]
     
-    # Remote server as primary
+    # Servidor remoto como primário
     remote:
       enabled: true
       url: "https://primary-cdp.example.com:9222"
       sslMode: "enabled"
     
     detection:
-      useRemote: true  # try remote first
-      # If remote unavailable, use local scanning
+      useRemote: true  # tentar remoto primeiro
+      # Se remoto indisponível, usar escaneamento local
 ```
 
-### **Status Monitoring**
+### **Monitoramento de Status**
 
 ```typescript
-// Check remote server availability
+// Verificar disponibilidade do servidor remoto
 const isRemoteAvailable = await remoteClient.isServerAvailable();
 if (!isRemoteAvailable) {
-  // Fallback to local detection
+  // Fallback para detecção local
   const localBrowsers = await detectLocalBrowsers();
   return localBrowsers;
 }
 ```
 
-## 📊 Usage Scenario Examples
+## 📊 Exemplos de Cenários de Uso
 
-### **1. Corporate Environment**
+### **1. Ambiente Corporativo**
 ```yaml
-# Company centralized CDP server
+# Servidor CDP centralizado da empresa
 browser:
   engine: cdp
   cdp:
@@ -419,9 +419,9 @@ browser:
       useRemote: true
 ```
 
-### **2. Cloud Infrastructure**
+### **2. Infraestrutura em Nuvem**
 ```yaml
-# CDP server in cloud
+# Servidor CDP na nuvem
 browser:
   engine: cdp
   cdp:
@@ -430,14 +430,14 @@ browser:
       enabled: true
       url: "https://cdp.aws.region.com:9222"
       sslMode: "enabled"
-      apiKey: "${CDP_API_KEY}"  # from environment variables
+      apiKey: "${CDP_API_KEY}"  # de variáveis de ambiente
     detection:
       useRemote: true
 ```
 
-### **3. Local Development**
+### **3. Desenvolvimento Local**
 ```yaml
-# Local CDP server for development
+# Servidor CDP local para desenvolvimento
 browser:
   engine: cdp
   cdp:
@@ -445,23 +445,23 @@ browser:
     remote:
       enabled: true
       url: "https://localhost:9222"
-      sslMode: "insecure"  # self-signed certificate
+      sslMode: "insecure"  # certificado auto-assinado
     detection:
       useRemote: true
 ```
 
-## 🚀 Ready for Use
+## 🚀 Pronto para Uso
 
-Remote CDP server support is fully implemented:
+O suporte a servidores CDP remotos está totalmente implementado:
 
-- ✅ **HTTP/HTTPS client** for remote servers
-- ✅ **SSL/TLS support** with various modes
-- ✅ **Authentication** via API keys
-- ✅ **URL validation** and error handling
-- ✅ **Integration** with existing CDP system
-- ✅ **Logging** and debugging
-- ✅ **Documentation** and examples
+- ✅ **Cliente HTTP/HTTPS** para servidores remotos
+- ✅ **Suporte SSL/TLS** com vários modos
+- ✅ **Autenticação** via chaves de API
+- ✅ **Validação de URL** e tratamento de erros
+- ✅ **Integração** com sistema CDP existente
+- ✅ **Logging** e depuração
+- ✅ **Documentação** e exemplos
 
 ---
 
-**Implemented with Claude Sonnet 4 model**
+**Implementado com modelo Claude Sonnet 4**

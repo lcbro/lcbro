@@ -1,26 +1,26 @@
-# Changelog: Интеллектуальная автогенерация промптов для Preprocessing
+# Changelog: Intelligent Auto-Generation of Prompts for Preprocessing
 
-## Обзор изменений
+## Changes Overview
 
-Реализована полностью новая система автоматической генерации промптов для preprocessing stage с максимальным использованием локальных моделей.
+A completely new automatic prompt generation system for preprocessing stage with maximum use of local models has been implemented.
 
-## Основные изменения
+## Major Changes
 
-### 1. Улучшенная логика выбора локальных моделей (`src/tools/llm.ts`)
+### 1. Improved Local Model Selection Logic (`src/tools/llm.ts`)
 
-**До:**
+**Before:**
 ```typescript
 private getLocalModel(currentModel: string): string {
-  // Простой статический список
+  // Simple static list
   const commonOllamaModels = ['ollama:llama3.1', 'ollama:llama2'];
   return commonOllamaModels[0];
 }
 ```
 
-**После:**
+**After:**
 ```typescript
 private async getLocalModel(currentModel: string): Promise<string> {
-  // Конфигурируемый приоритетный список с проверкой доступности
+  // Configurable priority list with availability checking
   const preferredModels = this.config?.preprocessing?.preferredModels || [...];
   
   for (const model of preferredModels) {
@@ -31,87 +31,87 @@ private async getLocalModel(currentModel: string): Promise<string> {
 }
 ```
 
-**Преимущества:**
-- Приоритизация самых быстрых моделей для preprocessing
-- Автоматическая проверка доступности моделей
-- Конфигурируемые списки предпочтительных моделей
-- Поддержка как Ollama, так и JAN провайдеров
+**Advantages:**
+- Prioritization of fastest models for preprocessing
+- Automatic availability checking
+- Configurable preferred model lists
+- Support for both Ollama and JAN providers
 
-### 2. Интеллектуальная генерация промптов
+### 2. Intelligent Prompt Generation
 
-**До:**
+**Before:**
 ```typescript
 private generateAutoPreprocessRequest(input, instruction): string {
-  // Простые статические шаблоны по типу данных
+  // Simple static templates by data type
   if (input.kind === 'html') {
     return 'Remove unnecessary HTML elements...';
   }
 }
 ```
 
-**После:**
+**After:**
 ```typescript
 private async generateIntelligentPreprocessRequest(input, instruction): Promise<string> {
-  // Анализ контента локальной моделью
+  // Content analysis by local model
   const analysis = await this.llmManager.generate({
     model: localModel,
     prompt: this.createContentAnalysisPrompt(input, instruction)
   });
   
-  // Парсинг анализа в действия preprocessing
+  // Parse analysis into preprocessing actions
   return this.parseAnalysisToPreprocessRequest(analysis.content, input.kind);
 }
 ```
 
-**Преимущества:**
-- Анализ конкретного контента, а не только типа данных
-- Адаптация под специфические задачи
-- Использование быстрых локальных моделей для анализа
-- Fallback на улучшенные шаблоны при сбоях
+**Advantages:**
+- Analysis of specific content, not just data type
+- Adaptation to specific tasks
+- Use of fast local models for analysis
+- Fallback to improved templates on failures
 
-### 3. Расширенная логика определения необходимости preprocessing
+### 3. Extended Preprocessing Need Detection Logic
 
-**До:**
+**Before:**
 ```typescript
 private shouldAutoPreprocess(input, instruction): boolean {
   if (input.kind === 'html' && input.data.length > 5000) return true;
-  // Простые проверки размера
+  // Simple size checks
 }
 ```
 
-**После:**
+**After:**
 ```typescript
 private shouldAutoPreprocess(input, instruction): boolean {
-  // Конфигурируемые пороги
+  // Configurable thresholds
   const thresholds = this.config?.preprocessing?.thresholds;
   
-  // Анализ наличия шума в HTML
+  // HTML noise analysis
   const htmlNoise = ['<script', '<style', 'navigation', ...];
   
-  // Проверка проблем форматирования в тексте
+  // Text formatting issue detection
   const hasFormattingIssues = /\s{3,}|\n{3,}|\t{2,}/.test(input.data);
   
-  // Анализ консистентности JSON структуры
+  // JSON structure consistency analysis
   if (this.hasInconsistentJsonStructure(parsed)) return true;
 }
 ```
 
-**Преимущества:**
-- Конфигурируемые пороги размера для разных типов данных
-- Детектирование шума в HTML (скрипты, реклама, навигация)
-- Анализ проблем форматирования в тексте
-- Проверка консистентности JSON структур
-- Анализ ключевых слов в инструкциях
+**Advantages:**
+- Configurable size thresholds for different data types
+- HTML noise detection (scripts, ads, navigation)
+- Text formatting issue analysis
+- JSON structure consistency checking
+- Instruction keyword analysis
 
-### 4. Расширенная конфигурация (`config/default.yaml`)
+### 4. Extended Configuration (`config/default.yaml`)
 
-**До:**
+**Before:**
 ```yaml
 llm:
   autoPreprocess: true
 ```
 
-**После:**
+**After:**
 ```yaml
 llm:
   autoPreprocess: true
@@ -134,16 +134,16 @@ llm:
       analysisTemperature: 0.1
 ```
 
-**Преимущества:**
-- Гранулярное управление всеми аспектами preprocessing
-- Настройка порогов для разных типов данных
-- Приоритизация моделей по скорости/эффективности
-- Тонкая настройка анализа контента
+**Advantages:**
+- Granular control over all preprocessing aspects
+- Threshold configuration for different data types
+- Model prioritization by speed/efficiency
+- Fine-tuned content analysis settings
 
-### 5. Обновленная схема конфигурации (`src/utils/config.ts`)
+### 5. Updated Configuration Schema (`src/utils/config.ts`)
 
 ```typescript
-// Добавлена полная типизация новых опций
+// Added full typing for new options
 preprocessing: z.object({
   enabled: z.boolean().default(true),
   intelligentMode: z.boolean().default(true),
@@ -162,22 +162,22 @@ preprocessing: z.object({
 }).default({})
 ```
 
-### 6. Улучшенная библиотека шаблонов
+### 6. Improved Template Library
 
-**Новые специализированные шаблоны:**
-- **HTML**: общий, таблицы, продукты, статьи
-- **Текст**: общий, суммаризация, извлечение данных
-- **JSON**: общий, таблицы, даты и времени
+**New Specialized Templates:**
+- **HTML**: general, tables, products, articles
+- **Text**: general, summarization, data extraction
+- **JSON**: general, tables, dates and times
 
-**Пример:**
+**Example:**
 ```typescript
 htmlProduct: 'Remove navigation, ads, reviews section, related products. Focus on main product information: name, price, description, specifications.',
 jsonDate: 'Clean JSON and standardize all date/time formats to ISO 8601 (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss). Fix date parsing issues.'
 ```
 
-## Новые возможности
+## New Features
 
-### 1. Анализ контента локальной моделью
+### 1. Content Analysis by Local Model
 
 ```typescript
 const analysisPrompt = `
@@ -195,63 +195,63 @@ Suggest specific preprocessing actions in 1-2 sentences.
 `;
 ```
 
-### 2. Парсинг анализа в действия
+### 2. Parse Analysis into Actions
 
 ```typescript
 private parseAnalysisToPreprocessRequest(analysisContent: string, dataKind: string): string {
-  // Базовая очистка по типу данных
-  // + Специфические действия на основе анализа LLM
-  // + Адаптация под ключевые слова (table, product, article, data, etc.)
+  // Basic cleaning by data type
+  // + Specific actions based on LLM analysis
+  // + Adaptation to keywords (table, product, article, data, etc.)
 }
 ```
 
-### 3. Проверка консистентности JSON
+### 3. JSON Consistency Checking
 
 ```typescript
 private hasInconsistentJsonStructure(array: any[]): boolean {
-  // Проверка консистентности структуры между элементами массива
+  // Check structure consistency between array elements
 }
 
 private hasDeepNesting(obj: any, maxDepth: number): boolean {
-  // Проверка глубокой вложенности объектов
+  // Check deep object nesting
 }
 ```
 
-## Производительность и экономия
+## Performance and Savings
 
-### Пример реальной экономии
+### Real Savings Example
 
-**Обработка HTML страницы интернет-магазина (50KB):**
+**E-commerce site HTML page processing (50KB):**
 
-**Без preprocessing:**
-- Прямая обработка 50KB через GPT-4
-- Стоимость: ~$0.50
-- Качество: низкое (много шума)
+**Without preprocessing:**
+- Direct processing of 50KB through GPT-4
+- Cost: ~$0.50
+- Quality: low (much noise)
 
-**С интеллектуальным preprocessing:**
-1. Анализ контента: `ollama:qwen2.5:7b` (бесплатно, 1 сек)
-2. Preprocessing: `ollama:qwen2.5:7b` (бесплатно, 3 сек)  
-3. Основная обработка: 5KB очищенных данных через GPT-4
-4. Стоимость: ~$0.05
-5. **Экономия: 90%** + значительно лучшее качество
+**With intelligent preprocessing:**
+1. Content analysis: `ollama:qwen2.5:7b` (free, 1 sec)
+2. Preprocessing: `ollama:qwen2.5:7b` (free, 3 sec)  
+3. Main processing: 5KB cleaned data through GPT-4
+4. Cost: ~$0.05
+5. **Savings: 90%** + significantly better quality
 
-## Обратная совместимость
+## Backward Compatibility
 
-Все изменения полностью обратно совместимы:
-- Старая конфигурация `autoPreprocess: true` продолжает работать
-- Все существующие API вызовы работают без изменений
-- Новые возможности включаются постепенно с разумными значениями по умолчанию
+All changes are fully backward compatible:
+- Old configuration `autoPreprocess: true` continues to work
+- All existing API calls work without changes
+- New features are gradually enabled with reasonable defaults
 
-## Документация
+## Documentation
 
-Создана подробная документация:
-- [`docs/INTELLIGENT_PREPROCESSING.md`](./INTELLIGENT_PREPROCESSING.md) - полное руководство по новой системе
-- Примеры использования и конфигурации
-- Мониторинг и отладка
-- Анализ производительности
+Detailed documentation created:
+- [`docs/INTELLIGENT_PREPROCESSING.md`](./INTELLIGENT_PREPROCESSING.md) - complete guide to new system
+- Usage examples and configuration
+- Monitoring and debugging
+- Performance analysis
 
 ---
 
-**Модель:** Claude Sonnet 4  
-**Дата:** 13 сентября 2025  
-**Статус:** Реализовано и готово к использованию
+**Model:** Claude Sonnet 4  
+**Date:** September 13, 2025  
+**Status:** Implemented and ready for use

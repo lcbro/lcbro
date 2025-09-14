@@ -1,152 +1,152 @@
-# Конфигурация директории для логов
+# Logs Directory Configuration
 
-## Обзор
+## Overview
 
-Реализована расширенная система управления логами с возможностью указания директории для хранения логов, ротацией файлов, сжатием и категоризацией.
+An extended log management system with the ability to specify a directory for storing logs, file rotation, compression, and categorization has been implemented.
 
-## 📁 Основные возможности
+## 📁 Key Features
 
-### **Управление директорией логов**
-- Настраиваемая директория для хранения логов
-- Автоматическое создание директории
-- Ротация логов по размеру и времени
-- Сжатие старых логов
+### **Log Directory Management**
+- Configurable directory for log storage
+- Automatic directory creation
+- Log rotation by size and time
+- Old log compression
 
-### **Категоризация логов**
-- Отдельные файлы для разных категорий
-- Настраиваемые форматы логирования
-- Консольное и файловое логирование
-- Цветной вывод в консоль
+### **Log Categorization**
+- Separate files for different categories
+- Configurable logging formats
+- Console and file logging
+- Colored console output
 
-### **Управление файлами**
-- Автоматическая ротация логов
-- Сжатие больших файлов
-- Очистка старых файлов
-- Мониторинг использования диска
+### **File Management**
+- Automatic log rotation
+- Large file compression
+- Old file cleanup
+- Disk usage monitoring
 
-## ⚙️ Конфигурация
+## ⚙️ Configuration
 
 ### config/default.yaml
 
 ```yaml
 logging:
   level: info
-  directory: /data/logs           # директория для хранения логов
-  maxFileSize: "100MB"           # максимальный размер файла лога
-  maxFiles: 10                   # максимальное количество файлов логов
-  compress: true                 # сжимать старые файлы логов
-  rotation: "daily"              # ротация логов: daily, weekly, monthly, size
+  directory: /data/logs           # directory for log storage
+  maxFileSize: "100MB"           # maximum log file size
+  maxFiles: 10                   # maximum number of log files
+  compress: true                 # compress old log files
+  rotation: "daily"              # log rotation: daily, weekly, monthly, size
   
-  # Конфигурация файлового логирования
+  # File logging configuration
   files:
-    enabled: true                # включить файловое логирование
-    format: "json"               # формат лога: json, pretty, text
-    includeTimestamp: true       # включать временную метку в имя файла
-    includeLevel: true           # включать уровень лога в имя файла
+    enabled: true                # enable file logging
+    format: "json"               # log format: json, pretty, text
+    includeTimestamp: true       # include timestamp in filename
+    includeLevel: true           # include log level in filename
     
-  # Конфигурация консольного логирования  
+  # Console logging configuration  
   console:
-    enabled: true                # включить консольное логирование
-    format: "pretty"             # формат консоли: pretty, json, text
-    colorize: true               # цветной вывод в консоль
+    enabled: true                # enable console logging
+    format: "pretty"             # console format: pretty, json, text
+    colorize: true               # colored console output
     
-  # Категории логов
+  # Log categories
   categories:
-    browser: true               # логи операций браузера
-    llm: true                   # логи операций LLM
-    cdp: true                   # логи подключений CDP
-    network: true               # логи сетевых запросов
-    errors: true                # логи ошибок
-    performance: true           # логи метрик производительности
+    browser: true               # browser operation logs
+    llm: true                   # LLM operation logs
+    cdp: true                   # CDP connection logs
+    network: true               # network request logs
+    errors: true                # error logs
+    performance: true           # performance metrics logs
   
-  # Детальное логирование LLM
+  # Detailed LLM logging
   llm:
-    enabled: true                 # включить детальное логирование LLM
-    logPrompts: true             # логировать все промпты отправляемые в LLM
-    logResponses: true           # логировать все ответы от LLM
-    logTokens: true              # логировать статистику использования токенов
-    logPerformance: true         # логировать метрики времени и производительности
-    logPreprocessing: true       # логировать анализ и результаты предобработки
+    enabled: true                 # enable detailed LLM logging
+    logPrompts: true             # log all prompts sent to LLM
+    logResponses: true           # log all LLM responses
+    logTokens: true              # log token usage statistics
+    logPerformance: true         # log time and performance metrics
+    logPreprocessing: true       # log preprocessing analysis and results
     
-    # Настройки логирования данных
-    maxPromptLength: 2000        # максимум символов для логирования промптов
-    maxResponseLength: 1000      # максимум символов для логирования ответов
-    maxInputDataLength: 5000     # максимум символов для логирования входных данных
+    # Data logging settings
+    maxPromptLength: 2000        # maximum characters for logging prompts
+    maxResponseLength: 1000      # maximum characters for logging responses
+    maxInputDataLength: 5000     # maximum characters for logging input data
     
-    # Отслеживание производительности
-    trackMetrics: true           # отслеживать метрики производительности
-    metricsInterval: 100         # логировать метрики каждые N операций
+    # Performance tracking
+    trackMetrics: true           # track performance metrics
+    metricsInterval: 100         # log metrics every N operations
 ```
 
-## 📂 Структура директории логов
+## 📂 Log Directory Structure
 
-### **Именование файлов**
+### **File Naming**
 ```
 /data/logs/
-├── application-2024-01-15.log          # Общие логи приложения
-├── browser-info-2024-01-15.log         # Логи браузера (уровень info)
-├── browser-error-2024-01-15.log        # Логи браузера (уровень error)
-├── llm-info-2024-01-15.log             # Логи LLM (уровень info)
-├── llm-error-2024-01-15.log            # Логи LLM (уровень error)
-├── cdp-info-2024-01-15.log             # Логи CDP (уровень info)
-├── network-info-2024-01-15.log         # Логи сети (уровень info)
-├── performance-info-2024-01-15.log     # Логи производительности (уровень info)
-├── errors-error-2024-01-15.log         # Логи ошибок (уровень error)
-├── application-2024-01-14.log.gz       # Сжатые старые файлы
+├── application-2024-01-15.log          # General application logs
+├── browser-info-2024-01-15.log         # Browser logs (info level)
+├── browser-error-2024-01-15.log        # Browser logs (error level)
+├── llm-info-2024-01-15.log             # LLM logs (info level)
+├── llm-error-2024-01-15.log            # LLM logs (error level)
+├── cdp-info-2024-01-15.log             # CDP logs (info level)
+├── network-info-2024-01-15.log         # Network logs (info level)
+├── performance-info-2024-01-15.log     # Performance logs (info level)
+├── errors-error-2024-01-15.log         # Error logs (error level)
+├── application-2024-01-14.log.gz       # Compressed old files
 └── browser-2024-01-14.log.gz
 ```
 
-### **Формат имен файлов**
-- `{category}-{level}-{timestamp}.log` - если включены уровень и временная метка
-- `{category}-{timestamp}.log` - если включена только временная метка
-- `{category}-{level}.log` - если включен только уровень
-- `{category}.log` - базовый формат
+### **File Name Format**
+- `{category}-{level}-{timestamp}.log` - if level and timestamp are enabled
+- `{category}-{timestamp}.log` - if only timestamp is enabled
+- `{category}-{level}.log` - if only level is enabled
+- `{category}.log` - basic format
 
-## 🔄 Ротация логов
+## 🔄 Log Rotation
 
-### **Типы ротации**
+### **Rotation Types**
 
-#### **daily** (ежедневно)
+#### **daily** (daily)
 ```yaml
 rotation: "daily"
 ```
-- Новый файл каждый день
-- Старые файлы сжимаются и архивируются
+- New file each day
+- Old files compressed and archived
 
-#### **weekly** (еженедельно)
+#### **weekly** (weekly)
 ```yaml
 rotation: "weekly"
 ```
-- Новый файл каждую неделю
-- Подходит для приложений с низкой активностью
+- New file each week
+- Suitable for low-activity applications
 
-#### **monthly** (ежемесячно)
+#### **monthly** (monthly)
 ```yaml
 rotation: "monthly"
 ```
-- Новый файл каждый месяц
-- Для долгосрочного хранения
+- New file each month
+- For long-term storage
 
-#### **size** (по размеру)
+#### **size** (by size)
 ```yaml
 rotation: "size"
 maxFileSize: "100MB"
 ```
-- Ротация при достижении максимального размера
-- Проверка каждый час
+- Rotation when maximum size is reached
+- Check every hour
 
-### **Настройки ротации**
+### **Rotation Settings**
 ```yaml
 logging:
-  maxFileSize: "100MB"           # максимальный размер файла
-  maxFiles: 10                   # максимальное количество файлов
-  compress: true                 # сжимать старые файлы
-  rotation: "daily"              # тип ротации
+  maxFileSize: "100MB"           # maximum file size
+  maxFiles: 10                   # maximum number of files
+  compress: true                 # compress old files
+  rotation: "daily"              # rotation type
 ```
 
-## 🎨 Форматы логирования
+## 🎨 Logging Formats
 
-### **JSON формат** (рекомендуется для файлов)
+### **JSON Format** (recommended for files)
 ```json
 {
   "level": "info",
@@ -158,7 +158,7 @@ logging:
 }
 ```
 
-### **Pretty формат** (для консоли)
+### **Pretty Format** (for console)
 ```
 [2024-01-15 10:30:00] [INFO] Browser navigation completed
     url: "https://example.com"
@@ -166,73 +166,73 @@ logging:
     category: "browser"
 ```
 
-### **Text формат** (простой)
+### **Text Format** (simple)
 ```
 2024-01-15T10:30:00.000Z [INFO] Browser navigation completed
 ```
 
-## 🛠️ Утилиты управления логами
+## 🛠️ Log Management Utilities
 
 ### **logs-manager.sh**
 
-#### **Список файлов логов**
+#### **List Log Files**
 ```bash
 ./scripts/logs-manager.sh list
 ./scripts/logs-manager.sh list -d /custom/logs/dir
 ```
 
-#### **Статистика логов**
+#### **Log Statistics**
 ```bash
 ./scripts/logs-manager.sh summary
 ```
 
-#### **Очистка старых логов**
+#### **Clean Old Logs**
 ```bash
-./scripts/logs-manager.sh cleanup 7    # удалить файлы старше 7 дней
-./scripts/logs-manager.sh cleanup 30   # удалить файлы старше 30 дней
+./scripts/logs-manager.sh cleanup 7    # remove files older than 7 days
+./scripts/logs-manager.sh cleanup 30   # remove files older than 30 days
 ```
 
-#### **Сжатие логов**
+#### **Compress Logs**
 ```bash
 ./scripts/logs-manager.sh compress
 ```
 
-#### **Мониторинг логов**
+#### **Monitor Logs**
 ```bash
-# Просмотр последних записей
+# View recent entries
 ./scripts/logs-manager.sh tail browser
 
-# Следить за логами в реальном времени
+# Follow logs in real-time
 ./scripts/logs-manager.sh tail browser -f
 
-# Просмотр с фильтрацией
+# View with filtering
 ./scripts/logs-manager.sh tail browser -g "error"
 ```
 
-#### **Поиск в логах**
+#### **Search Logs**
 ```bash
 ./scripts/logs-manager.sh search "error"
 ./scripts/logs-manager.sh search "timeout" -g "browser"
 ```
 
-#### **Экспорт логов**
+#### **Export Logs**
 ```bash
-# Экспорт всех логов
+# Export all logs
 ./scripts/logs-manager.sh export
 
-# Экспорт логов браузера
+# Export browser logs
 ./scripts/logs-manager.sh export browser -o browser-logs.tar.gz
 
-# Экспорт логов LLM
+# Export LLM logs
 ./scripts/logs-manager.sh export llm -o llm-logs.tar.gz
 ```
 
-#### **Статистика использования диска**
+#### **Disk Usage Statistics**
 ```bash
 ./scripts/logs-manager.sh size
 ```
 
-## 💻 Программное использование
+## 💻 Programmatic Usage
 
 ### **LogsManager**
 
@@ -242,92 +242,92 @@ import { Config } from './src/utils/config.js';
 
 const logsManager = new LogsManager(logger, config);
 
-// Инициализация
+// Initialize
 await logsManager.initialize();
 
-// Планирование автоматической ротации
+// Schedule automatic rotation
 logsManager.scheduleLogRotation();
 
-// Получение информации о файлах логов
+// Get log file information
 const logFiles = await logsManager.listLogFiles();
 console.log(`Found ${logFiles.length} log files`);
 
-// Получение файлов по категории
+// Get files by category
 const browserLogs = await logsManager.getLogFilesByCategory('browser');
 
-// Получение файлов по уровню
+// Get files by level
 const errorLogs = await logsManager.getLogFilesByLevel('error');
 
-// Сжатие файла лога
+// Compress log file
 await logsManager.compressLogFile('/data/logs/old-file.log');
 
-// Очистка старых логов
-await logsManager.cleanupOldLogs(30); // удалить файлы старше 30 дней
+// Clean old logs
+await logsManager.cleanupOldLogs(30); // remove files older than 30 days
 
-// Получение статистики использования диска
+// Get disk usage statistics
 const diskUsage = await logsManager.getLogsDiskUsage();
 console.log(`Total size: ${diskUsage.totalSize} bytes`);
 
-// Получение сводки логов
+// Get log summary
 const summary = await logsManager.getLogsSummary();
 console.log(summary);
 ```
 
-### **Создание продвинутого логгера**
+### **Create Advanced Logger**
 
 ```typescript
 import { createAdvancedLogger } from './src/utils/logger.js';
 
-// Создание логгера с управлением файлами
+// Create logger with file management
 const { logger, logsManager } = await createAdvancedLogger(config);
 
-// Логирование с категорией
+// Logging with category
 logger.info({ 
   category: 'browser', 
   url: 'https://example.com' 
 }, 'Browser navigation started');
 
-// Автоматическая ротация уже настроена
+// Automatic rotation already configured
 ```
 
-## 📊 Мониторинг и анализ
+## 📊 Monitoring and Analysis
 
-### **Статистика использования**
+### **Usage Statistics**
 ```bash
-# Общая статистика
+# General statistics
 ./scripts/logs-manager.sh summary
 
-# Использование диска
+# Disk usage
 ./scripts/logs-manager.sh size
 
-# Список файлов
+# File list
 ./scripts/logs-manager.sh list
 ```
 
-### **Анализ логов**
+### **Log Analysis**
 ```bash
-# Поиск ошибок
+# Search for errors
 ./scripts/logs-manager.sh search "error" -g "level.*error"
 
-# Анализ производительности
+# Performance analysis
 ./scripts/logs-manager.sh search "duration" -g "performance"
 
-# Мониторинг CDP подключений
+# Monitor CDP connections
 ./scripts/logs-manager.sh tail cdp -f
 ```
 
-### **Экспорт для анализа**
+### **Export for Analysis**
 ```bash
-# Экспорт всех логов за период
+# Export all logs for period
 ./scripts/logs-manager.sh export
 
-# Экспорт логов конкретной категории
+# Export logs by specific category
 ./scripts/logs-manager.sh export browser -o browser-analysis.tar.gz
 ```
 
-## 🔧 Настройка для разных сред
+## 🔧 Configuration for Different Environments
 
-### **Разработка**
+### **Development**
 ```yaml
 logging:
   level: debug
@@ -342,7 +342,7 @@ logging:
   maxFileSize: "10MB"
 ```
 
-### **Тестирование**
+### **Testing**
 ```yaml
 logging:
   level: info
@@ -356,7 +356,7 @@ logging:
   maxFiles: 5
 ```
 
-### **Продакшен**
+### **Production**
 ```yaml
 logging:
   level: warn
@@ -386,26 +386,26 @@ logging:
   maxFileSize: "50MB"
 ```
 
-## 🚨 Предупреждения и рекомендации
+## 🚨 Warnings and Recommendations
 
-### **Безопасность**
-- Не логируйте чувствительные данные (пароли, токены)
-- Ограничьте доступ к директории логов
-- Регулярно очищайте старые логи
+### **Security**
+- Don't log sensitive data (passwords, tokens)
+- Restrict access to log directory
+- Regularly clean old logs
 
-### **Производительность**
-- Используйте асинхронное логирование
-- Настройте ротацию для предотвращения переполнения диска
-- Сжимайте старые файлы для экономии места
+### **Performance**
+- Use asynchronous logging
+- Configure rotation to prevent disk overflow
+- Compress old files to save space
 
-### **Мониторинг**
-- Настройте алерты на ошибки
-- Мониторьте размер директории логов
-- Регулярно анализируйте логи на предмет проблем
+### **Monitoring**
+- Set up error alerts
+- Monitor log directory size
+- Regularly analyze logs for issues
 
-## 🎯 Примеры использования
+## 🎯 Usage Examples
 
-### **1. Настройка для высоконагруженного приложения**
+### **1. High-load Application Configuration**
 ```yaml
 logging:
   level: warn
@@ -421,7 +421,7 @@ logging:
     enabled: false
 ```
 
-### **2. Настройка для отладки**
+### **2. Debug Configuration**
 ```yaml
 logging:
   level: debug
@@ -443,7 +443,7 @@ logging:
     performance: true
 ```
 
-### **3. Настройка для мониторинга**
+### **3. Monitoring Configuration**
 ```yaml
 logging:
   level: info
@@ -461,19 +461,19 @@ logging:
     errors: true
 ```
 
-## 🚀 Готово к использованию
+## 🚀 Ready for Use
 
-Система управления директорией логов полностью реализована:
+The log directory management system is fully implemented:
 
-- ✅ **Настраиваемая директория** для хранения логов
-- ✅ **Автоматическая ротация** по размеру и времени
-- ✅ **Сжатие старых файлов** для экономии места
-- ✅ **Категоризация логов** по типам операций
-- ✅ **Утилиты управления** для администрирования
-- ✅ **Мониторинг использования** диска
-- ✅ **Экспорт и анализ** логов
-- ✅ **Гибкая конфигурация** для разных сред
+- ✅ **Configurable directory** for log storage
+- ✅ **Automatic rotation** by size and time
+- ✅ **Old file compression** for space saving
+- ✅ **Log categorization** by operation types
+- ✅ **Management utilities** for administration
+- ✅ **Disk usage monitoring**
+- ✅ **Export and analysis** capabilities
+- ✅ **Flexible configuration** for different environments
 
 ---
 
-**Реализовано с помощью модели Claude Sonnet 4**
+**Implemented with Claude Sonnet 4 model**

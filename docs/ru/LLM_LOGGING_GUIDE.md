@@ -1,36 +1,36 @@
-# Detailed LLM Logging for Debugging and Statistics
+# Детальное логирование LLM для отладки и статистики
 
-## Overview
+## Обзор
 
-A comprehensive system for logging all LLM operations with detailed information about prompts, responses, performance, and cost savings has been implemented.
+Реализована комплексная система логирования всех операций LLM с детальной информацией о промптах, ответах, производительности и экономии затрат.
 
-## Key Features
+## Основные возможности
 
-### 🔍 **Detailed Request Logging**
-- All prompts sent to LLM
-- System prompts and user instructions
-- Model parameters (temperature, max tokens)
-- Operation metadata (type, ID, timestamps)
+### 🔍 **Детальное логирование запросов**
+- Все промпты, отправляемые в LLM
+- Системные промпты и пользовательские инструкции
+- Параметры модели (температура, макс. токены)
+- Метаданные операции (тип, ID, временные метки)
 
-### 📊 **Response and Metrics Logging**
-- Full responses from LLM models
-- Token usage statistics
-- Operation execution time
-- Error handling with detailed information
+### 📊 **Логирование ответов и метрик**
+- Полные ответы от LLM моделей
+- Статистика использования токенов
+- Время выполнения операций
+- Обработка ошибок с детальной информацией
 
-### 💰 **Cost Savings Analysis**
-- Cost calculation by models
-- Savings from preprocessing
-- Before/after token comparison
-- Statistics by operation types
+### 💰 **Анализ экономии затрат**
+- Расчет стоимости по моделям
+- Экономия от preprocessing
+- Сравнение токенов до/после обработки
+- Статистика по типам операций
 
-### 📈 **Performance Metrics**
-- Automatic statistics tracking
-- Analysis by models (operation count, average tokens, time)
-- Preprocessing efficiency (data reduction, savings)
-- Periodic performance summaries
+### 📈 **Метрики производительности**
+- Автоматическое отслеживание статистики
+- Анализ по моделям (количество операций, средние токены, время)
+- Эффективность preprocessing (сокращение данных, экономия)
+- Периодические сводки производительности
 
-## Configuration
+## Конфигурация
 
 ### config/default.yaml
 
@@ -38,28 +38,28 @@ A comprehensive system for logging all LLM operations with detailed information 
 logging:
   level: info
   
-  # Detailed LLM logging
+  # Детальное логирование LLM
   llm:
-    enabled: true                 # enable/disable LLM logging
-    logPrompts: true             # log all prompts
-    logResponses: true           # log all responses
-    logTokens: true              # log token statistics
-    logPerformance: true         # log performance metrics
-    logPreprocessing: true       # log preprocessing analysis
+    enabled: true                 # включить/отключить логирование LLM
+    logPrompts: true             # логировать все промпты
+    logResponses: true           # логировать все ответы
+    logTokens: true              # логировать статистику токенов
+    logPerformance: true         # логировать метрики производительности
+    logPreprocessing: true       # логировать анализ preprocessing
     
-    # Data logging settings
-    maxPromptLength: 2000        # max characters for prompts
-    maxResponseLength: 1000      # max characters for responses
-    maxInputDataLength: 5000     # max characters for input data
+    # Настройки логирования данных
+    maxPromptLength: 2000        # макс. символов для промптов
+    maxResponseLength: 1000      # макс. символов для ответов
+    maxInputDataLength: 5000     # макс. символов для входных данных
     
-    # Performance tracking
-    trackMetrics: true           # track metrics
-    metricsInterval: 100         # log metrics every N operations
+    # Отслеживание производительности
+    trackMetrics: true           # отслеживать метрики
+    metricsInterval: 100         # логировать метрики каждые N операций
 ```
 
-## Types of Logged Operations
+## Типы логируемых операций
 
-### 1. **Content Analysis (analysis)**
+### 1. **Анализ контента (analysis)**
 ```json
 {
   "level": "info",
@@ -91,7 +91,7 @@ logging:
 }
 ```
 
-### 3. **Main Processing (main)**
+### 3. **Основная обработка (main)**
 ```json
 {
   "level": "info",
@@ -105,9 +105,9 @@ logging:
 }
 ```
 
-## Responses and Metrics
+## Ответы и метрики
 
-### Successful Responses
+### Успешные ответы
 ```json
 {
   "level": "info",
@@ -127,7 +127,7 @@ logging:
 }
 ```
 
-### Preprocessing Analysis
+### Анализ preprocessing
 ```json
 {
   "level": "info",
@@ -146,7 +146,7 @@ logging:
 }
 ```
 
-### Cost Savings Analysis
+### Анализ экономии затрат
 ```json
 {
   "level": "info",
@@ -163,9 +163,9 @@ logging:
 }
 ```
 
-## Performance Metrics
+## Метрики производительности
 
-### Periodic Summaries
+### Периодические сводки
 ```json
 {
   "level": "info",
@@ -199,7 +199,7 @@ logging:
 }
 ```
 
-### Final Summary
+### Финальная сводка
 ```json
 {
   "level": "info",
@@ -234,9 +234,9 @@ logging:
 }
 ```
 
-## Error Handling
+## Обработка ошибок
 
-### LLM Request Errors
+### Ошибки LLM запросов
 ```json
 {
   "level": "error",
@@ -252,60 +252,60 @@ logging:
 }
 ```
 
-## Log Analysis
+## Анализ логов
 
-### Using grep for Analysis
+### Использование grep для анализа
 
 ```bash
-# All preprocessing operations
+# Все операции preprocessing
 grep '"operationType": "preprocessing"' logs/app.log
 
-# All errors
+# Все ошибки
 grep '"success": false' logs/app.log
 
-# Performance metrics
+# Метрики производительности
 grep 'Performance Metrics Summary' logs/app.log
 
-# Cost savings analysis
+# Анализ экономии затрат
 grep 'Preprocessing Cost Analysis' logs/app.log
 
-# Statistics for specific model
+# Статистика по конкретной модели
 grep '"model": "gpt-4o-mini"' logs/app.log
 ```
 
-### Analysis with jq
+### Анализ с jq
 
 ```bash
-# Extract all preprocessing operations
+# Извлечение всех операций preprocessing
 cat logs/app.log | jq 'select(.operationType == "preprocessing")'
 
-# Token statistics
+# Статистика токенов
 cat logs/app.log | jq 'select(.tokensUsed) | .tokensUsed.total' | awk '{sum+=$1} END {print "Total tokens:", sum}'
 
-# Average operation duration
+# Средняя продолжительность операций
 cat logs/app.log | jq 'select(.duration) | .duration' | awk '{sum+=$1; count++} END {print "Average duration:", sum/count, "ms"}'
 
-# Preprocessing savings analysis
+# Анализ экономии от preprocessing
 cat logs/app.log | jq 'select(.msg == "Preprocessing Cost Analysis") | .estimatedCostSaved' | awk '{sum+=$1} END {print "Total cost saved: $", sum}'
 ```
 
-## Real-time Monitoring
+## Мониторинг в реальном времени
 
-### Viewing Logs in Real-time
+### Просмотр логов в реальном времени
 ```bash
-# Follow all LLM operations
+# Следить за всеми LLM операциями
 tail -f logs/app.log | grep -E "(LLM Request|LLM Response|Performance Metrics)"
 
-# Follow only errors
+# Следить только за ошибками
 tail -f logs/app.log | grep '"success": false'
 
-# Follow performance metrics
+# Следить за метриками производительности
 tail -f logs/app.log | grep 'Performance Metrics Summary'
 ```
 
-### Creating Dashboard with jq
+### Создание dashboard с помощью jq
 ```bash
-# Simple terminal dashboard
+# Простой dashboard в терминале
 while true; do
   clear
   echo "=== LLM Performance Dashboard ==="
@@ -317,9 +317,9 @@ while true; do
 done
 ```
 
-## Logging Level Configuration
+## Настройка уровней логирования
 
-### For Debugging (Maximum Detail)
+### Для отладки (максимальная детализация)
 ```yaml
 logging:
   level: debug
@@ -330,29 +330,29 @@ logging:
     logTokens: true
     logPerformance: true
     logPreprocessing: true
-    maxPromptLength: 5000      # more data for debugging
+    maxPromptLength: 5000      # больше данных для отладки
     maxResponseLength: 2000
     maxInputDataLength: 10000
     trackMetrics: true
-    metricsInterval: 10        # log metrics more frequently
+    metricsInterval: 10        # чаще логировать метрики
 ```
 
-### For Production (Optimized Logging)
+### Для продакшена (оптимизированное логирование)
 ```yaml
 logging:
   level: info
   llm:
     enabled: true
-    logPrompts: false          # disable prompts to save space
-    logResponses: false        # disable responses
-    logTokens: true           # keep tokens for monitoring
-    logPerformance: true      # keep metrics
-    logPreprocessing: false   # disable preprocessing details
+    logPrompts: false          # отключить промпты для экономии места
+    logResponses: false        # отключить ответы
+    logTokens: true           # оставить токены для мониторинга
+    logPerformance: true      # оставить метрики
+    logPreprocessing: false   # отключить детали preprocessing
     trackMetrics: true
-    metricsInterval: 1000     # log metrics less frequently
+    metricsInterval: 1000     # реже логировать метрики
 ```
 
-### For Performance Analysis
+### Для анализа производительности
 ```yaml
 logging:
   level: info
@@ -362,17 +362,17 @@ logging:
     logResponses: false
     logTokens: true
     logPerformance: true
-    logPreprocessing: true    # enable for efficiency analysis
-    maxPromptLength: 500      # minimal data
+    logPreprocessing: true    # включить для анализа эффективности
+    maxPromptLength: 500      # минимальные данные
     maxResponseLength: 200
     maxInputDataLength: 1000
     trackMetrics: true
-    metricsInterval: 50       # frequent metrics
+    metricsInterval: 50       # частые метрики
 ```
 
-## Automation Analysis
+## Автоматизация анализа
 
-### Daily Report Script
+### Скрипт для ежедневного отчета
 ```bash
 #!/bin/bash
 # daily_llm_report.sh
@@ -382,35 +382,35 @@ REPORT_FILE="reports/llm-$(date +%Y-%m-%d).txt"
 
 echo "=== LLM Performance Report for $(date +%Y-%m-%d) ===" > $REPORT_FILE
 
-# General statistics
+# Общая статистика
 echo "Total operations: $(grep 'LLM Request' $LOG_FILE | wc -l)" >> $REPORT_FILE
 echo "Total errors: $(grep '"success": false' $LOG_FILE | wc -l)" >> $REPORT_FILE
 echo "Preprocessing operations: $(grep '"operationType": "preprocessing"' $LOG_FILE | wc -l)" >> $REPORT_FILE
 
-# Token analysis
+# Анализ токенов
 TOTAL_TOKENS=$(grep 'LLM Response' $LOG_FILE | jq -r 'select(.tokensUsed) | .tokensUsed.total' | awk '{sum+=$1} END {print sum}')
 echo "Total tokens used: $TOTAL_TOKENS" >> $REPORT_FILE
 
-# Savings analysis
+# Анализ экономии
 COST_SAVED=$(grep 'Preprocessing Cost Analysis' $LOG_FILE | jq -r '.estimatedCostSaved' | awk '{sum+=$1} END {print sum}')
 echo "Estimated cost saved: \$${COST_SAVED}" >> $REPORT_FILE
 
-# Average duration
+# Средняя продолжительность
 AVG_DURATION=$(grep 'LLM Response' $LOG_FILE | jq -r '.duration' | awk '{sum+=$1; count++} END {if(count>0) print sum/count; else print "N/A"}')
 echo "Average response time: ${AVG_DURATION}ms" >> $REPORT_FILE
 
 echo "Report saved to $REPORT_FILE"
 ```
 
-## Conclusion
+## Заключение
 
-The detailed LLM logging system provides:
+Система детального логирования LLM обеспечивает:
 
-- ✅ **Full transparency** of all LLM operations
-- ✅ **Detailed debugging** of prompts and responses
-- ✅ **Performance analysis** and optimization
-- ✅ **Cost savings monitoring** from preprocessing
-- ✅ **Flexible configuration** for different needs
-- ✅ **Analysis automation** with standard tools
+- ✅ **Полную прозрачность** всех операций LLM
+- ✅ **Детальную отладку** промптов и ответов
+- ✅ **Анализ производительности** и оптимизацию
+- ✅ **Мониторинг экономии** от preprocessing
+- ✅ **Гибкую конфигурацию** под разные нужды
+- ✅ **Автоматизацию анализа** с помощью стандартных инструментов
 
-**Model:** Claude Sonnet 4
+**Модель:** Claude Sonnet 4

@@ -1,50 +1,50 @@
-# Интеллектуальная автогенерация промптов для Preprocessing
+# Intelligent Auto-Generation of Prompts for Preprocessing
 
-## Обзор
+## Overview
 
-Новая система автоматической генерации промптов для preprocessing использует локальные LLM модели для анализа контента и создания оптимальных инструкций предобработки. Это значительно улучшает качество обработки данных при минимальных затратах.
+The new automatic prompt generation system for preprocessing uses local LLM models to analyze content and create optimal preprocessing instructions. This significantly improves data processing quality at minimal cost.
 
-## Основные возможности
+## Key Features
 
-### 1. Интеллектуальный анализ контента
+### 1. Intelligent Content Analysis
 
-Система автоматически анализирует входные данные с помощью быстрых локальных моделей:
+The system automatically analyzes input data using fast local models:
 
-- **Анализ типа контента**: HTML, JSON, текст
-- **Определение структуры**: таблицы, продукты, статьи, данные
-- **Обнаружение шума**: реклама, навигация, скрипты
-- **Оценка сложности**: размер, вложенность, консистентность
+- **Content type analysis**: HTML, JSON, text
+- **Structure detection**: tables, products, articles, data
+- **Noise detection**: ads, navigation, scripts
+- **Complexity assessment**: size, nesting, consistency
 
-### 2. Приоритет локальных моделей
+### 2. Local Model Priority
 
-Система максимально использует локальные модели для экономии:
+The system maximizes local model usage for savings:
 
-**Порядок приоритета (по умолчанию):**
-1. `ollama:qwen2.5:7b` - самая быстрая для preprocessing
-2. `ollama:llama3.2:3b` - очень быстрая, маленькая модель  
-3. `ollama:mistral:7b` - хороший баланс
-4. `ollama:llama3.1:8b` - стабильный выбор
+**Priority order (default):**
+1. `ollama:qwen2.5:7b` - fastest for preprocessing
+2. `ollama:llama3.2:3b` - very fast, small model  
+3. `ollama:mistral:7b` - good balance
+4. `ollama:llama3.1:8b` - stable choice
 5. `jan:llama-3.2-3b` - JAN fallback
-6. `jan:mistral-7b` - JAN альтернатива
+6. `jan:mistral-7b` - JAN alternative
 
-### 3. Умные пороги автозапуска
+### 3. Smart Auto-Trigger Thresholds
 
-Система автоматически определяет когда нужен preprocessing:
+The system automatically determines when preprocessing is needed:
 
-- **HTML**: >3KB (по умолчанию) или наличие шума
-- **Текст**: >5KB (по умолчанию) или проблемы форматирования  
-- **JSON**: >1KB (по умолчанию) или несогласованность структуры
-- **Любой тип**: >10KB автоматически
+- **HTML**: >3KB (default) or presence of noise
+- **Text**: >5KB (default) or formatting issues  
+- **JSON**: >1KB (default) or structure inconsistency
+- **Any type**: >10KB automatically
 
-### 4. Библиотека шаблонов
+### 4. Template Library
 
-Если интеллектуальный анализ недоступен, система использует оптимизированные шаблоны:
+If intelligent analysis is unavailable, the system uses optimized templates:
 
-- **HTML**: общий, таблицы, продукты, статьи
-- **Текст**: общий, извлечение, суммаризация
-- **JSON**: общий, таблицы, даты
+- **HTML**: general, tables, products, articles
+- **Text**: general, extraction, summarization
+- **JSON**: general, tables, dates
 
-## Конфигурация
+## Configuration
 
 ### config/default.yaml
 
@@ -53,35 +53,35 @@ llm:
   autoPreprocess: true
   
   preprocessing:
-    enabled: true                 # включить/отключить preprocessing
-    intelligentMode: true         # использовать LLM для анализа
-    fallbackToTemplates: true     # fallback на шаблоны
+    enabled: true                 # enable/disable preprocessing
+    intelligentMode: true         # use LLM for analysis
+    fallbackToTemplates: true     # fallback to templates
     
-    # Пороги размера для автозапуска
+    # Size thresholds for auto-trigger
     thresholds:
-      html: 3000                  # HTML больше 3KB
-      text: 5000                  # текст больше 5KB  
-      json: 1000                  # JSON больше 1KB
+      html: 3000                  # HTML larger than 3KB
+      text: 5000                  # text larger than 5KB  
+      json: 1000                  # JSON larger than 1KB
       
-    # Приоритет моделей для preprocessing
+    # Model priority for preprocessing
     preferredModels:
-      - "ollama:qwen2.5:7b"       # самая быстрая
-      - "ollama:llama3.2:3b"      # очень быстрая
-      - "ollama:mistral:7b"       # баланс
-      - "ollama:llama3.1:8b"      # стабильная
+      - "ollama:qwen2.5:7b"       # fastest
+      - "ollama:llama3.2:3b"      # very fast
+      - "ollama:mistral:7b"       # balance
+      - "ollama:llama3.1:8b"      # stable
       - "jan:llama-3.2-3b"        # JAN fallback
-      - "jan:mistral-7b"          # JAN альтернатива
+      - "jan:mistral-7b"          # JAN alternative
     
-    # Настройки анализа
+    # Analysis settings
     analysis:
-      maxContentSample: 1000      # макс. символов для анализа
-      maxAnalysisTokens: 300      # макс. токенов анализа
-      analysisTemperature: 0.1    # низкая температура
+      maxContentSample: 1000      # max characters for analysis
+      maxAnalysisTokens: 300      # max analysis tokens
+      analysisTemperature: 0.1    # low temperature
 ```
 
-## Примеры использования
+## Usage Examples
 
-### 1. Автоматический режим (рекомендуется)
+### 1. Automatic Mode (Recommended)
 
 ```typescript
 const result = await mcp.callTool('llm.transform', {
@@ -90,18 +90,18 @@ const result = await mcp.callTool('llm.transform', {
     data: largeHtmlContent
   },
   instruction: 'Extract product information as JSON'
-  // preprocessRequest автоматически сгенерируется
+  // preprocessRequest automatically generated
 });
 ```
 
-**Что происходит:**
-1. Система определяет что HTML >3KB нуждается в preprocessing
-2. Локальная модель анализирует контент (первые 1000 символов)
-3. Генерируется специфический промпт: "Remove HTML noise: scripts, styles, navigation, ads, footers. Focus on product/item information, remove marketing fluff. Keep only content relevant to the main task."
-4. Быстрая локальная модель выполняет preprocessing
-5. Основная модель обрабатывает очищенные данные
+**What happens:**
+1. System determines HTML >3KB needs preprocessing
+2. Local model analyzes content (first 1000 characters)
+3. Generates specific prompt: "Remove HTML noise: scripts, styles, navigation, ads, footers. Focus on product/item information, remove marketing fluff. Keep only content relevant to the main task."
+4. Fast local model performs preprocessing
+5. Main model processes cleaned data
 
-### 2. Явное управление
+### 2. Explicit Control
 
 ```typescript
 const result = await mcp.callTool('llm.transform', {
@@ -111,73 +111,73 @@ const result = await mcp.callTool('llm.transform', {
 });
 ```
 
-### 3. Отключение preprocessing
+### 3. Disable Preprocessing
 
 ```typescript
-// В конфигурации
+// In configuration
 preprocessing: {
   enabled: false
 }
 
-// Или только интеллектуальный режим
+// Or only intelligent mode
 preprocessing: {
   intelligentMode: false,
   fallbackToTemplates: true
 }
 ```
 
-## Архитектура системы
+## System Architecture
 
-### 1. Детектор необходимости preprocessing
-- Анализирует размер контента
-- Проверяет наличие шума в HTML
-- Обнаруживает проблемы форматирования в тексте
-- Оценивает консистентность JSON структуры
+### 1. Preprocessing Need Detector
+- Analyzes content size
+- Checks for HTML noise
+- Detects text formatting issues
+- Evaluates JSON structure consistency
 
-### 2. Интеллектуальный генератор промптов  
-- Использует локальную модель для анализа контента
-- Создает кастомизированные инструкции preprocessing
-- Адаптируется под тип задачи (извлечение, очистка, структурирование)
+### 2. Intelligent Prompt Generator  
+- Uses local model for content analysis
+- Creates customized preprocessing instructions
+- Adapts to task type (extraction, cleaning, structuring)
 
-### 3. Fallback система
-- Автоматический переход на шаблоны при сбоях
-- Graceful degradation функциональности
-- Логирование всех этапов для отладки
+### 3. Fallback System
+- Automatic fallback to templates on failures
+- Graceful functionality degradation
+- Logging of all stages for debugging
 
-### 4. Менеджер локальных моделей
-- Приоритизация по скорости/эффективности
-- Автоматический выбор доступной модели
-- Поддержка Ollama и JAN провайдеров
+### 4. Local Model Manager
+- Prioritization by speed/efficiency
+- Automatic selection of available model
+- Support for Ollama and JAN providers
 
-## Производительность и экономия
+## Performance and Savings
 
-### Пример: Обработка интернет-магазина
+### Example: E-commerce Site Processing
 
-**Без preprocessing:**
-- Входные данные: 50KB HTML с навигацией, рекламой, комментариями
-- Токены: ~12,500 (OpenAI pricing)
-- Стоимость: ~$0.125 (GPT-4)
-- Качество: низкое (много шума)
+**Without preprocessing:**
+- Input data: 50KB HTML with navigation, ads, comments
+- Tokens: ~12,500 (OpenAI pricing)
+- Cost: ~$0.125 (GPT-4)
+- Quality: low (much noise)
 
-**С интеллектуальным preprocessing:**
-- Анализ контента: ollama:qwen2.5:7b (~200 токенов, бесплатно)
-- Preprocessing: ollama:qwen2.5:7b (~3000 токенов, бесплатно)  
-- Основная обработка: 5KB очищенных данных (~1,250 токенов)
-- Стоимость: ~$0.012 (только за основную обработку)
-- **Экономия: 90%** + значительно лучшее качество
+**With intelligent preprocessing:**
+- Content analysis: ollama:qwen2.5:7b (~200 tokens, free)
+- Preprocessing: ollama:qwen2.5:7b (~3000 tokens, free)  
+- Main processing: 5KB cleaned data (~1,250 tokens)
+- Cost: ~$0.012 (only for main processing)
+- **Savings: 90%** + significantly better quality
 
-### Время выполнения
+### Execution Time
 
-- **Анализ**: 0.5-1 сек (локальная модель)
-- **Preprocessing**: 2-5 сек (локальная модель)  
-- **Основная обработка**: 3-8 сек (целевая модель)
-- **Общее время**: +20-30% за 90% экономии и лучшее качество
+- **Analysis**: 0.5-1 sec (local model)
+- **Preprocessing**: 2-5 sec (local model)  
+- **Main processing**: 3-8 sec (target model)
+- **Total time**: +20-30% for 90% savings and better quality
 
-## Мониторинг и отладка
+## Monitoring and Debugging
 
-### Логирование
+### Logging
 
-Система логирует все этапы:
+The system logs all stages:
 
 ```json
 {
@@ -202,24 +202,24 @@ preprocessing: {
 }
 ```
 
-### Отладка
+### Debugging
 
-Для детального анализа установите уровень логирования:
+For detailed analysis, set logging level:
 
 ```yaml
 logging:
   level: debug
 ```
 
-## Заключение
+## Conclusion
 
-Новая система интеллектуальной автогенерации промптов для preprocessing:
+The new intelligent auto-generation system for preprocessing prompts:
 
-- ✅ **Экономит 80-90%** стоимости обработки
-- ✅ **Улучшает качество** результатов  
-- ✅ **Максимально использует** локальные модели
-- ✅ **Автоматически адаптируется** под тип контента
-- ✅ **Gracefully деградирует** при сбоях
-- ✅ **Легко конфигурируется** под нужды проекта
+- ✅ **Saves 80-90%** of processing costs
+- ✅ **Improves quality** of results  
+- ✅ **Maximizes usage** of local models
+- ✅ **Automatically adapts** to content type
+- ✅ **Gracefully degrades** on failures
+- ✅ **Easily configurable** for project needs
 
-Модель Claude Sonnet 4 была использована для создания этой документации.
+**Model:** Claude Sonnet 4

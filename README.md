@@ -29,6 +29,8 @@
 
 LCBro is a powerful MCP server for browser automation with support for both Playwright and Chrome DevTools Protocol (CDP). It provides intelligent preprocessing, comprehensive logging, and remote browser management capabilities.
 
+**🎯 Cost Optimization Focus**: This project is specifically designed to optimize LLM request costs and reduce context usage by intelligently preprocessing and cleaning data using local LLM models before sending to expensive main LLM APIs. This approach can reduce costs by up to 80% while improving result quality.
+
 ## ✨ Features
 
 <table>
